@@ -9,6 +9,8 @@ import create from './create';
 import edit from './edit';
 import article from './article';
 
+import './events';
+
 const element = document.getElementById('my-app');
 new home().start(element);
 new signin().mount(element);
