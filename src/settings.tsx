@@ -1,11 +1,42 @@
-import app, {Component} from 'apprun';
+import app, { Component } from 'apprun';
 
 export default class settingsComponent extends Component {
   state = 'settings';
 
   view = (state) => {
-    return <div>
-      <h1>{state}</h1>
+    return <div className="settings-page">
+      <div className="container page">
+        <div className="row">
+
+          <div className="col-md-6 offset-md-3 col-xs-12">
+            <h1 className="text-xs-center">Your Settings</h1>
+
+            <form>
+              <fieldset>
+                <fieldset className="form-group">
+                  <input className="form-control" type="text" placeholder="URL of profile picture" />
+                </fieldset>
+                <fieldset className="form-group">
+                  <input className="form-control form-control-lg" type="text" placeholder="Your Name" />
+                </fieldset>
+                <fieldset className="form-group">
+                  <textarea className="form-control form-control-lg" rows="8" placeholder="Short bio about you"></textarea>
+                </fieldset>
+                <fieldset className="form-group">
+                  <input className="form-control form-control-lg" type="text" placeholder="Email" />
+                </fieldset>
+                <fieldset className="form-group">
+                  <input className="form-control form-control-lg" type="password" placeholder="Password" />
+                </fieldset>
+                <button className="btn btn-lg btn-primary pull-xs-right">
+                  Update Settings
+              </button>
+              </fieldset>
+            </form>
+          </div>
+
+        </div>
+      </div>
     </div>
   }
 
@@ -14,8 +45,3 @@ export default class settingsComponent extends Component {
   }
 }
 
-
-// to use this component in main.tsx
-// import settings from './settings';
-// const element = document.getElementById('my-app');
-// new settings().start(element);
