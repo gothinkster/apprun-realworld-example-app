@@ -1,31 +1,35 @@
 import app, { Component } from 'apprun';
+import { IArticle } from './api';
+
+const Tag = ({ tag }) => <a href="" className="tag-pill tag-default">{tag}</a>
+
+const Article = (props) => {
+  const article = props.article as IArticle;
+  // console.log(article)
+  return <div className="article-preview">
+    <div className="article-meta">
+      <a href="profile.html"><img src={article.author.image} /></a>
+      <div className="info">
+        <a href="" className="author">{article.author.username}</a>
+        <span className="date">{article.updatedAt}</span>
+      </div>
+      <button className="btn btn-outline-primary btn-sm pull-xs-right">
+        <i className="ion-heart"></i> {article.favoritesCount}
+      </button>
+    </div>
+    <a href="" className="preview-link">
+      <h1>{article.title}</h1>
+      <p>{article.description}</p>
+      <span>Read more...</span>
+    </a>
+  </div>
+}
 
 export default class homeComponent extends Component {
   state = {
-    articles: []
+    articles: [],
+    tags: []
   };
-
-
-  ViewArticle = ({ article }) => {
-    // console.log(article)
-    return <div className="article-preview">
-      <div className="article-meta">
-        <a href="profile.html"><img src={article.author.image} /></a>
-        <div className="info">
-          <a href="" className="author">{article.author.username}</a>
-          <span className="date">{article.author.updatedAt}</span>
-        </div>
-        <button className="btn btn-outline-primary btn-sm pull-xs-right">
-          <i className="ion-heart"></i> {article.favoritesCount}
-            </button>
-      </div>
-      <a href="" className="preview-link">
-        <h1>{article.title}</h1>
-        <p>{article.description}</p>
-        <span>Read more...</span>
-      </a>
-    </div>
-  }
 
   view = (state) => {
     return <div className="home-page">
@@ -39,7 +43,6 @@ export default class homeComponent extends Component {
 
       <div className="container page">
         <div className="row">
-
           <div className="col-md-9">
             <div className="feed-toggle">
               <ul className="nav nav-pills outline-active">
@@ -51,24 +54,21 @@ export default class homeComponent extends Component {
                 </li>
               </ul>
             </div>
-
-            {state.articles.map(article => <this.ViewArticle article={article}></this.ViewArticle>)}
-
+            {state.articles.map(article => <Article article={article}></Article>)}
           </div>
-
           <div className="col-md-3">
             <div className="sidebar">
               <p>Popular Tags</p>
-
               <div className="tag-list">
-                <a href="" className="tag-pill tag-default">programming</a>
+                {state.tags.map(tag => <Tag tag={tag}></Tag>)}
+                {/* <a href="" className="tag-pill tag-default">programming</a>
                 <a href="" className="tag-pill tag-default">javascript</a>
                 <a href="" className="tag-pill tag-default">emberjs</a>
                 <a href="" className="tag-pill tag-default">angularjs</a>
                 <a href="" className="tag-pill tag-default">react</a>
                 <a href="" className="tag-pill tag-default">mean</a>
                 <a href="" className="tag-pill tag-default">node</a>
-                <a href="" className="tag-pill tag-default">rails</a>
+                <a href="" className="tag-pill tag-default">rails</a> */}
               </div>
             </div>
           </div>

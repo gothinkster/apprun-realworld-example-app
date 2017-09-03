@@ -7,32 +7,42 @@
 
 const defaultBasePath = 'https://conduit.productionready.io/api';
 
-import { toQueryString, get, post } from './fetch';
+import { toQueryString, serializeObject, get, post } from './fetch';
 
-/* Article */
-
-export interface ArticlesRequest {
-  tag?: string,
-  author?: string,
-  favorited?: string,
-  limit: number
-  offset: number
+export interface IFeed {
+  articles: Array<IArticle>;
+  articlesCount: number;
 }
 
-export interface ArticlesResponse {
-  articles: Array<Article>;
-  articlesCount: number
+export interface IAuthor {
+  username: string;
+  bio: string;
+  image: string;
+  following: true;
 }
 
-
-export class Article {
-  'title': string;
-  'description': string;
-  'body': string;
-  'tagList': Array<string>;
+export interface IArticle {
+  slug: string;
+  title: string;
+  description: string;
+  body: string;
+  createdAt: Date;
+  updatedAt: Date;
+  favorited: boolean;
+  favoritesCount: number;
+  author: IAuthor;
+  tagList: Array<string>;
 }
 
-export async function getArticles(request: ArticlesRequest): Promise<ArticlesResponse> {
+export interface IArticlesRequest {
+  tag?: string;
+  author?: string;
+  favorited?: string;
+  limit: number;
+  offset: number;
+}
+
+export function getArticles(request: IArticlesRequest): Promise<IFeed> {
   const url = `${defaultBasePath}/articles?${toQueryString(request)}`
   return get(url)
 }
