@@ -56,20 +56,13 @@ export function getTags(): Promise<ITags> {
   return get(url)
 }
 
-export function getCurrentUser() {
-  const url = `${defaultBasePath}/users`
-  return get(url);
-}
-
-export function register(username, email, password) {
-  const url = `${defaultBasePath}/users`
-  return post(url, { user: { username, email, password } })
-}
-export function signIn(email: string, password: string) {
-  const url = `${defaultBasePath}/users/login`
-  return post(url, { user: { email, password } })
-}
-
-export function signOut() {
-  setToken(null);
-}
+export const auth = {
+  current: () =>
+    get(`${defaultBasePath}/users`),
+  signIn: (user: { email: string, password: string }) =>
+    post(`${defaultBasePath}/users/login`, { user }),
+  register: (user: { username: string, email: string, password: string }) =>
+    post(`${defaultBasePath}/users`, { user }),
+  save: user =>
+    put(`${defaultBasePath }/user`, { user })
+};
