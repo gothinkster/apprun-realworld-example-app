@@ -58,7 +58,7 @@ export function getTags(): Promise<ITags> {
 
 export const auth = {
   current: () =>
-    get(`${defaultBasePath}/users`),
+    get(`${defaultBasePath}/user`),
   signIn: (user: { email: string, password: string }) =>
     post(`${defaultBasePath}/users/login`, { user }),
   register: (user: { username: string, email: string, password: string }) =>
