@@ -9,6 +9,10 @@ const defaultBasePath = 'https://conduit.productionready.io/api';
 
 import { toQueryString, serializeObject, get, post } from './fetch';
 
+export interface ITags {
+  tags: Array<string>;
+}
+
 export interface IFeed {
   articles: Array<IArticle>;
   articlesCount: number;
@@ -44,5 +48,10 @@ export interface IArticlesRequest {
 
 export function getArticles(request: IArticlesRequest): Promise<IFeed> {
   const url = `${defaultBasePath}/articles?${toQueryString(request)}`
+  return get(url)
+}
+
+export function getTags(): Promise<ITags> {
+  const url = `${defaultBasePath}/tags`
   return get(url)
 }

@@ -61,14 +61,6 @@ export default class homeComponent extends Component {
               <p>Popular Tags</p>
               <div className="tag-list">
                 {state.tags.map(tag => <Tag tag={tag}></Tag>)}
-                {/* <a href="" className="tag-pill tag-default">programming</a>
-                <a href="" className="tag-pill tag-default">javascript</a>
-                <a href="" className="tag-pill tag-default">emberjs</a>
-                <a href="" className="tag-pill tag-default">angularjs</a>
-                <a href="" className="tag-pill tag-default">react</a>
-                <a href="" className="tag-pill tag-default">mean</a>
-                <a href="" className="tag-pill tag-default">node</a>
-                <a href="" className="tag-pill tag-default">rails</a> */}
               </div>
             </div>
           </div>
@@ -79,7 +71,8 @@ export default class homeComponent extends Component {
 
   update = {
     '#': state => state,
-    '#articles': (state, articles) => ({ ...state, articles })
+    '#articles': (state, articles) => ({ ...state, articles }),
+    '#tags': (state, tags) => ({ ...state, tags })
   }
 }
 
