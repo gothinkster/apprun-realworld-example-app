@@ -1,6 +1,11 @@
 import app from 'apprun'
-import { getTags, getArticles, getCurrentUser } from './api';
-import { setToken } from './fetch';
+import { getTags, getArticles, auth } from './api';
+import { serializeObject, setToken } from './fetch';
+
+function setCurrentUser(user = null) {
+  setToken(user ? user.token : null);
+  app.run('#user',user)
+}
 
 app.on('//', _ => {})
 
@@ -11,11 +16,36 @@ app.on('#', async _ => {
   app.run('#tags', tags.tags);
 
   try {
-    const user = await getCurrentUser();
-    console.log(user)
-    setToken(user.token);
-    app.run('#user', user)
+    const current = await auth.current();
+    setCurrentUser(current.user);
   } catch (ex) {
     console.log('no current user')
+  }
+})
+
+app.on('#signout', _ => {
+  setCurrentUser();
+  document.location.hash = '#';
+})
+
+app.on('sign-in', async (e, returnTo) => {
+  try {
+    e.preventDefault();
+    const current = await auth.signIn(serializeObject(e.target));
+    setCurrentUser(current.user);
+    document.location.hash = returnTo || '#';
+  } catch (errors) {
+    app.run('#signin', returnTo, errors)
+  }
+})
+
+app.on('register', async e => {
+  try {
+    e.preventDefault();
+    const current = await auth.register(serializeObject(e.target));
+    setCurrentUser(current.user);
+    document.location.hash = '#';
+  } catch (errors) {
+    app.run('#register', errors)
   }
 })

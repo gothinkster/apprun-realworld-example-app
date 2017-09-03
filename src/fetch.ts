@@ -2,7 +2,10 @@ let access_token: string = window.localStorage.getItem('jwt');
 
 export function setToken(token: string) {
   access_token = token;
-  window.localStorage.setItem('jwt', token);
+  if(token)
+    window.localStorage.setItem('jwt', token);
+  else
+    window.localStorage.removeItem('jwt');
 }
 
 export async function fetchAsync(method: string, url: string, body?: any) {

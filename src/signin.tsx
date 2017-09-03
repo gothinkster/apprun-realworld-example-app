@@ -1,35 +1,38 @@
 import app, { Component } from 'apprun';
 
 export default class signinComponent extends Component {
-  state = 'signin';
+  state = {
+    returnTo: '#',
+    message: []
+  }
 
   view = (state) => {
+
     return <div className="auth-page">
       <div className="container page">
         <div className="row">
 
           <div className="col-md-6 offset-md-3 col-xs-12">
-            <h1 className="text-xs-center">Sign up</h1>
+            <h1 className="text-xs-center">Sign In</h1>
             <p className="text-xs-center">
-              <a href="">Have an account?</a>
+              <a href="#register">Need an account?</a>
             </p>
 
-            <ul className="error-messages">
-              <li>That email is already taken</li>
-            </ul>
+            {state.messages && <ul className="error-messages">
+              {state.messages.map(message =>
+                <li>{message}</li>
+              )}
+            </ul>}
 
-            <form>
+            <form onsubmit={e => app.run('sign-in', e, state.returnTo)}>
               <fieldset className="form-group">
-                <input className="form-control form-control-lg" type="text" placeholder="Your Name" />
+                <input className="form-control form-control-lg" type="text" placeholder="Email" name="email"/>
               </fieldset>
               <fieldset className="form-group">
-                <input className="form-control form-control-lg" type="text" placeholder="Email" />
-              </fieldset>
-              <fieldset className="form-group">
-                <input className="form-control form-control-lg" type="password" placeholder="Password" />
+                <input className="form-control form-control-lg" type="password" placeholder="Password" name="password" />
               </fieldset>
               <button className="btn btn-lg btn-primary pull-xs-right">
-                Sign up
+                Sign In
               </button>
             </form>
           </div>
@@ -40,7 +43,7 @@ export default class signinComponent extends Component {
   }
 
   update = {
-    '#signin': state => state,
+    '#signin': (state, returnTo, messages) => ({ ...state, returnTo, messages })
   }
 }
 

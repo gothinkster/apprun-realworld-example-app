@@ -7,7 +7,7 @@
 
 const defaultBasePath = 'https://conduit.productionready.io/api';
 
-import { toQueryString, serializeObject, get, post, del, put, setToken } from './fetch';
+import { toQueryString, get, post, del, put } from './fetch';
 
 export interface ITags {
   tags: Array<string>;
@@ -64,5 +64,5 @@ export const auth = {
   register: (user: { username: string, email: string, password: string }) =>
     post(`${defaultBasePath}/users`, { user }),
   save: user =>
-    put(`${defaultBasePath }/user`, { user })
+    put(`${defaultBasePath}/user`, { user })
 };

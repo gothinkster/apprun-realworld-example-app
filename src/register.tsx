@@ -1,7 +1,9 @@
 import app, {Component} from 'apprun';
 
 export default class registerComponent extends Component {
-  state = 'register';
+  state = {
+    messages: []
+  }
 
   view = (state) => {
     return <div className="auth-page">
@@ -11,22 +13,24 @@ export default class registerComponent extends Component {
           <div className="col-md-6 offset-md-3 col-xs-12">
             <h1 className="text-xs-center">Sign up</h1>
             <p className="text-xs-center">
-              <a href="">Have an account?</a>
+              <a href="#signin">Have an account?</a>
             </p>
 
-            <ul className="error-messages">
-              <li>That email is already taken</li>
-            </ul>
+            {state.messages && <ul className="error-messages">
+              {state.messages.map(message =>
+                <li>{message}</li>
+              )}
+            </ul>}
 
-            <form>
+            <form onsubmit={e => app.run('register', e)}>
               <fieldset className="form-group">
-                <input className="form-control form-control-lg" type="text" placeholder="Your Name" />
+                <input className="form-control form-control-lg" type="text" placeholder="Your Name" name="username"/>
               </fieldset>
               <fieldset className="form-group">
-                <input className="form-control form-control-lg" type="text" placeholder="Email" />
+                <input className="form-control form-control-lg" type="text" placeholder="Email" name="email"/>
               </fieldset>
               <fieldset className="form-group">
-                <input className="form-control form-control-lg" type="password" placeholder="Password" />
+                <input className="form-control form-control-lg" type="password" placeholder="Password" name="password"/>
               </fieldset>
               <button className="btn btn-lg btn-primary pull-xs-right">
                 Sign up
@@ -39,9 +43,8 @@ export default class registerComponent extends Component {
     </div>
   }
 
-
   update = {
-    '#register': state => state,
+    '#register': (state, messages) => ({ ...state, messages })
   }
 }
 

@@ -6,7 +6,7 @@ export default class createComponent extends Component {
   };
 
   view = (state) => {
-    if (!state.state) return;
+    if (!state.user) return;
     return <div className="editor-page">
       <div className="container page">
         <div className="row">
@@ -39,10 +39,10 @@ export default class createComponent extends Component {
 
   update = {
     '#create': state => {
-      if (!state.user) app.run('#signin');
+      if (!state.user) app.run('#signin', '#create');
       return state
     },
-    '#user': (state, user) => ({ ...state, user })    
+    '#user': (state, user) => ({ ...state, user })
   }
 }
 
