@@ -55,3 +55,27 @@ export function getTags(): Promise<ITags> {
   const url = `${defaultBasePath}/tags`
   return get(url)
 }
+
+export let access_token;
+
+export function setToken(token: string) {
+  access_token = token;
+}
+
+export function getCurrentUser() {
+  const url = `${defaultBasePath}/users`
+  return get(url);
+}
+
+export function register(username, email, password) {
+  const url = `${defaultBasePath}/users`
+  return post(url, { user: { username, email, password } })
+}  
+export function signIn(email: string, password: string) {
+  const url = `${defaultBasePath}/users/login`
+  return post(url, { user: { email, password } })
+}
+
+export function signOut() {
+  setToken(null);
+}
