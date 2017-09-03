@@ -19,13 +19,21 @@ export default class headerComponent extends Component {
             <i className="ion-gear-a"></i>&nbsp;Settings
             </a>
         </li>
-      }  
-      {!user && <li className="nav-item">
+      }
+      {user ? '': <li className="nav-item">
         <a className="nav-link" href="#signin">Sign In</a>
       </li>
       }
-      {!user && <li className="nav-item">
+      {user? '' : <li className="nav-item">
         <a className="nav-link" href="#register">Sign up</a>
+      </li>
+      }
+      {user && <li className="nav-item">
+        <a className="nav-link" href="">{user.username}</a>
+      </li>
+      }
+      {user && <li className="nav-item">
+        <a className="nav-link" href="#signout">Sign Out</a>
       </li>
       }
     </ul>
