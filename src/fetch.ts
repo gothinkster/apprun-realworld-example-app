@@ -11,25 +11,29 @@ export async function fetchAsync(method: string, url: string, body?: any) {
   const response = await window['fetch'](url, {
     method,
     headers,
-    body
+    body: body && JSON.stringify(body)
   });
-  return await response.json();
+  const result = await response.json();
+  if (!response.ok) {
+    throw Object.keys(result.errors).map(key => `${key} ${result.errors[key]}`);
+  }
+  return result;
 }
 
-export async function get(url: string) {
-  return await fetchAsync('GET', url);
+export function get(url: string) {
+  return fetchAsync('GET', url);
 }
 
-export async function post(url: string, body?: any) {
-  return await fetchAsync('POST', url, body);
+export function post(url: string, body?: any) {
+  return fetchAsync('POST', url, body);
 }
 
-export async function del(url: string) {
-  return await fetchAsync('DELETE', url);
+export function del(url: string) {
+  return fetchAsync('DELETE', url);
 }
 
-export async function put(url: string, body?: any) {
-  return await fetchAsync('PUT', url, body);
+export function put(url: string, body?: any) {
+  return fetchAsync('PUT', url, body);
 }
 export function toQueryString(obj) {
   const parts = [];
@@ -41,7 +45,7 @@ export function toQueryString(obj) {
   return parts.join("&");
 }
 
-export function serializeObject(form) {
+export function serializeObject<T>(form) {
   let obj = {};
   if (typeof form == 'object' && form.nodeName == "FORM") {
     for (let i = 0; i < form.elements.length; i++) {
@@ -66,6 +70,6 @@ export function serializeObject(form) {
       }
     }
   }
-  return obj;
+  return obj as T;
 }
 
