@@ -1,3 +1,36 @@
+let access_token: string = window.localStorage.getItem('jwt');
+
+export function setToken(token: string) {
+  access_token = token;
+  window.localStorage.setItem('jwt', token);
+}
+
+export async function fetchAsync(method: string, url: string, body?: any) {
+  const headers = access_token ? { 'Authorization': `Bearer ${access_token}` } : {}
+  headers['Content-Type'] = 'application/json; charset=utf-8';
+  const response = await window['fetch'](url, {
+    method,
+    headers,
+    body
+  });
+  return await response.json();
+}
+
+export async function get(url: string) {
+  return await fetchAsync('GET', url);
+}
+
+export async function post(url: string, body?: any) {
+  return await fetchAsync('POST', url, body);
+}
+
+export async function del(url: string) {
+  return await fetchAsync('DELETE', url);
+}
+
+export async function put(url: string, body?: any) {
+  return await fetchAsync('PUT', url, body);
+}
 export function toQueryString(obj) {
   const parts = [];
   for (var i in obj) {
@@ -34,25 +67,5 @@ export function serializeObject(form) {
     }
   }
   return obj;
-}
-
-export async function get(url: string, access_token?: string) {
-  const headers = access_token ? { 'Authorization': `Bearer ${access_token}` } : {}
-  const response = await window['fetch'](url, {
-    method: 'GET',
-    headers
-  });
-  return await response.json();
-}
-
-export async function post(url: string, data: any, access_token?: string) {
-  const headers = access_token ? { 'Authorization': `Bearer ${access_token}` } : {}
-  headers['Content-Type'] = 'application/json; charset=utf-8';
-  const response = await window['fetch'](url, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify(data)
-  });
-  return await response.json();
 }
 

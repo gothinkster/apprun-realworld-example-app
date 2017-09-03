@@ -1,5 +1,6 @@
 import app from 'apprun'
-import { getTags, getArticles, getCurrentUser, setToken } from './api';
+import { getTags, getArticles, getCurrentUser } from './api';
+import { setToken } from './fetch';
 
 app.on('//', _ => {})
 
