@@ -8,8 +8,11 @@ import settings from './settings';
 import create from './create';
 import edit from './edit';
 import article from './article';
+import header from './header';
 
 import './events';
+
+new header().start('header');
 
 const element = document.getElementById('my-app');
 new home().start(element);

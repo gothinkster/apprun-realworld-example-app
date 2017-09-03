@@ -1,9 +1,12 @@
 import app, { Component } from 'apprun';
 
 export default class createComponent extends Component {
-  state = 'create';
+  state = {
+
+  };
 
   view = (state) => {
+    if (!state.state) return;
     return <div className="editor-page">
       <div className="container page">
         <div className="row">
@@ -35,7 +38,11 @@ export default class createComponent extends Component {
   }
 
   update = {
-    '#create': state => state,
+    '#create': state => {
+      if (!state.user) app.run('#signin');
+      return state
+    },
+    '#user': (state, user) => ({ ...state, user })    
   }
 }
 
