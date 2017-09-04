@@ -1,6 +1,6 @@
 import app, { Component } from 'apprun';
 
-export default class articleComponent extends Component {
+class articleComponent extends Component {
   state = 'article';
 
   view = (state) => {
@@ -119,4 +119,6 @@ export default class articleComponent extends Component {
     '#article': state => state,
   }
 }
+
+new articleComponent().mount('my-app')
 

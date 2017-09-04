@@ -25,7 +25,7 @@ const Article = (props) => {
   </div>
 }
 
-export default class homeComponent extends Component {
+class homeComponent extends Component {
   state = {
     articles: [],
     tags: []
@@ -76,4 +76,5 @@ export default class homeComponent extends Component {
   }
 }
 
+new homeComponent().mount('my-app')
 

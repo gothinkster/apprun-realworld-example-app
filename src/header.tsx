@@ -1,6 +1,6 @@
 import app, { Component } from 'apprun';
 
-export default class headerComponent extends Component {
+class headerComponent extends Component {
   state = {}
   view = state => {
     const user = state.user
@@ -43,3 +43,5 @@ export default class headerComponent extends Component {
     '#user': (state, user) => ({ ...state, user })
   }
 }
+
+new headerComponent().mount('header')

@@ -1,6 +1,6 @@
 import app, {Component} from 'apprun';
 
-export default class editComponent extends Component {
+class editComponent extends Component {
   state = 'edit';
 
   view = (state) => {
@@ -38,3 +38,5 @@ export default class editComponent extends Component {
     '#edit': state => state,
   }
 }
+
+new editComponent().mount('my-app')

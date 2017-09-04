@@ -1,13 +1,23 @@
-import app from 'apprun'
+import app from 'apprun';
 import { tags, articles, auth, IUser } from './api';
 import { serializeObject, setToken } from './fetch';
 
+import './header';
+import './home';
+import './signin';
+import './register';
+import './profile';
+import './settings';
+import './create';
+import './edit';
+import './article';
+
 function setCurrentUser(user: IUser = null) {
   setToken(user ? user.token : null);
-  app.run('#user',user)
+  app.run('#user', user)
 }
 
-app.on('//', _ => {})
+app.on('//', _ => { })
 
 app.on('#', async _ => {
   const feed = await articles.all({ limit: 10, offset: 0 })
@@ -49,3 +59,4 @@ app.on('register', async e => {
     app.run('#register', errors)
   }
 })
+

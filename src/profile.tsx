@@ -1,6 +1,6 @@
 import app, { Component } from 'apprun';
 
-export default class profileComponent extends Component {
+class profileComponent extends Component {
   state = 'profile';
 
   view = (state) => {
@@ -92,3 +92,5 @@ export default class profileComponent extends Component {
   }
 }
 
+
+new profileComponent().mount('my-app')

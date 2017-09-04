@@ -1,6 +1,6 @@
 import app, {Component} from 'apprun';
 
-export default class registerComponent extends Component {
+class registerComponent extends Component {
   state = {
     messages: []
   }
@@ -48,4 +48,4 @@ export default class registerComponent extends Component {
   }
 }
 
-
+new registerComponent().mount('my-app')

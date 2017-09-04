@@ -1,6 +1,6 @@
 import app, { Component } from 'apprun';
 
-export default class signinComponent extends Component {
+class signinComponent extends Component {
   state = {
     message: []
   }
@@ -46,3 +46,4 @@ export default class signinComponent extends Component {
   }
 }
 
+new signinComponent().mount('my-app')

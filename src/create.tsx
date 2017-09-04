@@ -1,6 +1,6 @@
 import app, { Component } from 'apprun';
 
-export default class createComponent extends Component {
+class createComponent extends Component {
   state = {
     user: null
   };
@@ -46,3 +46,4 @@ export default class createComponent extends Component {
   }
 }
 
+new createComponent().mount('my-app')

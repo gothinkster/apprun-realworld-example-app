@@ -1,6 +1,6 @@
 import app, { Component } from 'apprun';
 
-export default class settingsComponent extends Component {
+class settingsComponent extends Component {
   state = 'settings';
 
   view = (state) => {
@@ -45,3 +45,5 @@ export default class settingsComponent extends Component {
   }
 }
 
+
+new settingsComponent().mount('my-app')
