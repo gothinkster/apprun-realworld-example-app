@@ -1,3 +1,5 @@
+declare var defaultBasePath;
+
 let access_token: string = window.localStorage.getItem('jwt');
 
 export function setToken(token: string) {
@@ -11,7 +13,7 @@ export function setToken(token: string) {
 export async function fetchAsync(method: string, url: string, body?: any) {
   const headers = access_token ? { 'Authorization': `Token ${access_token}` } : {}
   headers['Content-Type'] = 'application/json; charset=utf-8';
-  const response = await window['fetch'](url, {
+  const response = await window['fetch'](`${defaultBasePath}/${url}`, {
     method,
     headers,
     body: body && JSON.stringify(body)

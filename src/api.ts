@@ -5,7 +5,7 @@
  *
  */
 
-const defaultBasePath = 'https://conduit.productionready.io/api';
+window['defaultBasePath'] = 'https://conduit.productionready.io/api';
 
 import { toQueryString, get, post, del, put } from './fetch';
 
@@ -47,22 +47,23 @@ export interface IArticlesRequest {
 }
 
 export function getArticles(request: IArticlesRequest): Promise<IFeed> {
-  const url = `${defaultBasePath}/articles?${toQueryString(request)}`
+  const url = `/articles?${toQueryString(request)}`
   return get(url)
 }
 
 export function getTags(): Promise<ITags> {
-  const url = `${defaultBasePath}/tags`
+  const url = '/tags'
   return get(url)
 }
 
 export const auth = {
   current: () =>
-    get(`${defaultBasePath}/user`),
+    get('/user'),
   signIn: (user: { email: string, password: string }) =>
-    post(`${defaultBasePath}/users/login`, { user }),
+    post('/users/login', { user }),
   register: (user: { username: string, email: string, password: string }) =>
-    post(`${defaultBasePath}/users`, { user }),
+    post('/users', { user }),
   save: user =>
-    put(`${defaultBasePath}/user`, { user })
-};
+    put('/user', { user })
+}
+
