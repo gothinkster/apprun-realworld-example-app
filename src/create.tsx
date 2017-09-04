@@ -2,11 +2,11 @@ import app, { Component } from 'apprun';
 
 export default class createComponent extends Component {
   state = {
-
+    user: null
   };
 
   view = (state) => {
-    if (!state.user) return;
+    if (document.location.hash !== '#create' || !state.user) return;
     return <div className="editor-page">
       <div className="container page">
         <div className="row">
@@ -39,7 +39,7 @@ export default class createComponent extends Component {
 
   update = {
     '#create': state => {
-      if (!state.user) app.run('#signin', '#create');
+      if (!state.user) app.run('#signin');
       return state
     },
     '#user': (state, user) => ({ ...state, user })

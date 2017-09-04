@@ -28,14 +28,14 @@ app.on('#signout', _ => {
   document.location.hash = '#';
 })
 
-app.on('sign-in', async (e, returnTo) => {
+app.on('sign-in', async e => {
   try {
     e.preventDefault();
     const current = await auth.signIn(serializeObject(e.target));
     setCurrentUser(current.user);
-    document.location.hash = returnTo || '#';
+    if (document.location.hash === '#signin') document.location.hash = '#';
   } catch (errors) {
-    app.run('#signin', returnTo, errors)
+    app.run('#signin', errors)
   }
 })
 

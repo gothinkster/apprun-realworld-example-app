@@ -2,7 +2,6 @@ import app, { Component } from 'apprun';
 
 export default class signinComponent extends Component {
   state = {
-    returnTo: '#',
     message: []
   }
 
@@ -43,7 +42,7 @@ export default class signinComponent extends Component {
   }
 
   update = {
-    '#signin': (state, returnTo, messages) => ({ ...state, returnTo, messages })
+    '#signin': (state, messages) => ({ ...state, messages })
   }
 }
 
