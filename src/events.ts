@@ -1,8 +1,8 @@
 import app from 'apprun'
-import { getTags, getArticles, auth } from './api';
+import { tags, articles, auth, IUser } from './api';
 import { serializeObject, setToken } from './fetch';
 
-function setCurrentUser(user = null) {
+function setCurrentUser(user: IUser = null) {
   setToken(user ? user.token : null);
   app.run('#user',user)
 }
@@ -10,10 +10,10 @@ function setCurrentUser(user = null) {
 app.on('//', _ => {})
 
 app.on('#', async _ => {
-  const feed = await getArticles({ limit: 10, offset: 0 })
-  const tags = await getTags();
+  const feed = await articles.all({ limit: 10, offset: 0 })
+  const tagList = await tags.all();
   app.run('#articles', feed.articles);
-  app.run('#tags', tags.tags);
+  app.run('#tags', tagList.tags);
 
   try {
     const current = await auth.current();
@@ -31,8 +31,8 @@ app.on('#signout', _ => {
 app.on('sign-in', async e => {
   try {
     e.preventDefault();
-    const current = await auth.signIn(serializeObject(e.target));
-    setCurrentUser(current.user);
+    const session = await auth.signIn(serializeObject(e.target));
+    setCurrentUser(session.user);
     if (document.location.hash === '#signin') document.location.hash = '#';
   } catch (errors) {
     app.run('#signin', errors)
@@ -42,8 +42,8 @@ app.on('sign-in', async e => {
 app.on('register', async e => {
   try {
     e.preventDefault();
-    const current = await auth.register(serializeObject(e.target));
-    setCurrentUser(current.user);
+    const session = await auth.register(serializeObject(e.target));
+    setCurrentUser(session.user);
     document.location.hash = '#';
   } catch (errors) {
     app.run('#register', errors)

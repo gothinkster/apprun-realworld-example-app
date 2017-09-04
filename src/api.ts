@@ -25,6 +25,17 @@ export interface IAuthor {
   following: true;
 }
 
+export interface IUser {
+  email: string;
+  token: string;
+  username: string;
+  bio: string;
+  image: string;
+}
+export interface ISession {
+  user: IUser
+}
+
 export interface IArticle {
   slug: string;
   title: string;
@@ -46,24 +57,23 @@ export interface IArticlesRequest {
   offset: number;
 }
 
-export function getArticles(request: IArticlesRequest): Promise<IFeed> {
-  const url = `/articles?${toQueryString(request)}`
-  return get(url)
-}
-
-export function getTags(): Promise<ITags> {
-  const url = '/tags'
-  return get(url)
+export const tags = {
+  all: () => get<ITags>('/tags')
 }
 
 export const auth = {
   current: () =>
-    get('/user'),
+    get<ISession>('/user'),
   signIn: (user: { email: string, password: string }) =>
-    post('/users/login', { user }),
+    post<ISession>('/users/login', { user }),
   register: (user: { username: string, email: string, password: string }) =>
-    post('/users', { user }),
+    post<ISession>('/users', { user }),
   save: user =>
     put('/user', { user })
+}
+
+export const articles = {
+  all: (request: IArticlesRequest) =>
+    get<IFeed>(`/articles?${toQueryString(request)}`),
 }
 

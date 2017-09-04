@@ -26,11 +26,11 @@ export async function fetchAsync(method: string, url: string, body?: any) {
   return result;
 }
 
-export function get(url: string) {
+export function get<T>(url: string): Promise<T> {
   return fetchAsync('GET', url);
 }
 
-export function post(url: string, body?: any) {
+export function post<T>(url: string, body?: any): Promise<T> {
   return fetchAsync('POST', url, body);
 }
 
