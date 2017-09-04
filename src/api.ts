@@ -73,7 +73,17 @@ export const auth = {
 }
 
 export const articles = {
-  all: (request: IArticlesRequest) =>
+  search: (request: IArticlesRequest) =>
     get<IFeed>(`/articles?${toQueryString(request)}`),
+  feed: (request: {limit: number, offset: number}) =>
+    get<IFeed>(`/articles/feed?${toQueryString(request)}`),
+  get: (slug: string) =>
+    get<IArticle>(`/articles/${slug}`),
+  unfavorite: (slug: string) =>
+    del(`/articles/${slug}/favorite`),
+  update: (article: IArticle) =>
+    put(`/articles/${article.slug}`, { article }),
+  create: (article: IArticle) =>
+    post('/articles', { article })
 }
 

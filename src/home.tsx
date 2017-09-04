@@ -1,5 +1,5 @@
 import app, { Component } from 'apprun';
-import { IArticle } from './api';
+import { IArticle, tags, articles } from './api';
 
 const Tag = ({ tag }) => <a href="" className="tag-pill tag-default">{tag}</a>
 
@@ -27,11 +27,14 @@ const Article = (props) => {
 
 class homeComponent extends Component {
   state = {
+    type: '',
     articles: [],
     tags: []
   };
 
   view = (state) => {
+    if (state instanceof Promise) return;
+
     return <div className="home-page">
 
       <div className="banner">
@@ -47,14 +50,18 @@ class homeComponent extends Component {
             <div className="feed-toggle">
               <ul className="nav nav-pills outline-active">
                 <li className="nav-item">
-                  <a className="nav-link disabled" href="">Your Feed</a>
+                  <a className={`nav-link ${state.user ? '' : 'disabled'} ${state.type ? 'active' : ''}`}
+                    href="#/feed">Your Feed</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link active" href="">Global Feed</a>
+                  <a className={`nav-link ${state.type ? '' : 'active'}`} href="#">Global Feed</a>
                 </li>
               </ul>
             </div>
-            {state.articles.map(article => <Article article={article}></Article>)}
+            { state.articles.length
+              ? state.articles.map(article => <Article article={article}></Article>)
+              : <div className="article-preview">No articles are here... yet.</div>
+            }
           </div>
           <div className="col-md-3">
             <div className="sidebar">
@@ -70,9 +77,19 @@ class homeComponent extends Component {
   }
 
   update = {
-    '#': state => state,
-    '#articles': (state, articles) => ({ ...state, articles }),
-    '#tags': (state, tags) => ({ ...state, tags })
+    '#': async (state, type) => {
+
+      let tagList = state.tags.length
+        ? { tags: state.tags }
+        : await tags.all();
+
+      const feed = (type === 'feed')
+        ? await articles.feed({ limit: 10, offset: 0 })
+        : await articles.search({ limit: 10, offset: 0 });
+
+      return { ...this.state, type, tags: tagList.tags, articles: feed.articles }
+    },
+    '#user': (state, user) => ({ ...state, user })
   }
 }
 

@@ -44,4 +44,4 @@ class headerComponent extends Component {
   }
 }
 
-new headerComponent().mount('header')
+new headerComponent().start('header')

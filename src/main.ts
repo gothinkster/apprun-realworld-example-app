@@ -20,11 +20,6 @@ function setCurrentUser(user: IUser = null) {
 app.on('//', _ => { })
 
 app.on('#', async _ => {
-  const feed = await articles.all({ limit: 10, offset: 0 })
-  const tagList = await tags.all();
-  app.run('#articles', feed.articles);
-  app.run('#tags', tagList.tags);
-
   try {
     const current = await auth.current();
     setCurrentUser(current.user);
