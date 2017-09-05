@@ -7,7 +7,8 @@
 
 window['defaultBasePath'] = 'https://conduit.productionready.io/api';
 
-import { getToken, toQueryString, get, post, del, put } from './fetch';
+import { getToken, setToken, toQueryString, serializeObject, get, post, del, put } from './fetch';
+export { getToken, setToken, toQueryString, serializeObject }
 
 export interface ITags {
   tags: Array<string>;

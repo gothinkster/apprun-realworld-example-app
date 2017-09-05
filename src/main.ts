@@ -1,6 +1,5 @@
 import app from 'apprun';
-import { tags, articles, auth, IUser } from './api';
-import { serializeObject, setToken } from './fetch';
+import { serializeObject, setToken, tags, articles, auth, IUser } from './api';
 
 import './header';
 import './home';
@@ -14,7 +13,7 @@ import './article';
 
 app.on('//', _ => { })
 
-let _user;
+let _user: IUser = null
 function setCurrentUser(user: IUser = null) {
   _user = user;
   setToken(user ? user.token : null);
