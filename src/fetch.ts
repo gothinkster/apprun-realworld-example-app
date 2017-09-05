@@ -1,6 +1,9 @@
 declare var defaultBasePath;
 
 let access_token: string = window.localStorage.getItem('jwt');
+export function getToken() {
+  return access_token;
+}
 
 export function setToken(token: string) {
   access_token = token;

@@ -7,7 +7,7 @@
 
 window['defaultBasePath'] = 'https://conduit.productionready.io/api';
 
-import { toQueryString, get, post, del, put } from './fetch';
+import { getToken, toQueryString, get, post, del, put } from './fetch';
 
 export interface ITags {
   tags: Array<string>;
@@ -74,8 +74,9 @@ export const tags = {
 }
 
 export const auth = {
-  current: () =>
-    get<ISession>('/user'),
+  current: () => getToken()
+    ? get<ISession>('/user')
+    : null,
   signIn: (user: { email: string, password: string }) =>
     post<ISession>('/users/login', { user }),
   register: (user: { username: string, email: string, password: string }) =>

@@ -12,20 +12,26 @@ import './create';
 import './edit';
 import './article';
 
+app.on('//', _ => { })
+
+let _user;
 function setCurrentUser(user: IUser = null) {
+  _user = user;
   setToken(user ? user.token : null);
   app.run('#user', user)
 }
 
-app.on('//', _ => { })
-
 app.on('#', async (route, ...p) => {
-  try {
-    const current = await auth.current();
-    setCurrentUser(current.user);
-  } catch (ex) {
-    console.log('no current user')
+  if (!_user) {
+    try {
+      const current = await auth.current();
+      _user = current.user;
+    } catch (ex) {
+      // console.log('no current user')
+    }
+    setCurrentUser(_user);
   }
+
   if (!route) document.location.hash = '#/';
   app.run(`#/${route || ''}`, ...p);
 })
