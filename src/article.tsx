@@ -8,7 +8,7 @@ class articleComponent extends Component {
   }
 
   view = (state) => {
-    if (state instanceof Promise) return;
+    if (state instanceof Promise || !state.article) return;
     const article = state.article as IArticle;
     return <div className="article-page">
 
@@ -101,16 +101,16 @@ class articleComponent extends Component {
   }
 
   update = {
-    '#article': async (state, slug) => {
+    '#/article': async (state, slug) => {
       let article = state.article;
       if (!article || article.slug !== slug) {
         const result = await articles.get(slug);
         article = result.article;
-        console.log(article)        
-      }  
+        console.log(article)
+      }
       return { ...state, article }
     },
-    '#user': (state, user) => ({ ...state, user }),    
+    '#user': (state, user) => ({ ...state, user }),
   }
 }
 

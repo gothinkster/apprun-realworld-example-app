@@ -88,7 +88,7 @@ class profileComponent extends Component {
   }
 
   update = {
-    '#profile': state => state,
+    '#/profile': state => state,
   }
 }
 

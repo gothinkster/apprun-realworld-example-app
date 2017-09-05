@@ -44,7 +44,7 @@ class registerComponent extends Component {
   }
 
   update = {
-    '#register': (state, messages) => ({ ...state, messages })
+    '#/register': (state, messages) => ({ ...state, messages })
   }
 }
 

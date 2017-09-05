@@ -17,7 +17,7 @@ const Article = (props) => {
         <i className="ion-heart"></i> {article.favoritesCount}
       </button>
     </div>
-    <a href={`#article/${article.slug}`} className="preview-link">
+    <a href={`#/article/${article.slug}`} className="preview-link">
       <h1>{article.title}</h1>
       <p>{article.description}</p>
       <span>Read more...</span>
@@ -54,7 +54,7 @@ class homeComponent extends Component {
                     href="#/feed">Your Feed</a>
                 </li>
                 <li className="nav-item">
-                  <a className={`nav-link ${state.type ? '' : 'active'}`} href="#">Global Feed</a>
+                  <a className={`nav-link ${state.type ? '' : 'active'}`} href="#/">Global Feed</a>
                 </li>
               </ul>
             </div>
@@ -77,17 +77,16 @@ class homeComponent extends Component {
   }
 
   update = {
-    '#': async (state, type) => {
-
+    '#/': async (state, type) => {
       let tagList = state.tags.length
         ? { tags: state.tags }
         : await tags.all();
-
-      const feed = (type === 'feed')
-        ? await articles.feed({ limit: 10, offset: 0 })
-        : await articles.search({ limit: 10, offset: 0 });
-
-      return { ...this.state, type, tags: tagList.tags, articles: feed.articles }
+      const feed = await articles.search({ limit: 10, offset: 0 });
+      return { ...this.state, type:'', tags: tagList.tags, articles: feed.articles }
+    },
+    '#/feed': async (state, type) => {
+      const feed = await articles.feed({ limit: 10, offset: 0 })
+      return { ...this.state, type: 'feed', articles: feed.articles }
     },
     '#user': (state, user) => ({ ...state, user })
   }

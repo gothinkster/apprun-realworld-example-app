@@ -8,7 +8,7 @@ class createComponent extends Component {
   };
 
   view = (state) => {
-    if (document.location.hash !== '#create' || !state.user) return;
+    if (document.location.hash !== '#/create' || !state.user) return;
     return <div className="editor-page">
       <div className="container page">
         <div className="row">
@@ -19,7 +19,7 @@ class createComponent extends Component {
                 <li>{message}</li>
               )}
             </ul>}
-            
+
             <form onsubmit={e => this.run('create-article', e)}>
               <fieldset>
                 <fieldset className="form-group">
@@ -47,8 +47,8 @@ class createComponent extends Component {
   }
 
   update = {
-    '#create': state => {
-      if (!state.user) app.run('#signin');
+    '#/create': state => {
+      if (!state.user) app.run('#/login');
       return state
     },
     '#user': (state, user) => ({ ...state, user }),
@@ -58,7 +58,7 @@ class createComponent extends Component {
         const article = serializeObject<any>(e.target);
         article.tagList = article.tags.split(',');
         const result = await articles.create(article);
-        document.location.hash = `#/article/${result.slug}`;
+        document.location.hash = `#/article/${result.article.slug}`;
         return state;
       } catch (errors) {
         return {...state, messages: errors}

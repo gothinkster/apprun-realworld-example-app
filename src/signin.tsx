@@ -2,11 +2,10 @@ import app, { Component } from 'apprun';
 
 class signinComponent extends Component {
   state = {
-    message: []
+    messages: []
   }
 
   view = (state) => {
-
     return <div className="auth-page">
       <div className="container page">
         <div className="row">
@@ -42,7 +41,7 @@ class signinComponent extends Component {
   }
 
   update = {
-    '#signin': (state, messages) => ({ ...state, messages })
+    '#/login': (state, messages) => ({ ...state, messages })
   }
 }
 

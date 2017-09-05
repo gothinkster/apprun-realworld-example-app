@@ -62,7 +62,7 @@ export interface INewArticle {
   description: string,
   body: string,
   tagList: Array<string>;
-  
+
 }
 
 export interface IArticlesResponse {
@@ -96,6 +96,6 @@ export const articles = {
   update: (article: IArticle) =>
     put(`/articles/${article.slug}`, { article }),
   create: (article: INewArticle) =>
-    post<IArticle>('/articles', { article })
+    post<IArticlesResponse>('/articles', { article })
 }
 

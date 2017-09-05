@@ -41,7 +41,7 @@ class settingsComponent extends Component {
   }
 
   update = {
-    '#settings': state => state,
+    '#/settings': state => state,
   }
 }
 
