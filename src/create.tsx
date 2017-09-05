@@ -1,8 +1,10 @@
 import app, { Component } from 'apprun';
-
+import { serializeObject } from './fetch'
+import { INewArticle, articles } from './api'
 class createComponent extends Component {
   state = {
-    user: null
+    user: null,
+    messages: []
   };
 
   view = (state) => {
@@ -11,22 +13,29 @@ class createComponent extends Component {
       <div className="container page">
         <div className="row">
           <div className="col-md-10 offset-md-1 col-xs-12">
-            <form>
+
+            {state.messages && <ul className="error-messages">
+              {state.messages.map(message =>
+                <li>{message}</li>
+              )}
+            </ul>}
+            
+            <form onsubmit={e => this.run('create-article', e)}>
               <fieldset>
                 <fieldset className="form-group">
-                  <input type="text" className="form-control form-control-lg" placeholder="Article Title" />
+                  <input type="text" className="form-control form-control-lg" placeholder="Article Title" name="title" />
                 </fieldset>
                 <fieldset className="form-group">
-                  <input type="text" className="form-control" placeholder="What's this article about?" />
+                  <input type="text" className="form-control" placeholder="What's this article about?" name="description"/>
                 </fieldset>
                 <fieldset className="form-group">
-                  <textarea className="form-control" rows="8" placeholder="Write your article (in markdown)"></textarea>
+                  <textarea className="form-control" rows="8" placeholder="Write your article (in markdown)" name="body"></textarea>
                 </fieldset>
                 <fieldset className="form-group">
-                  <input type="text" className="form-control" placeholder="Enter tags" />
+                  <input type="text" className="form-control" placeholder="Enter tags" name="tags"/>
                   <div className="tag-list"></div>
                 </fieldset>
-                <button className="btn btn-lg pull-xs-right btn-primary" type="button">
+                <button className="btn btn-lg pull-xs-right btn-primary" type="submit">
                   Publish Article
                 </button>
               </fieldset>
@@ -42,7 +51,19 @@ class createComponent extends Component {
       if (!state.user) app.run('#signin');
       return state
     },
-    '#user': (state, user) => ({ ...state, user })
+    '#user': (state, user) => ({ ...state, user }),
+    'create-article': async (state, e) => {
+      try {
+        e.preventDefault();
+        const article = serializeObject<any>(e.target);
+        article.tagList = article.tags.split(',');
+        const result = await articles.create(article);
+        document.location.hash = `#/article/${result.slug}`;
+        return state;
+      } catch (errors) {
+        return {...state, messages: errors}
+      }
+    }
   }
 }
 

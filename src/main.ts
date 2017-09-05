@@ -38,7 +38,7 @@ app.on('sign-in', async e => {
     e.preventDefault();
     const session = await auth.signIn(serializeObject(e.target));
     setCurrentUser(session.user);
-    if (document.location.hash === '#signin') document.location.hash = '#';
+    if (document.location.hash === '#signin') document.location.hash = '#/feed';
   } catch (errors) {
     app.run('#signin', errors)
   }

@@ -57,6 +57,13 @@ export interface IArticlesRequest {
   offset: number;
 }
 
+export interface INewArticle {
+  title: string,
+  description: string,
+  body: string,
+  tagList: Array<string>;
+  
+}
 export const tags = {
   all: () => get<ITags>('/tags')
 }
@@ -83,7 +90,7 @@ export const articles = {
     del(`/articles/${slug}/favorite`),
   update: (article: IArticle) =>
     put(`/articles/${article.slug}`, { article }),
-  create: (article: IArticle) =>
-    post('/articles', { article })
+  create: (article: INewArticle) =>
+    post<IArticle>('/articles', { article })
 }
 

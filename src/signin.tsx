@@ -23,7 +23,7 @@ class signinComponent extends Component {
               )}
             </ul>}
 
-            <form onsubmit={e => app.run('sign-in', e, state.returnTo)}>
+            <form onsubmit={e => app.run('sign-in', e)}>
               <fieldset className="form-group">
                 <input className="form-control form-control-lg" type="text" placeholder="Email" name="email"/>
               </fieldset>
