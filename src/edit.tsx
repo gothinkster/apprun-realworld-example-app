@@ -35,7 +35,7 @@ class editComponent extends Component {
   }
 
   update = {
-    '#edit': state => state,
+    '#/edit': state => state,
   }
 }
 
