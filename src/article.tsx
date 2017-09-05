@@ -1,25 +1,31 @@
 import app, { Component } from 'apprun';
-
+import { IArticle, articles } from './api';
 class articleComponent extends Component {
-  state = 'article';
+  state = {
+    article: null,
+    user: null,
+    comments: []
+  }
 
   view = (state) => {
+    if (state instanceof Promise) return;
+    const article = state.article as IArticle;
     return <div className="article-page">
 
       <div className="banner">
         <div className="container">
 
-          <h1>How to build webapps that scale</h1>
+          <h1>{article.title}</h1>
 
           <div className="article-meta">
-            <a href=""><img src="http://i.imgur.com/Qr71crq.jpg" /></a>
+            <a href=""><img src={article.author.image} /></a>
             <div className="info">
-              <a href="" className="author">Eric Simons</a>
-              <span className="date">January 20th</span>
+              <a href="" className="author">{article.author.username}</a>
+              <span className="date">{article.updatedAt}</span>
             </div>
             <button className="btn btn-sm btn-outline-secondary">
               <i className="ion-plus-round"></i>
-              &nbsp; Follow Eric Simons <span className="counter">(10)</span>
+              &nbsp; Follow {article.author.username} <span className="counter">(10)</span>
             </button>
             &nbsp;&nbsp;
             <button className="btn btn-sm btn-outline-primary">
@@ -34,11 +40,7 @@ class articleComponent extends Component {
 
         <div className="row article-content">
           <div className="col-md-12">
-            <p>
-              Web development technologies have evolved at an incredible clip over the past few years.
-            </p>
-            <h2 id="introducing-ionic">Introducing RealWorld.</h2>
-            <p>It's a great solution for learning how other frameworks work.</p>
+            {article.body}
           </div>
         </div>
 
@@ -46,15 +48,15 @@ class articleComponent extends Component {
 
         <div className="article-actions">
           <div className="article-meta">
-            <a href="profile.html"><img src="http://i.imgur.com/Qr71crq.jpg" /></a>
+            <a href="profile.html"><img src={article.author.image} /></a>
             <div className="info">
-              <a href="" className="author">Eric Simons</a>
+              <a href="" className="author">{article.author.username}</a>
               <span className="date">January 20th</span>
             </div>
 
             <button className="btn btn-sm btn-outline-secondary">
               <i className="ion-plus-round"></i>
-              &nbsp; Follow Eric Simons <span className="counter">(10)</span>
+              &nbsp; Follow {article.author.username} <span className="counter">(10)</span>
             </button>
             &nbsp;
             <button className="btn btn-sm btn-outline-primary">
@@ -78,7 +80,7 @@ class articleComponent extends Component {
               </div>
             </form>
 
-            <div className="card">
+            {/* <div className="card">
               <div className="card-block">
                 <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
               </div>
@@ -90,25 +92,8 @@ class articleComponent extends Component {
                 <a href="" className="comment-author">Jacob Schmidt</a>
                 <span className="date-posted">Dec 29th</span>
               </div>
-            </div>
+            </div> */}
 
-            <div className="card">
-              <div className="card-block">
-                <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              </div>
-              <div className="card-footer">
-                <a href="" className="comment-author">
-                  <img src="http://i.imgur.com/Qr71crq.jpg" className="comment-author-img" />
-                </a>
-                &nbsp;
-                <a href="" className="comment-author">Jacob Schmidt</a>
-                <span className="date-posted">Dec 29th</span>
-                <span className="mod-options">
-                  <i className="ion-edit"></i>
-                  <i className="ion-trash-a"></i>
-                </span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -116,7 +101,16 @@ class articleComponent extends Component {
   }
 
   update = {
-    '#article': state => state,
+    '#article': async (state, slug) => {
+      let article = state.article;
+      if (!article || article.slug !== slug) {
+        const result = await articles.get(slug);
+        article = result.article;
+        console.log(article)        
+      }  
+      return { ...state, article }
+    },
+    '#user': (state, user) => ({ ...state, user }),    
   }
 }
 

@@ -64,6 +64,11 @@ export interface INewArticle {
   tagList: Array<string>;
   
 }
+
+export interface IArticlesResponse {
+  article: IArticle
+}
+
 export const tags = {
   all: () => get<ITags>('/tags')
 }
@@ -85,7 +90,7 @@ export const articles = {
   feed: (request: {limit: number, offset: number}) =>
     get<IFeed>(`/articles/feed?${toQueryString(request)}`),
   get: (slug: string) =>
-    get<IArticle>(`/articles/${slug}`),
+    get<IArticlesResponse>(`/articles/${slug}`),
   unfavorite: (slug: string) =>
     del(`/articles/${slug}/favorite`),
   update: (article: IArticle) =>
