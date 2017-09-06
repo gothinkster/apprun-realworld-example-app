@@ -1,4 +1,5 @@
 import app, { Component } from 'apprun';
+import Article from './preview';
 
 class profileComponent extends Component {
   state = 'profile';
@@ -15,7 +16,7 @@ class profileComponent extends Component {
               <h4>Eric Simons</h4>
               <p>
                 Cofounder @GoThinkster, lived in Aol's HQ for a few months, kinda looks like Peeta from the Hunger Games
-          </p>
+              </p>
               <button className="btn btn-sm btn-outline-secondary action-btn">
                 <i className="ion-plus-round"></i>
                 &nbsp;
