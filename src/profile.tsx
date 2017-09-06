@@ -1,5 +1,6 @@
 import app, { Component } from 'apprun';
 import Articles from './article-list';
+import Pages from './page-list';
 
 class profileComponent extends Component {
   state = 'profile';
@@ -43,6 +44,7 @@ class profileComponent extends Component {
               </ul>
             </div>
             <Articles articles={state.articles} />
+            <Pages max={state.articles.length} current={1} />
           </div>
         </div>
       </div>

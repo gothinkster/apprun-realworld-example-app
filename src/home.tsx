@@ -1,6 +1,7 @@
 import app, { Component } from 'apprun';
 import { tags, articles } from './api';
 import Articles from './article-list';
+import Pages from './page-list';
 
 const Tag = ({ tag }) => <a href="" className="tag-pill tag-default">{tag}</a>
 
@@ -15,14 +16,12 @@ class homeComponent extends Component {
     if (state instanceof Promise) return;
 
     return <div className="home-page">
-
       <div className="banner">
         <div className="container">
           <h1 className="logo-font">conduit</h1>
           <p>A place to share your knowledge.</p>
         </div>
       </div>
-
       <div className="container page">
         <div className="row">
           <div className="col-md-9">
@@ -38,6 +37,7 @@ class homeComponent extends Component {
               </ul>
             </div>
             <Articles articles={state.articles} />
+            <Pages max={state.articles.length} current={1}/>
           </div>
           <div className="col-md-3">
             <div className="sidebar">
