@@ -4,7 +4,6 @@ import Errors from './error-list';
 
 class registerComponent extends Component {
   state = {
-    messages: []
   }
 
   view = (state) => {
@@ -20,7 +19,7 @@ class registerComponent extends Component {
               <a href="#/login">Have an account?</a>
             </p>
 
-            <Errors messages={state.messages} />
+            {state.errors && <Errors errors={state.errors} />}
 
             <form onsubmit={e => this.run('register', e)}>
               <fieldset className="form-group">
@@ -51,8 +50,8 @@ class registerComponent extends Component {
         const session = await auth.register(serializeObject(e.target));
         app.run('#user', session.user);
         app.run('route', '#/');
-      } catch (messages) {
-        return { ...state, messages }
+      } catch ({ errors }) {
+        return { ...state, errors }
       }
     }
   }

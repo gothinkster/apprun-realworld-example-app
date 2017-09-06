@@ -1,7 +1,7 @@
 import app from 'apprun'
 
-export default function ({ messages }) {
+export default function ({ errors }) {
   return <ul className="error-messages">
-    {messages.map(message => <li>{message}</li>)}
+    {Object.keys(errors).map(key => <li>{`${key} ${errors[key]}`}</li>)}
   </ul>
 }

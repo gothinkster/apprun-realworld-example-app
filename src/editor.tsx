@@ -5,7 +5,6 @@ import Errors from './error-list';
 class createComponent extends Component {
   state = {
     user: null,
-    messages: []
   };
 
   view = (state) => {
@@ -15,7 +14,7 @@ class createComponent extends Component {
         <div className="row">
           <div className="col-md-10 offset-md-1 col-xs-12">
 
-            <Errors messages={state.messages} />
+            {state.errors && <Errors errors={state.errors} />}
 
             <form onsubmit={e => this.run('create-article', e)}>
               <fieldset>
@@ -56,8 +55,8 @@ class createComponent extends Component {
         const result = await articles.create(article);
         document.location.hash = `#/article/${result.article.slug}`;
         return state;
-      } catch (errors) {
-        return {...state, messages: errors}
+      } catch ({ errors }) {
+        return {...state, errors}
       }
     }
   }

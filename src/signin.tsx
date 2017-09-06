@@ -4,7 +4,6 @@ import Errors from './error-list';
 
 class signinComponent extends Component {
   state = {
-    messages: []
   }
 
   view = (state) => {
@@ -20,7 +19,7 @@ class signinComponent extends Component {
               <a href="#/register">Need an account?</a>
             </p>
 
-            <Errors messages={state.messages} />
+            {state.errors && <Errors errors={state.errors} />}
 
             <form onsubmit={e => this.run('sign-in', e)}>
               <fieldset className="form-group">
@@ -56,8 +55,8 @@ class signinComponent extends Component {
           document.location.hash = '#/feed';
         else
           app.run('route',state.returnTo);
-      } catch (messages) {
-        return { ...state, messages }
+      } catch ({ errors }) {
+        return { ...state, errors }
       }
     },
   }

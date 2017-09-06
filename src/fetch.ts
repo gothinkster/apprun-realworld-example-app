@@ -23,9 +23,7 @@ export async function fetchAsync(method: string, url: string, body?: any) {
   });
   // server might return string instead of json to cause error at this line
   const result = await response.json();
-  if (!response.ok) {
-    throw Object.keys(result.errors).map(key => `${key} ${result.errors[key]}`);
-  }
+  if (!response.ok) throw result;
   return result;
 }
 
