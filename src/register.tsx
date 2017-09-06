@@ -1,5 +1,7 @@
 import app, {Component} from 'apprun';
 import { auth, serializeObject } from './api'
+import Errors from './error-list';
+
 class registerComponent extends Component {
   state = {
     messages: []
@@ -18,11 +20,7 @@ class registerComponent extends Component {
               <a href="#/login">Have an account?</a>
             </p>
 
-            {state.messages && <ul className="error-messages">
-              {state.messages.map(message =>
-                <li>{message}</li>
-              )}
-            </ul>}
+            <Errors messages={state.messages} />
 
             <form onsubmit={e => this.run('register', e)}>
               <fieldset className="form-group">

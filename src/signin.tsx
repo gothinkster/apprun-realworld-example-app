@@ -1,5 +1,6 @@
 import app, { Component } from 'apprun';
 import { auth, serializeObject, IUser, setToken } from './api'
+import Errors from './error-list';
 
 class signinComponent extends Component {
   state = {
@@ -19,11 +20,7 @@ class signinComponent extends Component {
               <a href="#/register">Need an account?</a>
             </p>
 
-            {state.messages && <ul className="error-messages">
-              {state.messages.map(message =>
-                <li>{message}</li>
-              )}
-            </ul>}
+            <Errors messages={state.messages} />
 
             <form onsubmit={e => this.run('sign-in', e)}>
               <fieldset className="form-group">

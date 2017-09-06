@@ -1,5 +1,6 @@
 import app, { Component } from 'apprun';
 import { serializeObject, INewArticle, articles } from './api'
+import Errors from './error-list';
 
 class createComponent extends Component {
   state = {
@@ -14,11 +15,7 @@ class createComponent extends Component {
         <div className="row">
           <div className="col-md-10 offset-md-1 col-xs-12">
 
-            {state.messages && <ul className="error-messages">
-              {state.messages.map(message =>
-                <li>{message}</li>
-              )}
-            </ul>}
+            <Errors messages={state.messages} />
 
             <form onsubmit={e => this.run('create-article', e)}>
               <fieldset>
