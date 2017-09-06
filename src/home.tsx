@@ -88,7 +88,6 @@ class homeComponent extends Component {
       const feed = await articles.feed({ limit: 10, offset: 0 })
       return { ...this.state, type: 'feed', articles: feed.articles }
     },
-    '#user': (state, user) => ({ ...state, user })
   }
 }
 

@@ -8,7 +8,7 @@ class createComponent extends Component {
   };
 
   view = (state) => {
-    if (document.location.hash !== '#/create' || !state.user) return;
+    if (!app['user']) return;
     return <div className="editor-page">
       <div className="container page">
         <div className="row">
@@ -47,11 +47,10 @@ class createComponent extends Component {
   }
 
   update = {
-    '#/create': state => {
-      if (!state.user) app.run('#/login');
+    '#/editor': state => {
+      if (!app['user']) app.run('#/login');
       return state
     },
-    '#user': (state, user) => ({ ...state, user }),
     'create-article': async (state, e) => {
       try {
         e.preventDefault();

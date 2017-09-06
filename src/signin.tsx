@@ -1,4 +1,5 @@
 import app, { Component } from 'apprun';
+import { auth, serializeObject, IUser, setToken } from './api'
 
 class signinComponent extends Component {
   state = {
@@ -6,6 +7,8 @@ class signinComponent extends Component {
   }
 
   view = (state) => {
+    if (!state || state instanceof Promise) return;
+
     return <div className="auth-page">
       <div className="container page">
         <div className="row">
@@ -22,7 +25,7 @@ class signinComponent extends Component {
               )}
             </ul>}
 
-            <form onsubmit={e => app.run('sign-in', e)}>
+            <form onsubmit={e => this.run('sign-in', e)}>
               <fieldset className="form-group">
                 <input className="form-control form-control-lg" type="text" placeholder="Email" name="email"/>
               </fieldset>
@@ -41,8 +44,31 @@ class signinComponent extends Component {
   }
 
   update = {
-    '#/login': (state, messages) => ({ ...state, messages })
+    '#/login': state => ({ ...state, messages:[], returnTo: document.location.hash }),
+    '#/logout': state => {
+      app.run('#user', null);
+      document.location.hash = '#/';
+    },
+    'sign-in': async (state, e) => {
+      let user;
+      try {
+        e.preventDefault();
+        const session = await auth.signIn(serializeObject(e.target));
+        app.run('#user', session.user);
+        if (!state.returnTo || state.returnTo === '#/login')
+          document.location.hash = '#/feed';
+        else
+          app.run('route',state.returnTo);
+      } catch (messages) {
+        return { ...state, messages }
+      }
+    },
   }
 }
+
+app.on('#user', user => {
+  setToken(user ? user.token : null);
+  app['user'] = user;
+});
 
 new signinComponent().mount('my-app')

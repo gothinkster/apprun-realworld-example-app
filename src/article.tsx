@@ -3,13 +3,14 @@ import { IArticle, articles } from './api';
 class articleComponent extends Component {
   state = {
     article: null,
-    user: null,
     comments: []
   }
 
   view = (state) => {
-    if (state instanceof Promise || !state.article) return;
+
     const article = state.article as IArticle;
+    if (!article) return;
+
     return <div className="article-page">
 
       <div className="banner">
@@ -109,8 +110,7 @@ class articleComponent extends Component {
         console.log(article)
       }
       return { ...state, article }
-    },
-    '#user': (state, user) => ({ ...state, user }),
+    }
   }
 }
 

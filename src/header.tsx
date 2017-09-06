@@ -9,7 +9,7 @@ class headerComponent extends Component {
           <a className="nav-link active" href="#/">Home</a>
       </li>
       {user && <li className="nav-item">
-        <a className="nav-link" href="#/create">
+        <a className="nav-link" href="#/editor">
           <i className="ion-compose"></i>&nbsp;New Post
             </a>
       </li>
@@ -33,7 +33,7 @@ class headerComponent extends Component {
       </li>
       }
       {user && <li className="nav-item">
-        <a className="nav-link" href="#/signout">Sign Out</a>
+        <a className="nav-link" href="#/logout">Sign Out</a>
       </li>
       }
     </ul>

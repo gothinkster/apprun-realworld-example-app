@@ -1,11 +1,13 @@
 import app, {Component} from 'apprun';
-
+import { auth, serializeObject } from './api'
 class registerComponent extends Component {
   state = {
     messages: []
   }
 
   view = (state) => {
+    if (!state || state instanceof Promise) return;
+
     return <div className="auth-page">
       <div className="container page">
         <div className="row">
@@ -22,7 +24,7 @@ class registerComponent extends Component {
               )}
             </ul>}
 
-            <form onsubmit={e => app.run('register', e)}>
+            <form onsubmit={e => this.run('register', e)}>
               <fieldset className="form-group">
                 <input className="form-control form-control-lg" type="text" placeholder="Your Name" name="username"/>
               </fieldset>
@@ -44,7 +46,17 @@ class registerComponent extends Component {
   }
 
   update = {
-    '#/register': (state, messages) => ({ ...state, messages })
+    '#/register': (state, messages) => ({ ...state, messages }),
+    'register': async (state, e) => {
+      try {
+        e.preventDefault();
+        const session = await auth.register(serializeObject(e.target));
+        app.run('#user', session.user);
+        app.run('route', '#/');
+      } catch (messages) {
+        return { ...state, messages }
+      }
+    }
   }
 }
 
