@@ -1,5 +1,6 @@
 import app, { Component } from 'apprun';
-import { IArticle, articles } from './api';
+import { articles } from './api';
+import { IArticle } from './models';
 class articleComponent extends Component {
   state = {
     article: null,

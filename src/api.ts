@@ -10,6 +10,12 @@ window['defaultBasePath'] = 'https://conduit.productionready.io/api';
 import { getToken, setToken, toQueryString, serializeObject, get, post, del, put } from './fetch';
 export { getToken, setToken, toQueryString, serializeObject }
 
+import { IArticle, IProfile } from './models';
+
+export interface ISession {
+  user: IProfile
+}
+
 export interface ITags {
   tags: Array<string>;
 }
@@ -19,36 +25,6 @@ export interface IFeed {
   articlesCount: number;
 }
 
-export interface IAuthor {
-  username: string;
-  bio: string;
-  image: string;
-  following: true;
-}
-
-export interface IUser {
-  email: string;
-  token: string;
-  username: string;
-  bio: string;
-  image: string;
-}
-export interface ISession {
-  user: IUser
-}
-
-export interface IArticle {
-  slug: string;
-  title: string;
-  description: string;
-  body: string;
-  createdAt: Date;
-  updatedAt: Date;
-  favorited: boolean;
-  favoritesCount: number;
-  author: IAuthor;
-  tagList: Array<string>;
-}
 
 export interface IArticlesRequest {
   tag?: string;

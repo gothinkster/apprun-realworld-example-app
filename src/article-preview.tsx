@@ -1,5 +1,5 @@
 import app, { Component } from 'apprun';
-import { IArticle } from './api';
+import { IArticle } from './models';
 
 export default function Article (props) {
   const article = props.article as IArticle;

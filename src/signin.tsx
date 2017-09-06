@@ -1,5 +1,6 @@
 import app, { Component } from 'apprun';
-import { auth, serializeObject, IUser, setToken } from './api'
+import { auth, serializeObject, setToken } from './api'
+import { IProfile } from './models';
 import Errors from './error-list';
 
 class signinComponent extends Component {

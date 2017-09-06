@@ -28,7 +28,7 @@ class homeComponent extends Component {
             <div className="feed-toggle">
               <ul className="nav nav-pills outline-active">
                 <li className="nav-item">
-                  <a className={`nav-link ${state.user ? '' : 'disabled'} ${state.type ? 'active' : ''}`}
+                  <a className={`nav-link ${app['user'] ? '' : 'disabled'} ${state.type ? 'active' : ''}`}
                     href="#/feed">Your Feed</a>
                 </li>
                 <li className="nav-item">

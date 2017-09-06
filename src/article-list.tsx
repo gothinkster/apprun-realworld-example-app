@@ -1,5 +1,5 @@
 import app from 'apprun';
-import { IArticle } from './api';
+import { IArticle } from './models';
 import Article from './article-preview';
 
 export default function ({ articles }: { articles: Array<IArticle>}) {
