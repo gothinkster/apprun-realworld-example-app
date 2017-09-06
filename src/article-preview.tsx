@@ -19,5 +19,10 @@ export default function Article (props) {
       <p>{article.description}</p>
       <span>Read more...</span>
     </a>
+    <ul class="tag-list">
+      {article.tagList.map(tag =>
+        <li className="tag-default tag-pill tag-outline"> {tag} </li>
+      )}
+    </ul>
   </div>
 }

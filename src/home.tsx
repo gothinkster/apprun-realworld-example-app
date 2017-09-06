@@ -1,6 +1,6 @@
 import app, { Component } from 'apprun';
 import { tags, articles } from './api';
-import Article from './preview';
+import Articles from './article-list';
 
 const Tag = ({ tag }) => <a href="" className="tag-pill tag-default">{tag}</a>
 
@@ -37,10 +37,7 @@ class homeComponent extends Component {
                 </li>
               </ul>
             </div>
-            { state.articles.length
-              ? state.articles.map(article => <Article article={article}></Article>)
-              : <div className="article-preview">No articles are here... yet.</div>
-            }
+            <Articles articles={state.articles} />
           </div>
           <div className="col-md-3">
             <div className="sidebar">
