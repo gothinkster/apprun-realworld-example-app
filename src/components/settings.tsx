@@ -1,7 +1,7 @@
 import app, { Component } from 'apprun';
 
 class settingsComponent extends Component {
-  state = 'settings';
+  state = {}
 
   view = (state) => {
     return <div className="settings-page">

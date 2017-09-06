@@ -1,5 +1,5 @@
 import app, { Component } from 'apprun';
-import { tags, articles } from './api';
+import { tags, articles } from '../api';
 import Articles from './article-list';
 import Pages from './page-list';
 

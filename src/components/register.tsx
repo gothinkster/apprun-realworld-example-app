@@ -1,10 +1,9 @@
 import app, {Component} from 'apprun';
-import { auth, serializeObject } from './api'
+import { auth, serializeObject } from '../api'
 import Errors from './error-list';
 
 class registerComponent extends Component {
-  state = {
-  }
+  state = {}
 
   view = (state) => {
     if (!state || state instanceof Promise) return;

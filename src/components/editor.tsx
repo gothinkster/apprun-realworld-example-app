@@ -1,11 +1,9 @@
 import app, { Component } from 'apprun';
-import { serializeObject, INewArticle, articles } from './api'
+import { serializeObject, INewArticle, articles } from '../api'
 import Errors from './error-list';
 
 class createComponent extends Component {
-  state = {
-    user: null,
-  };
+  state = {}
 
   view = (state) => {
     if (!app['user']) return;

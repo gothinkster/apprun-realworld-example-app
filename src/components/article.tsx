@@ -1,6 +1,6 @@
 import app, { Component } from 'apprun';
-import { articles } from './api';
-import { IArticle } from './models';
+import { articles } from '../api';
+import { IArticle } from '../models';
 import Comments from './comment-list';
 
 class articleComponent extends Component {

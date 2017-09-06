@@ -1,11 +1,10 @@
 import app, { Component } from 'apprun';
-import { auth, serializeObject, setToken } from './api'
-import { IProfile } from './models';
+import { auth, serializeObject, setToken } from '../api'
+import { IProfile } from '../models';
 import Errors from './error-list';
 
 class signinComponent extends Component {
-  state = {
-  }
+  state = {}
 
   view = (state) => {
     if (!state || state instanceof Promise) return;

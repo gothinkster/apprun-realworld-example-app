@@ -1,5 +1,5 @@
 import app from 'apprun';
-import { IArticle } from './models';
+import { IArticle } from '../models';
 
 function Article(props) {
   const article = props.article as IArticle;

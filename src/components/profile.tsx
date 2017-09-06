@@ -3,7 +3,7 @@ import Articles from './article-list';
 import Pages from './page-list';
 
 class profileComponent extends Component {
-  state = 'profile';
+  state = {}
 
   view = (state) => {
     return <div className="profile-page">

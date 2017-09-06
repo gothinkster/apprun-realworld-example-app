@@ -1,5 +1,5 @@
 import app from 'apprun';
-import { IComment } from './models';
+import { IComment } from '../models';
 
 function Comment({ comment }: { comment: IComment }) {
   return <div className="card">

@@ -1,14 +1,14 @@
 import app from 'apprun';
 import { auth } from './api'
 
-import './header';
-import './home';
-import './signin';
-import './register';
-import './profile';
-import './settings';
-import './editor';
-import './article';
+import './components/header';
+import './components/home';
+import './components/signin';
+import './components/register';
+import './components/profile';
+import './components/settings';
+import './components/editor';
+import './components/article';
 
 app.on('//', _ => { })
 

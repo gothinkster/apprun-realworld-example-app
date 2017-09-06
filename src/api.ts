@@ -10,7 +10,7 @@ window['defaultBasePath'] = 'https://conduit.productionready.io/api';
 import { getToken, setToken, toQueryString, serializeObject, get, post, del, put } from './fetch';
 export { getToken, setToken, toQueryString, serializeObject }
 
-import { IArticle, IProfile } from './models';
+import { IArticle, IProfile, IComment } from './models';
 
 export interface ISession {
   user: IProfile
