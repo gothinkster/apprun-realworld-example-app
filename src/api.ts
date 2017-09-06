@@ -103,3 +103,22 @@ export const articles = {
     post<IArticlesResponse>('/articles', { article })
 }
 
+
+export const comments = {
+  create: (slug, comment) =>
+    post(`/articles/${slug}/comments`, { comment }),
+  delete: (slug, commentId) =>
+    del(`/articles/${slug}/comments/${commentId}`),
+  forArticle: slug =>
+    get(`/articles/${slug}/comments`)
+};
+
+export const profile = {
+  follow: username =>
+    post(`/profiles/${username}/follow`),
+  get: username =>
+    get(`/profiles/${username}`),
+  unfollow: username =>
+    del(`/profiles/${username}/follow`)
+};
+
