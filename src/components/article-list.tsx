@@ -19,11 +19,13 @@ function Article(props) {
       <p>{article.description}</p>
       <span>Read more...</span>
     </a>
-    <ul class="tag-list">
+    <div class="tag-list"><br/>
       {article.tagList.map(tag =>
-        <li className="tag-default tag-pill tag-outline"> {tag} </li>
+        <li className="tag-default tag-pill tag-outline">
+          <a href={`#/tag/${tag}`}>{tag} </a>
+        </li>
       )}
-    </ul>
+      </div>
   </div>
 }
 

@@ -22,6 +22,6 @@ app.on('#', async (route, ...p) => {
     }
     app.run('#user', user);
   }
-  if (!route) document.location.hash = '#/';
+  if (!route && !p.length) document.location.hash = '#/';
   app.run(`#/${route || ''}`, ...p);
 })
