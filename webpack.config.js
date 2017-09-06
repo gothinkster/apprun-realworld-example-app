@@ -14,6 +14,7 @@ module.exports = {
       { test: /.tsx?$/, loader: 'ts-loader' }
     ]
   },
+  devtool:'source-map',
   devServer: {
   }
 }
