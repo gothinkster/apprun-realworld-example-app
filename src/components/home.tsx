@@ -60,7 +60,6 @@ class homeComponent extends Component {
     </div>
   }
 
-
   getArticles = async (state, type: '' | 'feed' | 'tag', page, tag?: string) => {
     let tagList = state.tags.length
       ? { tags: state.tags }
@@ -103,12 +102,7 @@ class homeComponent extends Component {
     '#/tag': async (state, tag, page) => {
       return await this.getArticles(state, 'tag', page, tag)
     },
-    'set-page': async (state, page, e?) => {
-      if (e) {
-        e.preventDefault();
-        state.tag = e.target.textContent;
-        state.type = 'tag';
-      }
+    'set-page': async (state, page) => {
       const t = state.type === 'tag' && state.tag ? `/${state.tag}` : '';
       history.pushState(null, null, `#/${state.type}${t}/${page}`);
       return await this.getArticles(state, state.type, page, state.tag);
@@ -117,7 +111,7 @@ class homeComponent extends Component {
       // ?
       const articles = state.articles.map(a => {
         return a.slug === article.slug ? article : a;
-      })      
+      })
       return { ...state, articles };
     }
   }
