@@ -7,7 +7,7 @@ function Article(props) {
     <div className="article-meta">
       <a href="profile.html"><img src={article.author.image} /></a>
       <div className="info">
-        <a href="" className="author">{article.author.username}</a>
+        <a href={`#/profile/${article.author.username}`} className="author">{article.author.username}</a>
         <span className="date">{ new Date(article.updatedAt).toLocaleString() }</span>
       </div>
       <button className="btn btn-outline-primary btn-sm pull-xs-right" onclick={e => app.run('#toggle-fav-article', article)}>

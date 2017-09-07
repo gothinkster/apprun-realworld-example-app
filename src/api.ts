@@ -9,7 +9,6 @@ window['defaultBasePath'] = 'https://conduit.productionready.io/api';
 
 import { getToken, setToken, toQueryString, serializeObject, get, post, del, put } from './fetch';
 export { getToken, setToken, toQueryString, serializeObject }
-
 import { IArticle, IProfile, IComment } from './models';
 
 export interface ISession {
@@ -48,6 +47,10 @@ export interface IArticlesResponse {
 
 export interface ICommentsResponse {
   comments: Array<IComment>
+}
+
+export interface IProfileResponse {
+  profile: IProfile
 }
 
 export const tags = {
@@ -94,7 +97,7 @@ export const comments = {
 
 export const profile = {
   get: (username: string) =>
-    get<IProfile>(`/profiles/${username}`),
+    get<IProfileResponse>(`/profiles/${username}`),
   follow: (username: string) =>
     post(`/profiles/${username}/follow`),
   unfollow: (username: string) =>
