@@ -26,9 +26,12 @@ class profileComponent extends Component {
               <p>
                 {profile.bio}
               </p>
-              <button className="btn btn-sm btn-outline-secondary action-btn">
-                <i className="ion-plus-round"></i>
-                &nbsp;Follow {profile.username}
+              <button className="btn btn-sm btn-outline-secondary action-btn"
+                onclick={e => app.run('#toggle-follow', profile, 'on-profile')}>
+                {profile.following
+                  ? <span><i className="ion-minus-round"></i> Unfollow {profile.username}</span>
+                  : <span><i className="ion-plus-round"></i> Follow {profile.username}</span>
+                }
               </button>
             </div>
           </div>
@@ -98,8 +101,18 @@ class profileComponent extends Component {
         return a.slug === article.slug ? article : a;
       })
       return { ...state, articles };
+    },
+    '#update-follow-on-profile': (state, profile) => {
+      return { ...state, profile };
     }
   }
 }
+
+app.on('#toggle-follow', async (author: IProfile, id?) => {
+  const result = author.following
+    ? await profile.unfollow(author.username)
+    : await profile.follow(author.username);
+  app.run(`#update-follow-${id}`, result.profile)
+})
 
 new profileComponent().mount('my-app')

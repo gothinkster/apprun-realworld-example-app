@@ -99,7 +99,7 @@ export const profile = {
   get: (username: string) =>
     get<IProfileResponse>(`/profiles/${username}`),
   follow: (username: string) =>
-    post(`/profiles/${username}/follow`),
+    post<IProfileResponse>(`/profiles/${username}/follow`),
   unfollow: (username: string) =>
     del(`/profiles/${username}/follow`)
 };

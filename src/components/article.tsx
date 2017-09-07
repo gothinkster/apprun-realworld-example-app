@@ -22,9 +22,12 @@ class articleComponent extends Component {
               <a href="" className="author">{article.author.username}</a>
               <span className="date">{new Date(article.updatedAt).toLocaleString()}</span>
             </div>
-            <button className="btn btn-sm btn-outline-secondary">
-              <i className="ion-plus-round"></i>
-              &nbsp; Follow {article.author.username}
+            <button className="btn btn-sm btn-outline-secondary"
+              onclick={e => app.run('#toggle-follow', article.author, 'on-article')}>
+              {article.author.following
+                ? <span><i className="ion-minus-round"></i> Unfollow {article.author.username}</span>
+                : <span><i className="ion-plus-round"></i> Follow {article.author.username}</span>
+              }
             </button>
             &nbsp;&nbsp;
             <button className="btn btn-sm btn-outline-primary"
@@ -81,6 +84,9 @@ class articleComponent extends Component {
     },
     '#update-article': (state, article) => {
       return { ...state, article };
+    },
+    '#update-follow-on-article': (state, author) => {
+      return { ...state, article: { ...state.article, author } };
     }
   }
 }
