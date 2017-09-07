@@ -8,7 +8,7 @@ function Article(props) {
       <a href="profile.html"><img src={article.author.image} /></a>
       <div className="info">
         <a href="" className="author">{article.author.username}</a>
-        <span className="date">{article.updatedAt}</span>
+        <span className="date">{ new Date(article.updatedAt).toLocaleString() }</span>
       </div>
       <button className="btn btn-outline-primary btn-sm pull-xs-right">
         <i className="ion-heart"></i> {article.favoritesCount}

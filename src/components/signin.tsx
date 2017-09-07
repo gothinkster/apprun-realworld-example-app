@@ -51,10 +51,11 @@ class signinComponent extends Component {
         e.preventDefault();
         const session = await auth.signIn(serializeObject(e.target));
         app.run('#user', session.user);
-        if (!state.returnTo || state.returnTo === '#/login')
+        const returnTo: string = (state.returnTo || '').replace(/\#\/login\/?/, '')
+        if (!returnTo)
           document.location.hash = '#/feed';
         else
-          app.run('route',state.returnTo);
+          app.run('route', returnTo);
       } catch ({ errors }) {
         return { ...state, errors }
       }

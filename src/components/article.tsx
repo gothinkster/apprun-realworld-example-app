@@ -1,5 +1,5 @@
 import app, { Component } from 'apprun';
-import { articles } from '../api';
+import { articles, comments } from '../api';
 import { IArticle } from '../models';
 import Comments from './comment-list';
 
@@ -10,22 +10,17 @@ class articleComponent extends Component {
   }
 
   view = (state) => {
-
     const article = state.article as IArticle;
     if (!article) return;
-
     return <div className="article-page">
-
       <div className="banner">
         <div className="container">
-
           <h1>{article.title}</h1>
-
           <div className="article-meta">
             <a href=""><img src={article.author.image} /></a>
             <div className="info">
               <a href="" className="author">{article.author.username}</a>
-              <span className="date">{article.updatedAt}</span>
+              <span className="date">{new Date(article.updatedAt).toLocaleString()}</span>
             </div>
             <button className="btn btn-sm btn-outline-secondary">
               <i className="ion-plus-round"></i>
@@ -41,48 +36,47 @@ class articleComponent extends Component {
       </div>
 
       <div className="container page">
-
         <div className="row article-content">
           <div className="col-md-12">
-            {article.body}
-          </div>
-        </div>
-
-        <hr />
-
-        <div className="article-actions">
-          <div className="article-meta">
-            <a href="profile.html"><img src={article.author.image} /></a>
-            <div className="info">
-              <a href="" className="author">{article.author.username}</a>
-              <span className="date">January 20th</span>
+            <p>{article.body}</p>
+            <div class="tag-list"><br />
+              {article.tagList.map(tag =>
+                <li className="tag-default tag-pill tag-outline">
+                  <a href={`#/tag/${tag}`}>{tag} </a>
+                </li>
+              )}
             </div>
-
-            <button className="btn btn-sm btn-outline-secondary">
-              <i className="ion-plus-round"></i>
-              &nbsp; Follow {article.author.username} <span className="counter">(10)</span>
-            </button>
-            &nbsp;
-            <button className="btn btn-sm btn-outline-primary">
-              <i className="ion-heart"></i>
-              &nbsp; Favorite Post <span className="counter">(29)</span>
-            </button>
           </div>
         </div>
-        <Comments />
+        <hr />
+        <Comments comments={state.comments}/>
       </div>
     </div>
   }
 
   update = {
     '#/article': async (state, slug) => {
-      let article = state.article;
+      let article = state.article as IArticle;
+      let _comments = state.comments;
       if (!article || article.slug !== slug) {
         const result = await articles.get(slug);
         article = result.article;
-        console.log(article)
+        const commentsResponse = await comments.forArticle(article.slug);
+        _comments = commentsResponse.comments;
       }
-      return { ...state, article }
+      return { ...state, article, comments: _comments }
+    },
+    '#new-comment': async (state, e) => {
+      try {
+        e.preventDefault();
+        const comment = e.target['comment'].value;
+        await comments.create(state.article.slug, { body: comment });
+        const commentsResponse = await comments.forArticle(state.article.slug);
+        const _comments = commentsResponse.comments;
+        return { ...state, comments: _comments }
+      } catch ({ errors }) {
+        return { ...state, errors }
+      }
     }
   }
 }

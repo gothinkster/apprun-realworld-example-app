@@ -46,6 +46,10 @@ export interface IArticlesResponse {
   article: IArticle
 }
 
+export interface ICommentsResponse {
+  comments: Array<IComment>
+}
+
 export const tags = {
   all: () => get<ITags>('/tags')
 }
@@ -79,22 +83,21 @@ export const articles = {
     post<IArticlesResponse>('/articles', { article })
 }
 
-
 export const comments = {
-  create: (slug, comment) =>
+  create: (slug: string, comment: { body: string }) =>
     post(`/articles/${slug}/comments`, { comment }),
   delete: (slug, commentId) =>
     del(`/articles/${slug}/comments/${commentId}`),
-  forArticle: slug =>
-    get(`/articles/${slug}/comments`)
+  forArticle: (slug: string) =>
+    get<ICommentsResponse>(`/articles/${slug}/comments`)
 };
 
 export const profile = {
-  follow: username =>
+  get: (username: string) =>
+    get<IProfile>(`/profiles/${username}`),
+  follow: (username: string) =>
     post(`/profiles/${username}/follow`),
-  get: username =>
-    get(`/profiles/${username}`),
-  unfollow: username =>
+  unfollow: (username: string) =>
     del(`/profiles/${username}/follow`)
 };
 
