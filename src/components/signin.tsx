@@ -54,8 +54,10 @@ class signinComponent extends Component {
         const returnTo: string = (state.returnTo || '').replace(/\#\/login\/?/, '')
         if (!returnTo)
           document.location.hash = '#/feed';
-        else
+        else {
           app.run('route', returnTo);
+          history.pushState(null, null, returnTo);
+        }
       } catch ({ errors }) {
         return { ...state, errors }
       }
