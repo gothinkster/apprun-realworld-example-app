@@ -13,7 +13,7 @@ export function setToken(token: string) {
     window.localStorage.removeItem('jwt');
 }
 
-export async function fetchAsync(method: string, url: string, body?: any) {
+export async function fetchAsync(method: 'GET' | 'POST' | 'DELETE' | 'PUT', url: string, body?: any) {
   const headers = access_token ? { 'Authorization': `Token ${access_token}` } : {}
   headers['Content-Type'] = 'application/json; charset=utf-8';
   const response = await window['fetch'](`${defaultBasePath}${url}`, {
