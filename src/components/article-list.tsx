@@ -10,7 +10,7 @@ function Article(props) {
         <a href="" className="author">{article.author.username}</a>
         <span className="date">{ new Date(article.updatedAt).toLocaleString() }</span>
       </div>
-      <button className="btn btn-outline-primary btn-sm pull-xs-right">
+      <button className="btn btn-outline-primary btn-sm pull-xs-right" onclick={e => app.run('#toggle-fav-article', article)}>
         <i className="ion-heart"></i> {article.favoritesCount}
       </button>
     </div>

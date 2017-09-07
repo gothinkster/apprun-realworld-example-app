@@ -112,9 +112,23 @@ class homeComponent extends Component {
       const t = state.type === 'tag' && state.tag ? `/${state.tag}` : '';
       history.pushState(null, null, `#/${state.type}${t}/${page}`);
       return await this.getArticles(state, state.type, page, state.tag);
+    },
+    '#update-article': (state, article) => {
+      // ?
+      const articles = state.articles.map(a => {
+        return a.slug === article.slug ? article : a;
+      })      
+      return { ...state, articles };
     }
   }
 }
+
+app.on('#toggle-fav-article', async article => {
+  const result = article.favorited
+    ? await articles.unfavorite(article.slug)
+    : await articles.favorite(article.slug);
+  app.run('#update-article', result.article)
+})
 
 new homeComponent().mount('my-app')
 

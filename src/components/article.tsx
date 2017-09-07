@@ -24,12 +24,12 @@ class articleComponent extends Component {
             </div>
             <button className="btn btn-sm btn-outline-secondary">
               <i className="ion-plus-round"></i>
-              &nbsp; Follow {article.author.username} <span className="counter">(10)</span>
+              &nbsp; Follow {article.author.username}
             </button>
             &nbsp;&nbsp;
             <button className="btn btn-sm btn-outline-primary">
               <i className="ion-heart"></i>
-              &nbsp; Favorite Post <span className="counter">(29)</span>
+              &nbsp; Favorite Post <span className="counter">({article.favoritesCount})</span>
             </button>
           </div>
         </div>
