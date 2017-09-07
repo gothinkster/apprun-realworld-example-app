@@ -10,7 +10,8 @@ function Article(props) {
         <a href={`#/profile/${article.author.username}`} className="author">{article.author.username}</a>
         <span className="date">{ new Date(article.updatedAt).toLocaleString() }</span>
       </div>
-      <button className="btn btn-outline-primary btn-sm pull-xs-right" onclick={e => app.run('#toggle-fav-article', article)}>
+      <button className="btn btn-outline-primary btn-sm pull-xs-right"
+        onclick={e => app.run('#toggle-fav-article', article, props.id)}>
         <i className="ion-heart"></i> {article.favoritesCount}
       </button>
     </div>
@@ -29,8 +30,8 @@ function Article(props) {
   </div>
 }
 
-export default function ({ articles }: { articles: Array<IArticle>}) {
+export default function ({ articles, id }: { articles: Array<IArticle>, id?: string }) {
   return articles.length
-  ? articles.map(article => <Article article={article}></Article>)
-  : <div className="article-preview">No articles are here... yet.</div>
+    ? articles.map(article => <Article article={article} id={id}></Article>)
+    : <div className="article-preview">No articles are here... yet.</div>
 }

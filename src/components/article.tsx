@@ -27,7 +27,8 @@ class articleComponent extends Component {
               &nbsp; Follow {article.author.username}
             </button>
             &nbsp;&nbsp;
-            <button className="btn btn-sm btn-outline-primary">
+            <button className="btn btn-sm btn-outline-primary"
+              onclick={e => app.run('#toggle-fav-article', article, 'article')}>
               <i className="ion-heart"></i>
               &nbsp; Favorite Post <span className="counter">({article.favoritesCount})</span>
             </button>
@@ -77,6 +78,9 @@ class articleComponent extends Component {
       } catch ({ errors }) {
         return { ...state, errors }
       }
+    },
+    '#update-article': (state, article) => {
+      return { ...state, article };
     }
   }
 }

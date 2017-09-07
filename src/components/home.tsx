@@ -44,7 +44,7 @@ class homeComponent extends Component {
                 }
               </ul>
             </div>
-            <Articles articles={state.articles} />
+            <Articles articles={state.articles} id='home-articles' />
             <Pages max={Math.floor(state.max / PAGE_SIZE)} selected={state.page} onpage={page => this.run('set-page', page)}/>
           </div>
           <div className="col-md-3">
@@ -113,7 +113,7 @@ class homeComponent extends Component {
       history.pushState(null, null, `#/tag/${tag}/1`);
       return await this.getArticles(state, 'tag', 1, tag);
     },
-    '#update-article': (state, article) => {
+    '#update-home-articles': (state, article) => {
       // ?
       const articles = state.articles.map(a => {
         return a.slug === article.slug ? article : a;
@@ -123,11 +123,11 @@ class homeComponent extends Component {
   }
 }
 
-app.on('#toggle-fav-article', async article => {
+app.on('#toggle-fav-article', async (article, id) => {
   const result = article.favorited
     ? await articles.unfavorite(article.slug)
     : await articles.favorite(article.slug);
-  app.run('#update-article', result.article)
+  app.run(`#update-${id}`, result.article)
 })
 
 new homeComponent().mount('my-app')

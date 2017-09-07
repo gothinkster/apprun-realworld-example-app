@@ -50,7 +50,7 @@ class profileComponent extends Component {
                 </li>
               </ul>
             </div>
-            <Articles articles={state.articles} />
+            <Articles articles={state.articles} id='profile-articles'/>
             <Pages max={Math.floor(state.max / PAGE_SIZE)} selected={state.page}
               onpage={page => this.run('set-page', page)} />
           </div>
@@ -91,6 +91,13 @@ class profileComponent extends Component {
       const url = `#/profile/${state.profile.username}/${state.type}/${page}`
       history.pushState(null, null, url);
       return this.getState(state, null, null, page)
+    },
+    '#update-profile-articles': (state, article) => {
+      // ?
+      const articles = state.articles.map(a => {
+        return a.slug === article.slug ? article : a;
+      })
+      return { ...state, articles };
     }
   }
 }
