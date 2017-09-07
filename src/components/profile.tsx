@@ -9,7 +9,7 @@ const PAGE_SIZE = 10;
 class profileComponent extends Component {
   state = {
     name: '',
-    type: '',
+    type: 'articles',
     page: 1
   }
 
@@ -41,8 +41,8 @@ class profileComponent extends Component {
             <div className="articles-toggle">
               <ul className="nav nav-pills outline-active">
                 <li className="nav-item">
-                  <a className={`nav-link ${state.type === '' ? 'active' : ''}`}
-                    href={`#/profile/${profile.username}//1`}>My Articles</a>
+                  <a className={`nav-link ${state.type === 'articles' ? 'active' : ''}`}
+                    href={`#/profile/${profile.username}/articles/1`}>My Articles</a>
                 </li>
                 <li className="nav-item">
                   <a className={`nav-link ${state.type === 'favorites' ? 'active' : ''}`}
@@ -59,34 +59,38 @@ class profileComponent extends Component {
     </div>
   }
 
+  getState = async (state, name, type, page) => {
+    name = name || state.name;
+    type = type || state.type;
+    page = parseInt(page) || state.page;
+    let newState = state;
+    if (name !== state.name) {
+      const profileResult = await profile.get(name);
+      newState = { ...newState, profile: profileResult.profile }
+    }
+    if (name !== state.name || type !== state.type || page !== state.page) {
+      const limit = PAGE_SIZE;
+      const offset = (page - 1) * limit;
+      const articleResult = type === "favorites"
+        ? await articles.search({ favorited: name, offset, limit })
+        : await articles.search({ author: name, offset, limit });
+      newState = {
+        ...newState, name, type, page,
+        articles: articleResult.articles,
+        max: articleResult.articlesCount,
+      }
+    }
+    return newState
+  }
+
   update = {
-    '#/profile': async (state, name, type, page) => {
-      name = name || state.name;
-      type = type || state.type;
-      page = parseInt(page) || state.page;
-      let newState = state;
-      if (name !== state.name) {
-        const profileResult = await profile.get(name);
-        newState = { ...newState, profile: profileResult.profile }
-      }
-      if (name !== state.name || type !== state.type || page !== state.page) {
-        const limit = PAGE_SIZE;
-        const offset = (page - 1) * limit;
-        const articleResult = type ==="favorites"
-          ? await articles.search({ favorited: name, offset, limit })
-          : await articles.search({ author: name, offset, limit });
-        newState = {
-          ...newState, type, page,
-          articles: articleResult.articles,
-          max: articleResult.articlesCount,
-        }
-      }
-      return newState
+    '#/profile': (state, name, type, page) => {
+      return this.getState(state, name, type, page)
     },
     'set-page': (state, page) => {
       const url = `#/profile/${state.profile.username}/${state.type}/${page}`
       history.pushState(null, null, url);
-      return {...state, page}
+      return this.getState(state, null, null, page)
     }
   }
 }
