@@ -50,7 +50,7 @@ class homeComponent extends Component {
           <div className="col-md-3">
             <div className="sidebar">
               <p>Popular Tags</p>
-              <div className="tag-list" onclick={e => this.run('set-page', 1, e)}>
+              <div className="tag-list" onclick={e => this.run('set-tag', e) }>
                 {state.tags.map(tag => <Tag tag={tag} />)}
               </div>
             </div>
@@ -106,6 +106,12 @@ class homeComponent extends Component {
       const t = state.type === 'tag' && state.tag ? `/${state.tag}` : '';
       history.pushState(null, null, `#/${state.type}${t}/${page}`);
       return await this.getArticles(state, state.type, page, state.tag);
+    },
+    'set-tag': async (state, e) => {
+      e.preventDefault();
+      const tag = e.target.textContent;
+      history.pushState(null, null, `#/tag/${tag}/1`);
+      return await this.getArticles(state, 'tag', 1, tag);
     },
     '#update-article': (state, article) => {
       // ?
