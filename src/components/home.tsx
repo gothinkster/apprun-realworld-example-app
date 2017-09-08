@@ -6,7 +6,7 @@ import Pages from './page-list';
 const PAGE_SIZE = 10
 const Tag = ({ tag }) => <a href="" className="tag-pill tag-default">{tag}</a>
 
-class homeComponent extends Component {
+class HomeComponent extends Component {
   state = {
     type: '',
     articles: [],
@@ -129,5 +129,5 @@ app.on('#toggle-fav-article', async (article, id) => {
   app.run(`#update-${id}`, result.article)
 })
 
-export default new homeComponent().mount('my-app')
+export default new HomeComponent().mount('my-app')
 

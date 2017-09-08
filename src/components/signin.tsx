@@ -3,7 +3,7 @@ import { auth, serializeObject, setToken } from '../api'
 
 import Errors from './error-list';
 
-class signinComponent extends Component {
+class SigninComponent extends Component {
   state = {}
 
   view = (state) => {
@@ -69,4 +69,4 @@ app.on('#user', user => {
   app['user'] = user;
 });
 
-new signinComponent().mount('my-app')
+export default new SigninComponent().mount('my-app')

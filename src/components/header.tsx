@@ -1,6 +1,6 @@
 import app, { Component } from 'apprun';
 
-class headerComponent extends Component {
+class HeaderComponent extends Component {
   state = {}
   view = state => {
     const user = state.user
@@ -44,4 +44,4 @@ class headerComponent extends Component {
   }
 }
 
-new headerComponent().mount('header')
+export default new HeaderComponent().mount('header')

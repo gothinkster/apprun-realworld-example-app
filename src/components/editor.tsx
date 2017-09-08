@@ -2,7 +2,7 @@ import app, { Component } from 'apprun';
 import { serializeObject, articles } from '../api'
 import Errors from './error-list';
 
-class createComponent extends Component {
+class EditorComponent extends Component {
   state = {}
 
   view = (state) => {
@@ -73,4 +73,4 @@ class createComponent extends Component {
   }
 }
 
-new createComponent().mount('my-app')
+export default new EditorComponent().mount('my-app')

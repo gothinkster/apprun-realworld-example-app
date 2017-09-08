@@ -1,7 +1,7 @@
 import app, { Component } from 'apprun';
 import { serializeObject, auth } from '../api'
 import Errors from './error-list';
-class settingsComponent extends Component {
+class SettingsComponent extends Component {
   state = {}
 
   view = (state) => {
@@ -66,4 +66,4 @@ class settingsComponent extends Component {
   }
 }
 
-new settingsComponent().mount('my-app')
+export default new SettingsComponent().mount('my-app')

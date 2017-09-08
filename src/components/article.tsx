@@ -4,7 +4,7 @@ import { IArticle } from '../models';
 import Comments from './comment-list';
 import * as marked from 'marked';
 
-class articleComponent extends Component {
+class ArticleComponent extends Component {
   state = {
     article: null,
     comments: []
@@ -123,5 +123,5 @@ app.on('#delete-article', article => {
   document.location.hash = '#/';
 })
 
-new articleComponent().mount('my-app')
+export default new ArticleComponent().mount('my-app')
 

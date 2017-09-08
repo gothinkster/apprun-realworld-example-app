@@ -6,7 +6,7 @@ import Pages from './page-list';
 
 const PAGE_SIZE = 10;
 
-class profileComponent extends Component {
+class ProfileComponent extends Component {
   state = {
     name: '',
     type: 'articles',
@@ -116,4 +116,4 @@ app.on('#toggle-follow', async (author: IProfile, id?) => {
   app.run(`#update-follow-${id}`, result.profile)
 })
 
-new profileComponent().mount('my-app')
+export default new ProfileComponent().mount('my-app')

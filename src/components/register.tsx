@@ -2,7 +2,7 @@ import app, {Component} from 'apprun';
 import { auth, serializeObject } from '../api'
 import Errors from './error-list';
 
-class registerComponent extends Component {
+class RegisterComponent extends Component {
   state = {}
 
   view = (state) => {
@@ -56,4 +56,4 @@ class registerComponent extends Component {
   }
 }
 
-new registerComponent().mount('my-app')
+export default new RegisterComponent().mount('my-app')
