@@ -5,9 +5,11 @@ function Article(props) {
   const article = props.article as IArticle;
   return <div className="article-preview">
     <div className="article-meta">
-      <a href="profile.html"><img src={article.author.image} /></a>
+      <a href={article.author.image} ><img src={article.author.image} /></a>
       <div className="info">
-        <a href={`#/profile/${article.author.username}`} className="author">{article.author.username}</a>
+        <a href={`#/profile/${article.author.username}`} className="author">
+          {article.author.username}
+        </a>
         <span className="date">{ new Date(article.updatedAt).toLocaleString() }</span>
       </div>
       <button className="btn btn-outline-primary btn-sm pull-xs-right"
