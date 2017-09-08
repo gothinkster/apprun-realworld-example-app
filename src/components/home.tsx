@@ -124,6 +124,7 @@ class homeComponent extends Component {
 }
 
 app.on('#toggle-fav-article', async (article, id) => {
+  if (!app['user']) return app.run('#/login');
   const result = article.favorited
     ? await articles.unfavorite(article.slug)
     : await articles.favorite(article.slug);
