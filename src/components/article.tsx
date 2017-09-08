@@ -79,8 +79,7 @@ class articleComponent extends Component {
         const comment = e.target['comment'].value;
         await comments.create(state.article.slug, { body: comment });
         const commentsResponse = await comments.forArticle(state.article.slug);
-        const _comments = commentsResponse.comments;
-        return { ...state, comments: _comments }
+        return { ...state, comments: commentsResponse.comments }
       } catch ({ errors }) {
         return { ...state, errors }
       }
@@ -90,6 +89,11 @@ class articleComponent extends Component {
     },
     '#update-follow-on-article': (state, author) => {
       return { ...state, article: { ...state.article, author } };
+    },
+    '#delete-comment': async (state, comment) => {
+      await comments.delete(this.state.article.slug, comment.id);
+      const commentsResponse = await comments.forArticle(state.article.slug);      
+      return { ...state, comments: commentsResponse.comments }      
     }
   }
 }

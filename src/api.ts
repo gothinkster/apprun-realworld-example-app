@@ -76,7 +76,7 @@ export const articles = {
     get<IFeed>(`/articles/feed?${toQueryString(request)}`),
   get: (slug: string) =>
     get<IArticlesResponse>(`/articles/${slug}`),
-  favorite: slug =>
+  favorite: (slug: string) =>
     post(`/articles/${slug}/favorite`),
   unfavorite: (slug: string) =>
     del(`/articles/${slug}/favorite`),
@@ -89,7 +89,7 @@ export const articles = {
 export const comments = {
   create: (slug: string, comment: { body: string }) =>
     post(`/articles/${slug}/comments`, { comment }),
-  delete: (slug, commentId) =>
+  delete: (slug: string, commentId: string) =>
     del(`/articles/${slug}/comments/${commentId}`),
   forArticle: (slug: string) =>
     get<ICommentsResponse>(`/articles/${slug}/comments`)
