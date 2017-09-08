@@ -1,9 +1,4 @@
-/**
- * Conduit API
- *
- * OpenAPI spec version: 1.0.0
- *
- */
+// Conduit API
 
 window['defaultBasePath'] = 'https://conduit.productionready.io/api';
 
@@ -105,4 +100,3 @@ export const profile = {
   unfollow: (username: string) =>
     del(`/profiles/${username}/follow`)
 };
-

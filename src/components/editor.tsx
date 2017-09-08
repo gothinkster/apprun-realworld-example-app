@@ -54,7 +54,7 @@ class createComponent extends Component {
         article = result.article
       }
       article = article || { title: '', description: '', body: '', tagList: [] };
-      return { ...state, article };
+      return { article };
     },
     'submit-article': async (state, e) => {
       try {
