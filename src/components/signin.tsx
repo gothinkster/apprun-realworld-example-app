@@ -1,6 +1,6 @@
 import app, { Component } from 'apprun';
 import { auth, serializeObject, setToken } from '../api'
-import { IProfile } from '../models';
+
 import Errors from './error-list';
 
 class signinComponent extends Component {
@@ -46,7 +46,6 @@ class signinComponent extends Component {
       document.location.hash = '#/';
     },
     'sign-in': async (state, e) => {
-      let user;
       try {
         e.preventDefault();
         const session = await auth.signIn(serializeObject(e.target));

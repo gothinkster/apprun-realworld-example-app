@@ -1,5 +1,5 @@
 import app, { Component } from 'apprun';
-import { serializeObject, INewArticle, articles } from '../api'
+import { serializeObject, articles } from '../api'
 import Errors from './error-list';
 
 class createComponent extends Component {
