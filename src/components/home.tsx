@@ -84,11 +84,9 @@ class homeComponent extends Component {
     return {
       ...state,
       tags: tagList.tags,
-      type,
+      type, page, tag,
       articles: feed.articles,
-      max: feed.articlesCount,
-      page: page,
-      tag
+      max: feed.articlesCount
     }
   }
 
@@ -131,5 +129,5 @@ app.on('#toggle-fav-article', async (article, id) => {
   app.run(`#update-${id}`, result.article)
 })
 
-new homeComponent().mount('my-app')
+export default new homeComponent().mount('my-app')
 
