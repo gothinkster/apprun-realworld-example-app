@@ -4,7 +4,7 @@
   "description": "> ### AppRun codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld) spec and API.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "karma start",
     "start": "webpack-dev-server",
     "build": "webpack -p",
     "lint": "tslint -p ."
@@ -21,7 +21,13 @@
   },
   "homepage": "https://github.com/yysun/realworld-starter-kit#readme",
   "devDependencies": {
+    "@types/jasmine": "^2.5.54",
     "apprun": "^1.6.0",
+    "jasmine-core": "^2.8.0",
+    "karma": "^1.7.1",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-webpack": "^2.0.4",
     "ts-loader": "^2.3.4",
     "tslint": "^5.7.0",
     "typescript": "^2.5.2",
