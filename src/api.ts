@@ -76,6 +76,8 @@ export const articles = {
     get<IFeed>(`/articles/feed?${toQueryString(request)}`),
   get: (slug: string) =>
     get<IArticlesResponse>(`/articles/${slug}`),
+  delete: (slug: string) =>
+    del(`/articles/${slug}`),
   favorite: (slug: string) =>
     post(`/articles/${slug}/favorite`),
   unfavorite: (slug: string) =>

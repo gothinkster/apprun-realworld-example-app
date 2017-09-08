@@ -25,19 +25,35 @@ class articleComponent extends Component {
               </a>
               <span className="date">{new Date(article.updatedAt).toLocaleString()}</span>
             </div>
-            <button className="btn btn-sm btn-outline-secondary"
-              onclick={e => app.run('#toggle-follow', article.author, 'on-article')}>
-              {article.author.following
-                ? <span><i className="ion-minus-round"></i> Unfollow {article.author.username}</span>
-                : <span><i className="ion-plus-round"></i> Follow {article.author.username}</span>
-              }
-            </button>
-            &nbsp;&nbsp;
-            <button className="btn btn-sm btn-outline-primary"
-              onclick={e => app.run('#toggle-fav-article', article, 'article')}>
-              <i className="ion-heart"></i>
-              &nbsp; Favorite Post <span className="counter">({article.favoritesCount})</span>
-            </button>
+
+            {app['user'] && app['user'].username === article.author.username
+              ?<span>
+                <button className="btn btn-sm btn-outline-secondary"
+                  onclick={e => app.run('#edit-article', article)}>
+                  <i className="ion-edit"></i>&nbsp; Edit Article
+              </button>&nbsp;&nbsp;
+              <button className="btn btn-sm btn-outline-danger"
+                  onclick={e => app.run('#delete-article', article)}>
+                  <i className="ion-trash-o"></i>&nbsp; Delete Article
+              </button>
+              </span>
+
+              : <span>
+                <button className="btn btn-sm btn-outline-secondary"
+                  onclick={e => app.run('#toggle-follow', article.author, 'on-article')}>
+                  {article.author.following
+                    ? <span><i className="ion-minus-round"></i> Unfollow {article.author.username}</span>
+                    : <span><i className="ion-plus-round"></i> Follow {article.author.username}</span>
+                  }
+                </button> &nbsp;&nbsp;
+                <button className="btn btn-sm btn-outline-primary"
+                  onclick={e => app.run('#toggle-fav-article', article, 'article')}>
+                  <i className="ion-heart"></i>
+                  &nbsp; Favorite Post <span className="counter">({article.favoritesCount})</span>
+                </button>
+              </span>
+            }
+                  
           </div>
         </div>
       </div>
@@ -97,6 +113,15 @@ class articleComponent extends Component {
     }
   }
 }
+
+app.on('#edit-article', article => {
+  document.location.hash = `#/editor/${article.slug}`;
+})
+
+app.on('#delete-article', article => {
+  articles.delete(article.slug);
+  document.location.hash = '#/';
+})
 
 new articleComponent().mount('my-app')
 

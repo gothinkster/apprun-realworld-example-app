@@ -6,27 +6,32 @@ class createComponent extends Component {
   state = {}
 
   view = (state) => {
-    if (!app['user']) return;
+    if (!app['user'] || !state.article) return;
+    const article = state.article;
     return <div className="editor-page">
       <div className="container page">
         <div className="row">
           <div className="col-md-10 offset-md-1 col-xs-12">
-
             {state.errors && <Errors errors={state.errors} />}
-
-            <form onsubmit={e => this.run('create-article', e)}>
+            <form onsubmit={e => this.run('submit-article', e)}>
+              <input type="hidden" name="slug" value={article.slug} />
               <fieldset>
                 <fieldset className="form-group">
-                  <input type="text" className="form-control form-control-lg" placeholder="Article Title" name="title" />
+                  <input type="text" className="form-control form-control-lg" placeholder="Article Title"
+                    name="title" value={article.title}/>
                 </fieldset>
                 <fieldset className="form-group">
-                  <input type="text" className="form-control" placeholder="What's this article about?" name="description"/>
+                  <input type="text" className="form-control" placeholder="What's this article about?"
+                    name="description" value={article.description}/>
                 </fieldset>
                 <fieldset className="form-group">
-                  <textarea className="form-control" rows="8" placeholder="Write your article (in markdown)" name="body"></textarea>
+                  <textarea className="form-control" rows="8" placeholder="Write your article (in markdown)" name="body">
+                    {article.body}
+                  </textarea>
                 </fieldset>
                 <fieldset className="form-group">
-                  <input type="text" className="form-control" placeholder="Enter tags" name="tags"/>
+                  <input type="text" className="form-control" placeholder="Enter tags" name="tags"
+                    value={article.tagList.join(', ')}/>
                   <div className="tag-list"></div>
                 </fieldset>
                 <button className="btn btn-lg pull-xs-right btn-primary" type="submit">
@@ -41,16 +46,24 @@ class createComponent extends Component {
   }
 
   update = {
-    '#/editor': state => {
+    '#/editor': async (state, slug) => {
       if (!app['user']) app.run('#/login');
-      return state
+      let article;
+      if (slug) {
+        const result = await articles.get(slug);
+        article = result.article
+      }
+      article = article || { title: '', description: '', body: '', tagList: [] };
+      return { ...state, article };
     },
-    'create-article': async (state, e) => {
+    'submit-article': async (state, e) => {
       try {
         e.preventDefault();
         const article = serializeObject<any>(e.target);
         article.tagList = article.tags.split(',');
-        const result = await articles.create(article);
+        const result = article.slug
+          ? await articles.create(article)
+          : await articles.update(article)
         document.location.hash = `#/article/${result.article.slug}`;
         return state;
       } catch ({ errors }) {
