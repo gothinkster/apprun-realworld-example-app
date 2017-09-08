@@ -2,6 +2,7 @@ import app, { Component } from 'apprun';
 import { articles, comments } from '../api';
 import { IArticle } from '../models';
 import Comments from './comment-list';
+import * as marked from 'marked';
 
 class articleComponent extends Component {
   state = {
@@ -42,7 +43,7 @@ class articleComponent extends Component {
       <div className="container page">
         <div className="row article-content">
           <div className="col-md-12">
-            <p>{article.body}</p>
+            <p>{`_html:${marked(article.body, { sanitize: true })}`}</p>
             <div class="tag-list"><br />
               {article.tagList.map(tag =>
                 <li className="tag-default tag-pill tag-outline">

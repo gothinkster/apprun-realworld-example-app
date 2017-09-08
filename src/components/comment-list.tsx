@@ -1,11 +1,12 @@
 import app from 'apprun';
 import { IComment, IProfile } from '../models';
+import * as marked from 'marked';
 
 function Comment({ comment }: { comment: IComment }) {
   return <div className="card">
     <div className="card-block">
       <p className="card-text">
-        { comment.body }
+        <p>{`_html:${marked(comment.body, { sanitize: true })}`}</p>
       </p>
     </div>
     <div className="card-footer">
@@ -13,7 +14,7 @@ function Comment({ comment }: { comment: IComment }) {
         <img src={comment.author.image} className="comment-author-img" />
     </a>
     &nbsp;
-    <a className="comment-author" href="['/profile', comment.author.username]">
+    <a className="comment-author" href={`#/profile/${comment.author.username}`}>
       { comment.author.username }
     </a>
     <span className="date-posted">
