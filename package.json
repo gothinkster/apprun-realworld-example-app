@@ -22,7 +22,7 @@
   "homepage": "https://github.com/yysun/realworld-starter-kit#readme",
   "devDependencies": {
     "@types/jasmine": "^2.5.54",
-    "apprun": "^1.6.0",
+    "apprun": "^1.6.2",
     "jasmine-core": "^2.8.0",
     "karma": "^1.7.1",
     "karma-chrome-launcher": "^2.2.0",
