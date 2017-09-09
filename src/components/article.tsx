@@ -4,6 +4,47 @@ import { IArticle } from '../models';
 import Comments from './comment-list';
 import * as marked from 'marked';
 
+function ArticleMeta({ article }: { article: IArticle }) {
+  const favClass = article.favorited ? "btn-primary" : "btn-outline-primary";
+  const followClass = article.author.following ? "btn-secondary" : "btn-outline-secondary";
+  return <div className="article-meta">
+    <a href={article.author.image} ><img src={article.author.image} /></a>
+    <div className="info">
+      <a href={`#/profile/${article.author.username}`} className="author">
+        {article.author.username}
+      </a>
+      <span className="date">{new Date(article.updatedAt).toLocaleString()}</span>
+    </div>
+
+    {app['user'] && app['user'].username === article.author.username
+      ? <span>
+        <button className="btn btn-sm btn-outline-secondary"
+          onclick={e => app.run('#edit-article', article)}>
+          <i className="ion-edit"></i>&nbsp; Edit Article
+          </button>&nbsp;&nbsp;
+          <button className="btn btn-sm btn-outline-danger"
+          onclick={e => app.run('#delete-article', article)}>
+          <i className="ion-trash-o"></i>&nbsp; Delete Article
+              </button>
+        </span>
+      : <span>
+        <button className={`btn btn-sm ${followClass}`}
+          onclick={e => app.run('#toggle-follow', article.author, 'article')}>
+          {article.author.following
+            ? <span><i className="ion-minus-round"></i> Unfollow {article.author.username}</span>
+            : <span><i className="ion-plus-round"></i> Follow {article.author.username}</span>
+          }
+        </button> &nbsp;&nbsp;
+        <button className={`btn btn-sm ${favClass}`}
+          onclick={e => app.run('#toggle-fav-article', article, 'article')}>
+          {article.favorited ? <i className="ion-heart"></i> : <i></i>}
+          &nbsp; Favorite Post <span className="counter">({article.favoritesCount})</span>
+        </button>
+      </span>
+    }
+  </div>
+}
+
 class ArticleComponent extends Component {
   state = {
     article: null,
@@ -13,48 +54,12 @@ class ArticleComponent extends Component {
   view = (state) => {
     const article = state.article as IArticle;
     if (!article) return;
+
     return <div className="article-page">
       <div className="banner">
         <div className="container">
           <h1>{article.title}</h1>
-          <div className="article-meta">
-            <a href={article.author.image} ><img src={article.author.image} /></a>
-            <div className="info">
-              <a href={`#/profile/${article.author.username}`} className="author">
-                {article.author.username}
-              </a>
-              <span className="date">{new Date(article.updatedAt).toLocaleString()}</span>
-            </div>
-
-            {app['user'] && app['user'].username === article.author.username
-              ?<span>
-                <button className="btn btn-sm btn-outline-secondary"
-                  onclick={e => app.run('#edit-article', article)}>
-                  <i className="ion-edit"></i>&nbsp; Edit Article
-              </button>&nbsp;&nbsp;
-              <button className="btn btn-sm btn-outline-danger"
-                  onclick={e => app.run('#delete-article', article)}>
-                  <i className="ion-trash-o"></i>&nbsp; Delete Article
-              </button>
-              </span>
-
-              : <span>
-                <button className="btn btn-sm btn-outline-secondary"
-                  onclick={e => app.run('#toggle-follow', article.author, 'article')}>
-                  {article.author.following
-                    ? <span><i className="ion-minus-round"></i> Unfollow {article.author.username}</span>
-                    : <span><i className="ion-plus-round"></i> Follow {article.author.username}</span>
-                  }
-                </button> &nbsp;&nbsp;
-                <button className="btn btn-sm btn-outline-primary"
-                  onclick={e => app.run('#toggle-fav-article', article, 'article')}>
-                  {article.favorited ? <i className="ion-heart"></i> : <i></i>}
-                  &nbsp; Favorite Post <span className="counter">({article.favoritesCount})</span>
-                </button>
-              </span>
-            }
-
-          </div>
+          <ArticleMeta article={article}/>
         </div>
       </div>
 
@@ -62,7 +67,7 @@ class ArticleComponent extends Component {
         <div className="row article-content">
           <div className="col-md-12">
             <p>{`_html:${marked(article.body, { sanitize: true })}`}</p>
-            <div class="tag-list"><br />
+            <div className="tag-list"><br />
               {article.tagList.map(tag =>
                 <li className="tag-default tag-pill tag-outline">
                   <a href={`#/tag/${tag}`}>{tag} </a>
@@ -72,6 +77,9 @@ class ArticleComponent extends Component {
           </div>
         </div>
         <hr />
+        <div className="article-actions">
+          <ArticleMeta article={article} />
+        </div>
         <Comments comments={state.comments}/>
       </div>
     </div>
