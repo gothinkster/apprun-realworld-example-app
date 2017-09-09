@@ -14,14 +14,14 @@ We've gone to great lengths to adhere to the [RealWorld](https://github.com/goth
 
 [AppRun](https://github.com/yysun/apprun) is a 3K library for developing applications using the elm style model-view-update architecture and event pub and sub pattern.
 
-The application is built using [AppRun](https://github.com/yysun/apprun) component, which has the model-view-update architecture.
+The RealWorld example application is built using [AppRun](https://github.com/yysun/apprun) component that implements the model-view-update architecture.
 ```
 import app, { Component } from 'apprun';
 class ArticleComponent extends Component{
-  
+
   state = {}
 
-  view = <div></div>
+  view = (state) => <div></div>
 
   update = {
     '#/article': async(state, slug) => {}
