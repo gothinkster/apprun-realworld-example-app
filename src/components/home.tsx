@@ -44,7 +44,7 @@ class HomeComponent extends Component {
                 }
               </ul>
             </div>
-            <Articles articles={state.articles} id='home-articles' />
+            <Articles articles={state.articles} id='home' />
             <Pages max={Math.floor(state.max / PAGE_SIZE)} selected={state.page} onpage={page => this.run('set-page', page)}/>
           </div>
           <div className="col-md-3">
@@ -60,7 +60,7 @@ class HomeComponent extends Component {
     </div>
   }
 
-  getArticles = async (state, type: '' | 'feed' | 'tag', page, tag?: string) => {
+  updateStae = async (state, type: '' | 'feed' | 'tag', page, tag?: string) => {
     let tagList = state.tags.length
       ? { tags: state.tags }
       : await tags.all();
@@ -92,42 +92,33 @@ class HomeComponent extends Component {
 
   update = {
     '#/': async (state, page) => {
-      return await this.getArticles(state, '', page)
+      return await this.updateStae(state, '', page)
     },
     '#/feed': async (state, page) => {
-      return await this.getArticles(state, 'feed', page)
+      return await this.updateStae(state, 'feed', page)
     },
     '#/tag': async (state, tag, page) => {
-      return await this.getArticles(state, 'tag', page, tag)
+      return await this.updateStae(state, 'tag', page, tag)
     },
     'set-page': async (state, page) => {
       const t = state.type === 'tag' && state.tag ? `/${state.tag}` : '';
       history.pushState(null, null, `#/${state.type}${t}/${page}`);
-      return await this.getArticles(state, state.type, page, state.tag);
+      return await this.updateStae(state, state.type, page, state.tag);
     },
     'set-tag': async (state, e) => {
       e.preventDefault();
       const tag = e.target.textContent;
       history.pushState(null, null, `#/tag/${tag}/1`);
-      return await this.getArticles(state, 'tag', 1, tag);
+      return await this.updateStae(state, 'tag', 1, tag);
     },
-    '#update-home-articles': (state, article) => {
-      // ?
-      const articles = state.articles.map(a => {
+    '#update-article': (state, article, id) => {
+      state.articles = state.articles.map(a => {
         return a.slug === article.slug ? article : a;
       })
-      return { ...state, articles };
-    }
+      return id === 'home' ? state : null;
+    },
   }
 }
-
-app.on('#toggle-fav-article', async (article, id) => {
-  if (!app['user']) return app.run('#/login');
-  const result = article.favorited
-    ? await articles.unfavorite(article.slug)
-    : await articles.favorite(article.slug);
-  app.run(`#update-${id}`, result.article)
-})
 
 export default new HomeComponent().mount('my-app')
 

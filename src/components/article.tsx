@@ -40,7 +40,7 @@ class ArticleComponent extends Component {
 
               : <span>
                 <button className="btn btn-sm btn-outline-secondary"
-                  onclick={e => app.run('#toggle-follow', article.author, 'on-article')}>
+                  onclick={e => app.run('#toggle-follow', article.author, 'article')}>
                   {article.author.following
                     ? <span><i className="ion-minus-round"></i> Unfollow {article.author.username}</span>
                     : <span><i className="ion-plus-round"></i> Follow {article.author.username}</span>
@@ -100,11 +100,13 @@ class ArticleComponent extends Component {
         return { ...state, errors }
       }
     },
-    '#update-article': (state, article) => {
-      return { ...state, article };
+    '#update-article': (state, article, id) => {
+      state.article = article;
+      return id === 'article' ? state : null;
     },
-    '#update-follow-on-article': (state, author) => {
-      return { ...state, article: { ...state.article, author } };
+    '#update-follow': (state, profile, id) => {
+      state.article.profile = profile;
+      return id === 'article' ? state : null;
     },
     '#delete-comment': async (state, comment) => {
       await comments.delete(this.state.article.slug, comment.id);
@@ -113,6 +115,14 @@ class ArticleComponent extends Component {
     }
   }
 }
+
+app.on('#toggle-fav-article', async (article: IArticle, id: string) => {
+  if (!app['user']) return app.run('#/login');
+  const result = article.favorited
+    ? await articles.unfavorite(article.slug)
+    : await articles.favorite(article.slug);
+  app.run(`#update-article`, result.article, id)
+})
 
 app.on('#edit-article', article => {
   document.location.hash = `#/editor/${article.slug}`;
