@@ -3,6 +3,7 @@ import { IArticle } from '../models';
 
 function Article(props) {
   const article = props.article as IArticle;
+  const favClass = article.favorited ? "btn-primary" : "btn-outline-primary";
   return <div className="article-preview">
     <div className="article-meta">
       <a href={article.author.image} ><img src={article.author.image} /></a>
@@ -10,9 +11,9 @@ function Article(props) {
         <a href={`#/profile/${article.author.username}`} className="author">
           {article.author.username}
         </a>
-        <span className="date">{ new Date(article.updatedAt).toLocaleString() }</span>
+        <span className="date">{new Date(article.updatedAt).toLocaleString()}</span>
       </div>
-      <button className={`btn btn-outline-primary btn-sm pull-xs-right${article.favorited ? ' active' : ''}`}
+      <button className={`btn btn-sm pull-xs-right ${favClass}`}
         onclick={e => app.run('#toggle-fav-article', article, props.id)}>
         <i className="ion-heart"></i> {article.favoritesCount}
       </button>
@@ -21,14 +22,15 @@ function Article(props) {
       <h1>{article.title}</h1>
       <p>{article.description}</p>
       <span>Read more...</span>
+
+      <ul className="tag-list">
+        {article.tagList.map(tag =>
+          <li className="tag-default tag-pill tag-outline">
+            <a href={`#/tag/${tag}`}>{tag} </a>
+          </li>
+        )}
+      </ul>
     </a>
-    <div class="tag-list"><br/>
-      {article.tagList.map(tag =>
-        <li className="tag-default tag-pill tag-outline">
-          <a href={`#/tag/${tag}`}>{tag} </a>
-        </li>
-      )}
-      </div>
   </div>
 }
 
