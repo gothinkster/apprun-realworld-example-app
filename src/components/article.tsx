@@ -48,12 +48,12 @@ class ArticleComponent extends Component {
                 </button> &nbsp;&nbsp;
                 <button className="btn btn-sm btn-outline-primary"
                   onclick={e => app.run('#toggle-fav-article', article, 'article')}>
-                  <i className="ion-heart"></i>
+                  {article.favorited ? <i className="ion-heart"></i> : <i></i>}
                   &nbsp; Favorite Post <span className="counter">({article.favoritesCount})</span>
                 </button>
               </span>
             }
-                  
+
           </div>
         </div>
       </div>
@@ -104,14 +104,14 @@ class ArticleComponent extends Component {
       state.article = article;
       return id === 'article' ? state : null;
     },
-    '#update-follow': (state, profile, id) => {
-      state.article.profile = profile;
+    '#update-follow': (state, author, id) => {
+      state.article.author = author;
       return id === 'article' ? state : null;
     },
     '#delete-comment': async (state, comment) => {
       await comments.delete(this.state.article.slug, comment.id);
-      const commentsResponse = await comments.forArticle(state.article.slug);      
-      return { ...state, comments: commentsResponse.comments }      
+      const commentsResponse = await comments.forArticle(state.article.slug);
+      return { ...state, comments: commentsResponse.comments }
     }
   }
 }
