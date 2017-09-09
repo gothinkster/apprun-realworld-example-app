@@ -10,6 +10,7 @@ class ProfileComponent extends Component {
   state = {
     name: '',
     type: 'articles',
+    articles: [],
     page: 1
   }
 
@@ -95,8 +96,8 @@ class ProfileComponent extends Component {
       history.pushState(null, null, url);
       return this.updateState(state, null, null, page)
     },
-    '#update-articles': (state, article, id) => {
-      const articles = state.articles.map(a => {
+    '#update-article': (state, article, id) => {
+      state.articles = state.articles.map(a => {
         return a.slug === article.slug ? article : a;
       })
       return id === 'profile' ? state : null;
@@ -113,7 +114,7 @@ app.on('#toggle-follow', async (author: IProfile, id: string) => {
   const result = author.following
     ? await profile.unfollow(author.username)
     : await profile.follow(author.username);
-  app.run(`#update-follow}`, result.profile, id)
+  app.run(`#update-follow`, result.profile, id)
 })
 
 export default new ProfileComponent().mount('my-app')
