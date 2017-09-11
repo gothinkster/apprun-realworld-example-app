@@ -1,13 +1,23 @@
 import app, { Component, on } from 'apprun';
 import { serializeObject, auth } from '../api'
 import Errors from './error-list';
+import Modal from './modal';
+
 class SettingsComponent extends Component {
   state = {}
 
   view = (state) => {
     if (!app['user']) return;
     const user = app['user'];
+
     return <div className="settings-page">
+      {
+        state.showModal ? <Modal title='Confirmation'
+          body='Your settings has been updated successfully.'
+          ok='OK'
+          onOK={e => this.run('ok', e)}
+          onCancel={e => this.run('cancel', e)} /> : ''
+      }
       <div className="container page">
         <div className="row">
           <div className="col-md-6 offset-md-3 col-xs-12">
@@ -47,23 +57,29 @@ class SettingsComponent extends Component {
     </div>
   }
 
-  
+
   @on('#/settings') settings = state => {
     if (!app['user']) app.run('#/login');
     return {}
   }
- 
+
   @on('submit-settings') submitSettings = async (state, e) => {
     try {
       e.preventDefault();
       const user = serializeObject<any>(e.target);
       const result = await auth.save(user);
       app.run('#user', result.user);
-      document.location.hash = `#/profile/${result.user.username}`;
+      return { showModal: true }
     } catch ({ errors }) {
       return { ...state, errors }
     }
   }
+
+  @on('ok, cancel') ok = state => {
+    return { showModel: false }
+    //document.location.hash = `#/profile/${app['user'].username}`;
+  }
+
 }
 
 export default new SettingsComponent().mount('my-app')

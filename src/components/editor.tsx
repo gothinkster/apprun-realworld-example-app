@@ -14,7 +14,7 @@ class EditorComponent extends Component {
           <div className="col-md-10 offset-md-1 col-xs-12">
             {state.errors && <Errors errors={state.errors} />}
             <form onsubmit={e => this.run('submit-article', e)}>
-              <input type="hidden" name="slug" value={article.slug} />
+              {article.slug && <input type="hidden" name="slug" value={article.slug} />}
               <fieldset>
                 <fieldset className="form-group">
                   <input type="text" className="form-control form-control-lg" placeholder="Article Title"
@@ -45,7 +45,7 @@ class EditorComponent extends Component {
     </div>
   }
 
-  
+
   @on('#/editor') root = async (state, slug) => {
     if (!app['user']) app.run('#/login');
     let article;

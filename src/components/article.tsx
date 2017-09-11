@@ -2,6 +2,7 @@ import app, { Component, on } from 'apprun';
 import { articles, comments } from '../api';
 import { IArticle } from '../models';
 import Comments from './comment-list';
+import Modal from './modal';
 import * as marked from 'marked';
 
 function ArticleMeta({ article }: { article: IArticle }) {
@@ -56,6 +57,15 @@ class ArticleComponent extends Component {
     if (!article) return;
 
     return <div className="article-page">
+
+      {
+        state.deleting ? <Modal title='Delete Article'
+        body='Are you sure you want to delete this article?'
+        ok='Delete' cancel='No'
+        onOK={e => this.run('ok-delete-article', e)}
+        onCancel={e => this.run('cancel-delete-article', e)} /> : ''
+      }
+
       <div className="banner">
         <div className="container">
           <h1>{article.title}</h1>
@@ -96,7 +106,7 @@ class ArticleComponent extends Component {
     }
     return { ...state, article, comments: _comments }
   }
-  
+
   @on('#new-comment') newComment = async (state, e) => {
     try {
       e.preventDefault();
@@ -113,12 +123,12 @@ class ArticleComponent extends Component {
     state.article = article;
     return id === 'article' ? state : null;
   }
-  
+
   @on('#update-follow') updateFollow = (state, author, id) => {
     state.article.author = author;
     return id === 'article' ? state : null;
   }
-    
+
   @on('#delete-comment') deleteComment = async (state, comment) => {
     await comments.delete(this.state.article.slug, comment.id);
     const commentsResponse = await comments.forArticle(state.article.slug);
@@ -137,10 +147,16 @@ class ArticleComponent extends Component {
     document.location.hash = `#/editor/${article.slug}`;
   }
 
-  @on('#delete-article') deleteArticle = (state, article) => {
-    articles.delete(article.slug);
+  @on('#delete-article') deleteArticle = (state, article) => ({ ...state, deleting: true })
+
+  @on('ok-delete-article') okDelete = (state, e) => {
+    articles.delete(state.article.slug);
     document.location.hash = '#/';
+    return ({ ...state, deleting: false })
   }
+
+  @on('cancel-delete-article') cancelDelete = (state, article) => ({ ...state, deleting: false })
+
 }
 
 export default new ArticleComponent().mount('my-app')
