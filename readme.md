@@ -10,6 +10,16 @@ This codebase was created to demonstrate application frontend built with **[AppR
 
 We've gone to great lengths to adhere to the [RealWorld](https://github.com/gothinkster/realworld) community style guides & best practices.
 
+## General functionality
+
+* Authenticate users via JWT (login/signup pages + logout button)
+* CRU* users (sign up & settings page - no deleting required)
+* CRUD Articles
+* CR*D Comments on articles (no updating required)
+* GET and display paginated lists of articles
+* Favorite articles
+* Follow other users
+
 ## How it works
 
 [AppRun](https://github.com/yysun/apprun) is a 3K library for developing applications using the elm style model-view-update architecture and event pub and sub pattern.
@@ -44,7 +54,15 @@ class ArticleComponent extends Component{
 }
 ```
 
-The application code has about 1000 lines source that can be gziped to 14.5K.
+This codebase has about 1000 lines of source code that can be gziped to 18K.
+
+Following articles have more details of this application and AppRun.
+* [Deep Dive into AppRun State](https://medium.com/@yiyisun/deep-dive-into-apprun-state-3d6fb58b1521)
+
+* [Deep Dive into AppRun Events](
+https://medium.com/@yiyisun/deep-dive-into-apprun-events-1650dc7811ea)
+
+* [Building Applications with AppRun](https://medium.com/@yiyisun/building-applications-with-apprun-d103cd461bae)
 
 ## Getting started
 
