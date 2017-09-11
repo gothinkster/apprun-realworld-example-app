@@ -1,4 +1,4 @@
-import app, { Component } from 'apprun';
+import app, { Component, on } from 'apprun';
 import { articles, comments } from '../api';
 import { IArticle } from '../models';
 import Comments from './comment-list';
@@ -37,7 +37,7 @@ function ArticleMeta({ article }: { article: IArticle }) {
         </button> &nbsp;&nbsp;
         <button className={`btn btn-sm ${favClass}`}
           onclick={e => app.run('#toggle-fav-article', article, 'article')}>
-          {article.favorited ? <i className="ion-heart"></i> : <i></i>}
+          <i className="ion-heart"></i>
           &nbsp; Favorite Post <span className="counter">({article.favoritesCount})</span>
         </button>
       </span>
@@ -59,7 +59,7 @@ class ArticleComponent extends Component {
       <div className="banner">
         <div className="container">
           <h1>{article.title}</h1>
-          <ArticleMeta article={article}/>
+          <ArticleMeta article={article} />
         </div>
       </div>
 
@@ -80,66 +80,68 @@ class ArticleComponent extends Component {
         <div className="article-actions">
           <ArticleMeta article={article} />
         </div>
-        <Comments comments={state.comments}/>
+        <Comments comments={state.comments} />
       </div>
     </div>
   }
 
-  update = {
-    '#/article': async (state, slug) => {
-      let article = state.article as IArticle;
-      let _comments = state.comments;
-      if (!article || article.slug !== slug) {
-        const result = await articles.get(slug);
-        article = result.article;
-        const commentsResponse = await comments.forArticle(article.slug);
-        _comments = commentsResponse.comments;
-      }
-      return { ...state, article, comments: _comments }
-    },
-    '#new-comment': async (state, e) => {
-      try {
-        e.preventDefault();
-        const comment = e.target['comment'].value;
-        await comments.create(state.article.slug, { body: comment });
-        const commentsResponse = await comments.forArticle(state.article.slug);
-        return { ...state, comments: commentsResponse.comments }
-      } catch ({ errors }) {
-        return { ...state, errors }
-      }
-    },
-    '#update-article': (state, article, id) => {
-      state.article = article;
-      return id === 'article' ? state : null;
-    },
-    '#update-follow': (state, author, id) => {
-      state.article.author = author;
-      return id === 'article' ? state : null;
-    },
-    '#delete-comment': async (state, comment) => {
-      await comments.delete(this.state.article.slug, comment.id);
+  @on('#/article') root = async (state, slug) => {
+    let article = state.article as IArticle;
+    let _comments = state.comments;
+    if (!article || article.slug !== slug) {
+      const result = await articles.get(slug);
+      article = result.article;
+      const commentsResponse = await comments.forArticle(article.slug);
+      _comments = commentsResponse.comments;
+    }
+    return { ...state, article, comments: _comments }
+  }
+  
+  @on('#new-comment') newComment = async (state, e) => {
+    try {
+      e.preventDefault();
+      const comment = e.target['comment'].value;
+      await comments.create(state.article.slug, { body: comment });
       const commentsResponse = await comments.forArticle(state.article.slug);
       return { ...state, comments: commentsResponse.comments }
+    } catch ({ errors }) {
+      return { ...state, errors }
     }
   }
+
+  @on('#update-article') updateArticle = (state, article, id) => {
+    state.article = article;
+    return id === 'article' ? state : null;
+  }
+  
+  @on('#update-follow') updateFollow = (state, author, id) => {
+    state.article.author = author;
+    return id === 'article' ? state : null;
+  }
+    
+  @on('#delete-comment') deleteComment = async (state, comment) => {
+    await comments.delete(this.state.article.slug, comment.id);
+    const commentsResponse = await comments.forArticle(state.article.slug);
+    return { ...state, comments: commentsResponse.comments }
+  }
+
+  @on('#toggle-fav-article') toggleFavArticle = async (state, article: IArticle, id: string) => {
+    if (!app['user']) return app.run('#/login');
+    const result = article.favorited
+      ? await articles.unfavorite(article.slug)
+      : await articles.favorite(article.slug);
+    app.run(`#update-article`, result.article, id)
+  }
+
+  @on('#edit-article') editArticle = (state, article) => {
+    document.location.hash = `#/editor/${article.slug}`;
+  }
+
+  @on('#delete-article') deleteArticle = (state, article) => {
+    articles.delete(article.slug);
+    document.location.hash = '#/';
+  }
 }
-
-app.on('#toggle-fav-article', async (article: IArticle, id: string) => {
-  if (!app['user']) return app.run('#/login');
-  const result = article.favorited
-    ? await articles.unfavorite(article.slug)
-    : await articles.favorite(article.slug);
-  app.run(`#update-article`, result.article, id)
-})
-
-app.on('#edit-article', article => {
-  document.location.hash = `#/editor/${article.slug}`;
-})
-
-app.on('#delete-article', article => {
-  articles.delete(article.slug);
-  document.location.hash = '#/';
-})
 
 export default new ArticleComponent().mount('my-app')
 

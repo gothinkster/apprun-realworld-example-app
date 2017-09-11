@@ -1,4 +1,4 @@
-import app, { Component } from 'apprun';
+import app, { Component, on } from 'apprun';
 import { auth, serializeObject, setToken } from '../api'
 
 import Errors from './error-list';
@@ -12,7 +12,6 @@ class SigninComponent extends Component {
     return <div className="auth-page">
       <div className="container page">
         <div className="row">
-
           <div className="col-md-6 offset-md-3 col-xs-12">
             <h1 className="text-xs-center">Sign In</h1>
             <p className="text-xs-center">
@@ -23,7 +22,7 @@ class SigninComponent extends Component {
 
             <form onsubmit={e => this.run('sign-in', e)}>
               <fieldset className="form-group">
-                <input className="form-control form-control-lg" type="text" placeholder="Email" name="email"/>
+                <input className="form-control form-control-lg" type="text" placeholder="Email" name="email" />
               </fieldset>
               <fieldset className="form-group">
                 <input className="form-control form-control-lg" type="password" placeholder="Password" name="password" />
@@ -39,34 +38,34 @@ class SigninComponent extends Component {
     </div>
   }
 
-  update = {
-    '#/login': state => ({ ...state, messages:[], returnTo: document.location.hash }),
-    '#/logout': state => {
-      app.run('#user', null);
-      document.location.hash = '#/';
-    },
-    'sign-in': async (state, e) => {
-      try {
-        e.preventDefault();
-        const session = await auth.signIn(serializeObject(e.target));
-        app.run('#user', session.user);
-        const returnTo: string = (state.returnTo || '').replace(/\#\/login\/?/, '')
-        if (!returnTo)
-          document.location.hash = '#/feed';
-        else {
-          app.run('route', returnTo);
-          history.pushState(null, null, returnTo);
-        }
-      } catch ({ errors }) {
-        return { ...state, errors }
-      }
-    },
+  @on('#/login') login = state => ({ ...state, messages: [], returnTo: document.location.hash })
+  
+  @on('#/logout') logout = state => {
+    app.run('#user', null);
+    document.location.hash = '#/';
   }
-}
-
-app.on('#user', user => {
-  setToken(user ? user.token : null);
-  app['user'] = user;
-});
+  
+  @on('sign-in') signIn = async (state, e) => {
+    try {
+      e.preventDefault();
+      const session = await auth.signIn(serializeObject(e.target));
+      app.run('#user', session.user);
+      const returnTo: string = (state.returnTo || '').replace(/\#\/login\/?/, '')
+      if (!returnTo)
+        document.location.hash = '#/feed';
+      else {
+        app.run('route', returnTo);
+        history.pushState(null, null, returnTo);
+      }
+    } catch ({ errors }) {
+      return { ...state, errors }
+    }
+  }
+ 
+  @on('#user') setUser = (state, user) => {
+    setToken(user ? user.token : null);
+    app['user'] = user;
+  }
+}  
 
 export default new SigninComponent().mount('my-app')

@@ -1,4 +1,4 @@
-import app, { Component } from 'apprun';
+import app, { Component, on } from 'apprun';
 import { IProfile } from '../models';
 import { articles, profile } from '../api';
 import Articles from './article-list';
@@ -54,7 +54,7 @@ class ProfileComponent extends Component {
                 </li>
               </ul>
             </div>
-            <Articles articles={state.articles} id='profile'/>
+            <Articles articles={state.articles} id='profile' />
             <Pages max={Math.floor(state.max / PAGE_SIZE)} selected={state.page}
               onpage={page => this.run('set-page', page)} />
           </div>
@@ -87,34 +87,33 @@ class ProfileComponent extends Component {
     return newState
   }
 
-  update = {
-    '#/profile': (state, name, type, page) => {
-      return this.updateState(state, name, type, page)
-    },
-    'set-page': (state, page) => {
-      const url = `#/profile/${state.profile.username}/${state.type}/${page}`
-      history.pushState(null, null, url);
-      return this.updateState(state, null, null, page)
-    },
-    '#update-article': (state, article, id) => {
-      state.articles = state.articles.map(a => {
-        return a.slug === article.slug ? article : a;
-      })
-      return id === 'profile' ? state : null;
-    },
-    '#update-follow': (state, profile, id) => {
-      state.profile = profile;
-      return id === 'profile' ? state : null;
-    }
-  }
-}
+  @on('#/profile') root = (state, name, type, page) => this.updateState(state, name, type, page)
 
-app.on('#toggle-follow', async (author: IProfile, id: string) => {
-  if (!app['user']) return app.run('#/login');
-  const result = author.following
-    ? await profile.unfollow(author.username)
-    : await profile.follow(author.username);
-  app.run(`#update-follow`, result.profile, id)
-})
+  @on('set-page') setPage = (state, page) => {
+    const url = `#/profile/${state.profile.username}/${state.type}/${page}`
+    history.pushState(null, null, url);
+    return this.updateState(state, null, null, page)
+  }
+ 
+  @on('#update-article') updateArticle = (state, article, id) => {
+    state.articles = state.articles.map(a => {
+      return a.slug === article.slug ? article : a;
+    })
+    return id === 'profile' ? state : null;
+  }
+ 
+  @on('#update-follow') updateFollow = (state, profile, id) => {
+    state.profile = profile;
+    return id === 'profile' ? state : null;
+  }
+
+  @on('#toggle-follow') toggleFollow = async (state, author: IProfile, id: string) => {
+    if (!app['user']) return app.run('#/login');
+    const result = author.following
+      ? await profile.unfollow(author.username)
+      : await profile.follow(author.username);
+    app.run(`#update-follow`, result.profile, id)
+  }
+}  
 
 export default new ProfileComponent().mount('my-app')

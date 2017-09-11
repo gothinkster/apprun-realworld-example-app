@@ -1,4 +1,4 @@
-import app, { Component } from 'apprun';
+import app, { Component, on } from 'apprun';
 
 class HeaderComponent extends Component {
   state = {}
@@ -6,7 +6,7 @@ class HeaderComponent extends Component {
     const user = state.user
     return <ul className="nav navbar-nav pull-xs-right">
       <li className="nav-item">
-          <a className="nav-link active" href="#/">Home</a>
+        <a className="nav-link active" href="#/">Home</a>
       </li>
       {user && <li className="nav-item">
         <a className="nav-link" href="#/editor">
@@ -15,16 +15,16 @@ class HeaderComponent extends Component {
       </li>
       }
       {user && <li className="nav-item">
-          <a className="nav-link" href="#/settings">
-            <i className="ion-gear-a"></i>&nbsp;Settings
+        <a className="nav-link" href="#/settings">
+          <i className="ion-gear-a"></i>&nbsp;Settings
             </a>
-        </li>
+      </li>
       }
-      {user ? '': <li className="nav-item">
+      {user ? '' : <li className="nav-item">
         <a className="nav-link" href="#/login">Sign In</a>
       </li>
       }
-      {user? '' : <li className="nav-item">
+      {user ? '' : <li className="nav-item">
         <a className="nav-link" href="#/register">Sign up</a>
       </li>
       }
@@ -39,9 +39,8 @@ class HeaderComponent extends Component {
     </ul>
   }
 
-  update = {
-    '#user': (state, user) => ({ ...state, user })
-  }
+  @on('#user') setUser = (state, user) => ({ ...state, user })
+  
 }
 
 export default new HeaderComponent().mount('header')

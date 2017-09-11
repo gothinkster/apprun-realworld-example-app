@@ -1,4 +1,4 @@
-import app, {Component} from 'apprun';
+import app, { Component, on } from 'apprun';
 import { auth, serializeObject } from '../api'
 import Errors from './error-list';
 
@@ -22,13 +22,13 @@ class RegisterComponent extends Component {
 
             <form onsubmit={e => this.run('register', e)}>
               <fieldset className="form-group">
-                <input className="form-control form-control-lg" type="text" placeholder="Your Name" name="username"/>
+                <input className="form-control form-control-lg" type="text" placeholder="Your Name" name="username" />
               </fieldset>
               <fieldset className="form-group">
-                <input className="form-control form-control-lg" type="text" placeholder="Email" name="email"/>
+                <input className="form-control form-control-lg" type="text" placeholder="Email" name="email" />
               </fieldset>
               <fieldset className="form-group">
-                <input className="form-control form-control-lg" type="password" placeholder="Password" name="password"/>
+                <input className="form-control form-control-lg" type="password" placeholder="Password" name="password" />
               </fieldset>
               <button className="btn btn-lg btn-primary pull-xs-right">
                 Sign up
@@ -41,17 +41,16 @@ class RegisterComponent extends Component {
     </div>
   }
 
-  update = {
-    '#/register': (state, messages) => ({ ...state, messages }),
-    'register': async (state, e) => {
-      try {
-        e.preventDefault();
-        const session = await auth.register(serializeObject(e.target));
-        app.run('#user', session.user);
-        app.run('route', '#/');
-      } catch ({ errors }) {
-        return { ...state, errors }
-      }
+  @on('#/register') register = (state, messages) => ({ ...state, messages })
+  
+  @on('register') submitRegistration = async (state, e) => {
+    try {
+      e.preventDefault();
+      const session = await auth.register(serializeObject(e.target));
+      app.run('#user', session.user);
+      app.run('route', '#/');
+    } catch ({ errors }) {
+      return { ...state, errors }
     }
   }
 }

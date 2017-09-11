@@ -30,6 +30,20 @@ class ArticleComponent extends Component{
 }
 ```
 
+Or use the _on_ decorator (AppRun 1.7+)
+```
+import app, { Component, on } from 'apprun';
+class ArticleComponent extends Component{
+
+  state = {}
+
+  view = (state) => <div></div>
+
+  @on('#/article') root =  async(state, slug) => {}
+
+}
+```
+
 The application code has about 1000 lines source that can be gziped to 14.5K.
 
 ## Getting started
