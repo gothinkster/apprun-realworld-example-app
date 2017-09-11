@@ -1,13 +1,22 @@
 import app, { Component } from 'apprun';
 import { tags, articles } from '../api';
+import { IArticle } from '../models';
 import Articles from './article-list';
 import Pages from './page-list';
 
 const PAGE_SIZE = 10
 const Tag = ({ tag }) => <a href="" className="tag-pill tag-default">{tag}</a>
 
+declare interface IState {
+  type: '' | 'feed' | 'tag'
+  articles: Array<IArticle>
+  tags: Array<string>
+  max: number
+  page: number
+}
+
 class HomeComponent extends Component {
-  state = {
+  state : IState = {
     type: '',
     articles: [],
     tags: [],
@@ -60,7 +69,7 @@ class HomeComponent extends Component {
     </div>
   }
 
-  updateStae = async (state, type: '' | 'feed' | 'tag', page, tag?: string) => {
+  updateState = async (state, type: '' | 'feed' | 'tag', page, tag?: string) => {
     let tagList = state.tags.length
       ? { tags: state.tags }
       : await tags.all();
@@ -91,25 +100,19 @@ class HomeComponent extends Component {
   }
 
   update = {
-    '#/': async (state, page) => {
-      return await this.updateStae(state, '', page)
-    },
-    '#/feed': async (state, page) => {
-      return await this.updateStae(state, 'feed', page)
-    },
-    '#/tag': async (state, tag, page) => {
-      return await this.updateStae(state, 'tag', page, tag)
-    },
+    '#/': async (state, page) => await this.updateState(state, '', page),
+    '#/feed': async (state, page) => await this.updateState(state, 'feed', page),
+    '#/tag': async (state, tag, page) => await this.updateState(state, 'tag', page, tag),
     'set-page': async (state, page) => {
       const t = state.type === 'tag' && state.tag ? `/${state.tag}` : '';
       history.pushState(null, null, `#/${state.type}${t}/${page}`);
-      return await this.updateStae(state, state.type, page, state.tag);
+      return await this.updateState(state, state.type, page, state.tag);
     },
     'set-tag': async (state, e) => {
       e.preventDefault();
       const tag = e.target.textContent;
       history.pushState(null, null, `#/tag/${tag}/1`);
-      return await this.updateStae(state, 'tag', 1, tag);
+      return await this.updateState(state, 'tag', 1, tag);
     },
     '#update-article': (state, article, id) => {
       state.articles = state.articles.map(a => {
