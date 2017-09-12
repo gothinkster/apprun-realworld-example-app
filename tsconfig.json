@@ -5,6 +5,7 @@
     "reactNamespace": "app",
     "lib": ["dom", "es2015", "es5"],
     "sourceMap": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "importHelpers": true
   }
 }
