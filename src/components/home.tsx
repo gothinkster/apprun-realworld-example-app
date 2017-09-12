@@ -81,7 +81,7 @@ class HomeComponent extends Component {
     let feed;
     switch (type) {
       case 'feed':
-        feed = await articles.feed({ limit, offset });
+        feed = await articles.search({ author: app['user'].username, limit, offset });
         break;
       case 'tag':
         feed = await articles.search({ tag, limit, offset });
@@ -102,7 +102,7 @@ class HomeComponent extends Component {
   @on('#/')  root = async (state, page) => await this.updateState(state, '', page)
 
   @on('#/feed') feed = async (state, page) => await this.updateState(state, 'feed', page)
-  
+
   @on('#/tag')  tag = async (state, tag, page) => await this.updateState(state, 'tag', page, tag)
 
   @on('set-page') setPage = async (state, page) => {
