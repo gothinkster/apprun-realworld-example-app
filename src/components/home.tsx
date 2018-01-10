@@ -73,7 +73,7 @@ class HomeComponent extends Component {
     let tagList = state.tags.length
       ? { tags: state.tags }
       : await tags.all();
-
+    
     page = parseInt(page) || 1;
     tag = tag || state.tag;
     const limit = PAGE_SIZE;
@@ -81,7 +81,7 @@ class HomeComponent extends Component {
     let feed;
     switch (type) {
       case 'feed':
-        feed = await articles.search({ author: app['user'].username, limit, offset });
+        feed = await articles.feed({ limit, offset });
         break;
       case 'tag':
         feed = await articles.search({ tag, limit, offset });
