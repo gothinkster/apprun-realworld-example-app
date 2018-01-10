@@ -4,7 +4,7 @@
   "description": "> ### AppRun codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld) spec and API.",
   "main": "index.js",
   "scripts": {
-    "test": "karma start",
+    "test": "jest --watch",
     "start": "webpack-dev-server",
     "build": "webpack -p",
     "lint": "tslint -p ."
@@ -21,22 +21,33 @@
   },
   "homepage": "https://github.com/yysun/realworld-starter-kit#readme",
   "devDependencies": {
-    "@types/jasmine": "^2.5.54",
-    "apprun": "^1.8.2",
-    "jasmine-core": "^2.8.0",
-    "karma": "^1.7.1",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-jasmine": "^1.1.0",
-    "karma-webpack": "^2.0.4",
+    "@types/jest": "^22.0.1",
+    "jest": "^22.0.5",
     "source-map-loader": "^0.2.3",
-    "ts-loader": "^2.3.4",
+    "ts-jest": "^22.0.1",
+    "ts-loader": "^2.3.7",
     "tslib": "^1.7.1",
     "tslint": "^5.7.0",
-    "typescript": "^2.5.2",
+    "typescript": "^2.6.2",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.10.1"
   },
   "dependencies": {
-    "marked": "^0.3.12"
+    "apprun": "^1.8.2",
+    "marked": "^0.3.12"    
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   }
 }

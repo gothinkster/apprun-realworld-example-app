@@ -14,6 +14,12 @@ articles.feed = jasmine.createSpy('articles.feed').and
 
 describe('home component', () => {
 
+  beforeAll(() => {
+    const event = document.createEvent("Event")
+    event.initEvent("DOMContentLoaded", true, true)
+    window.document.dispatchEvent(event)
+  })
+
   it('should update state: #/', (done) => {
     app.run('route', '#/');
     setTimeout(() => {
