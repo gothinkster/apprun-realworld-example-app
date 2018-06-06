@@ -14,7 +14,7 @@ class SettingsComponent extends Component {
       {
         state.showModal ? <Modal title='Confirmation'
           body='Your settings has been updated successfully.'
-          ok='OK'
+          ok='OK' cancel='Cancel'
           onOK={e => this.run('ok', e)}
           onCancel={e => this.run('cancel', e)} /> : ''
       }
