@@ -10,8 +10,6 @@ import './components/settings';
 import './components/editor';
 import './components/article';
 
-app.on('//', _ => { })
-
 app.on('#', async (route, ...p) => {
   let user = app['user'];
   if (!user) {
@@ -22,6 +20,6 @@ app.on('#', async (route, ...p) => {
     }
     app.run('#user', user);
   }
-  if (!route && !p.length) document.location.hash = '#/';
+
   app.run(`#/${route || ''}`, ...p);
 })
