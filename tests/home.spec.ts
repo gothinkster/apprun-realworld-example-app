@@ -1,7 +1,10 @@
 import app from 'apprun';
 import { tags, articles } from '../src/api';
 import home from '../src/components/home';
-import '../src/main'
+
+app.on('#', async (route, ...p) => {
+  app.run(`#/${route || ''}`, ...p);
+})
 
 tags.all = jasmine.createSpy('tags.all').and
   .returnValue({ tags: [1, 2, 3] });
@@ -13,12 +16,6 @@ articles.feed = jasmine.createSpy('articles.feed').and
   .returnValue({ articles: [], articlesCount: 5 });
 
 describe('home component', () => {
-
-  beforeAll(() => {
-    const event = document.createEvent("Event")
-    event.initEvent("DOMContentLoaded", true, true)
-    window.document.dispatchEvent(event)
-  })
 
   it('should update state: #/', (done) => {
     app.run('route', '#/');
@@ -63,7 +60,7 @@ describe('home component', () => {
       const state = home.state;
       expect(state.type).toBe('feed');
       expect(state.page).toBe(3);
-      expect(articles.feed).toHaveBeenCalledWith({ offset: 20, limit: 10 });      
+      expect(articles.feed).toHaveBeenCalledWith({ offset: 20, limit: 10 });
       done();
     })
   })
@@ -75,7 +72,7 @@ describe('home component', () => {
       expect(state.type).toBe('tag');
       expect(state.max).toBe(10);
       expect(state.tag).toBeUndefined();
-      expect(articles.search).toHaveBeenCalledWith({ tag:undefined, offset: 0, limit: 10 });      
+      expect(articles.search).toHaveBeenCalledWith({ tag:undefined, offset: 0, limit: 10 });
       done();
     })
   })
@@ -88,7 +85,7 @@ describe('home component', () => {
       expect(state.max).toBe(10);
       expect(state.tag).toBe('t2');
       expect(state.page).toBe(1);
-      expect(articles.search).toHaveBeenCalledWith({ tag: 't2', offset: 0, limit: 10 });            
+      expect(articles.search).toHaveBeenCalledWith({ tag: 't2', offset: 0, limit: 10 });
       done();
     })
   })
@@ -100,7 +97,7 @@ describe('home component', () => {
       expect(state.type).toBe('tag');
       expect(state.tag).toBe('t3');
       expect(state.page).toBe(20);
-      expect(articles.search).toHaveBeenCalledWith({ tag: 't3', offset: 190, limit: 10 });            
+      expect(articles.search).toHaveBeenCalledWith({ tag: 't3', offset: 190, limit: 10 });
       done();
     })
   })
@@ -128,5 +125,5 @@ describe('home component', () => {
       done();
     })
   })
-  
+
 })
