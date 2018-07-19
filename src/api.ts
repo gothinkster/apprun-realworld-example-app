@@ -4,10 +4,10 @@ window['defaultBasePath'] = 'https://conduit.productionready.io/api';
 
 import { getToken, setToken, toQueryString, serializeObject, get, post, del, put } from './fetch';
 export { getToken, setToken, toQueryString, serializeObject }
-import { IArticle, IProfile, IComment } from './models';
+import { IUser, IProfile, IArticle, IComment } from './models';
 
-export interface ISession {
-  user: IProfile
+export interface IAuthResponse {
+  user: IUser
 }
 
 export interface ITags {
@@ -54,12 +54,12 @@ export const tags = {
 
 export const auth = {
   current: () => getToken()
-    ? get<ISession>('/user')
+    ? get<IAuthResponse>('/user')
     : null,
   signIn: (user: { email: string, password: string }) =>
-    post<ISession>('/users/login', { user }),
+    post<IAuthResponse>('/users/login', { user }),
   register: (user: { username: string, email: string, password: string }) =>
-    post<ISession>('/users', { user }),
+    post<IAuthResponse>('/users', { user }),
   save: user =>
     put('/user', { user })
 }

@@ -1,18 +1,14 @@
 
-export interface IAuthor {
+export interface IUser {
   username: string;
   bio: string;
   image: string;
   following: true;
 }
 
-export interface IProfile {
+export interface IProfile extends IUser {
   email: string;
   token: string;
-  username: string;
-  bio: string;
-  image: string;
-  following: true;
 }
 
 export interface IArticle {
@@ -24,7 +20,7 @@ export interface IArticle {
   updatedAt: Date;
   favorited: boolean;
   favoritesCount: number;
-  author: IAuthor;
+  author: IUser;
   tagList: Array<string>;
 }
 
@@ -33,5 +29,7 @@ export interface IComment {
   id: number;
   body: string;
   createdAt: string;
-  author: IAuthor;
+  author: IUser;
 }
+
+export type ITag = string;
