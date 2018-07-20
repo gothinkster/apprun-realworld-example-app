@@ -105,7 +105,7 @@ class HomeComponent extends Component {
 
   @on('#/tag')  tag = async (state, tag, page) => await this.updateState(state, 'tag', page, tag)
 
-  @on('#update-article') updateArticle = (state, article, id) => {
+  @on('/update-article') updateArticle = (state, article, id) => {
     state.articles = state.articles.map(a => {
       return a.slug === article.slug ? article : a;
     })

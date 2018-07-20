@@ -89,7 +89,7 @@ class ProfileComponent extends Component {
 
   @on('#/profile') root = (state, name, type, page) => this.updateState(state, name, type, page)
 
-  @on('#update-article') updateArticle = (state, article, id) => {
+  @on('/update-article') updateArticle = (state, article, id) => {
     state.articles = state.articles.map(a => {
       return a.slug === article.slug ? article : a;
     })

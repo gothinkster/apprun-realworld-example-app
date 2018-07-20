@@ -15,7 +15,7 @@ class ArticleComponent extends Component {
   view = (state) => {
     const article = state.article as IArticle;
     if (!article) return;
-
+    
     return <div className="article-page">
 
       {
@@ -79,7 +79,7 @@ class ArticleComponent extends Component {
     }
   }
 
-  @on('#update-article') updateArticle = (state, article, id) => {
+  @on('/update-article') updateArticle = (state, article, id) => {
     state.article = article;
     return id === 'article' ? state : null;
   }
@@ -100,7 +100,7 @@ class ArticleComponent extends Component {
     const result = article.favorited
       ? await articles.unfavorite(article.slug)
       : await articles.favorite(article.slug);
-    app.run(`#update-article`, result.article, id)
+    app.run(`/update-article`, result.article, id)
   }
 
   @on('#edit-article') editArticle = (state, article) => {
