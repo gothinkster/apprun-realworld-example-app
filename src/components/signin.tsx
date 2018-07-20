@@ -1,5 +1,5 @@
 import app, { Component, on } from 'apprun';
-import { auth, serializeObject, setToken } from '../api'
+import { auth, serializeObject } from '../api'
 
 import Errors from './error-list';
 
@@ -39,17 +39,17 @@ class SigninComponent extends Component {
   }
 
   @on('#/login') login = state => ({ ...state, messages: [], returnTo: document.location.hash })
-  
+
   @on('#/logout') logout = state => {
-    app.run('#user', null);
+    app.run('/user', null);
     document.location.hash = '#/';
   }
-  
+
   @on('sign-in') signIn = async (state, e) => {
     try {
       e.preventDefault();
       const session = await auth.signIn(serializeObject(e.target));
-      app.run('#user', session.user);
+      app.run('/user', session.user);
       const returnTo: string = (state.returnTo || '').replace(/\#\/login\/?/, '')
       if (!returnTo)
         document.location.hash = '#/feed';
@@ -61,11 +61,6 @@ class SigninComponent extends Component {
       return { ...state, errors }
     }
   }
- 
-  @on('#user') setUser = (state, user) => {
-    setToken(user ? user.token : null);
-    app['user'] = user;
-  }
-}  
+}
 
 export default new SigninComponent().mount('my-app')

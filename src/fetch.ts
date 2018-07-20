@@ -1,3 +1,5 @@
+import app from 'apprun';
+
 declare var defaultBasePath;
 
 let access_token: string = window && window.localStorage && window.localStorage.getItem('jwt') || '';
@@ -5,24 +7,24 @@ export function getToken() {
   return access_token;
 }
 
-export function setToken(token: string) {
-  access_token = token;
-  if (!window.localStorage) return;  
-  if(token)
-    window.localStorage.setItem('jwt', token);
+app.on('/user', user => {
+  app['user'] = user;
+  access_token = user && user.token;
+  if (!window.localStorage) return;
+  if (access_token)
+    window.localStorage.setItem('jwt', access_token);
   else
     window.localStorage.removeItem('jwt');
-}
+});
 
 export async function fetchAsync(method: 'GET' | 'POST' | 'DELETE' | 'PUT', url: string, body?: any) {
-  const headers = access_token ? { 'Authorization': `Token ${access_token}` } : {}
-  headers['Content-Type'] = 'application/json; charset=utf-8';
+  const headers = { 'Content-Type': 'application/json; charset=utf-8' };
+  if (access_token) headers['Authorization'] = `Token ${access_token}`;
   const response = await window['fetch'](`${defaultBasePath}${url}`, {
     method,
     headers,
     body: body && JSON.stringify(body)
   });
-  // server might return string instead of json to cause error at this line
   const result = await response.json();
   if (!response.ok) throw result;
   return result;

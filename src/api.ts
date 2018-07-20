@@ -2,8 +2,8 @@
 
 window['defaultBasePath'] = 'https://conduit.productionready.io/api';
 
-import { getToken, setToken, toQueryString, serializeObject, get, post, del, put } from './fetch';
-export { getToken, setToken, toQueryString, serializeObject }
+import { toQueryString, serializeObject, getToken, get, post, del, put } from './fetch';
+export { toQueryString, serializeObject }
 import { IUser, IProfile, IArticle, IComment } from './models';
 
 export interface IAuthResponse {

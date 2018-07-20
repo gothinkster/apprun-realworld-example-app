@@ -1,5 +1,5 @@
 import app, { Component, on } from 'apprun';
-
+import { auth } from '../api'
 class HeaderComponent extends Component {
   state = {}
   view = state => {
@@ -39,8 +39,21 @@ class HeaderComponent extends Component {
     </ul>
   }
 
-  @on('#user') setUser = (state, user) => ({ ...state, user })
-  
+  @on('/user') setUser = (state, user) => ({ ...state, user })
+
+  rednered = async () => {
+    let user = app['user'];
+    if (!user) {
+      try {
+        const current = await auth.current();
+        app['user'] = current.user;
+      }
+      catch (ex) {
+        console.log(ex.json());
+      }
+      app.run('/user', user);
+    }
+  }
 }
 
-export default new HeaderComponent().mount('header')
+export default new HeaderComponent().start('header')
