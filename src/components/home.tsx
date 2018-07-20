@@ -25,7 +25,7 @@ class HomeComponent extends Component {
   };
 
   view = (state) => {
-    if (state instanceof Promise) return;
+    const tag = state.type === 'tag' && state.tag ? `/${state.tag}` : '';
     return <div className="home-page">
       <div className="banner">
         <div className="container">
@@ -54,7 +54,7 @@ class HomeComponent extends Component {
               </ul>
             </div>
             <Articles articles={state.articles} id='home' />
-            <Pages max={Math.floor(state.max / PAGE_SIZE)} selected={state.page} onpage={page => this.run('set-page', page)} />
+            <Pages max={Math.floor(state.max / PAGE_SIZE)} selected={state.page} link={`#/${state.type}${tag}`} />
           </div>
           <div className="col-md-3">
             <div className="sidebar">
@@ -104,12 +104,6 @@ class HomeComponent extends Component {
   @on('#/feed') feed = async (state, page) => await this.updateState(state, 'feed', page)
 
   @on('#/tag')  tag = async (state, tag, page) => await this.updateState(state, 'tag', page, tag)
-
-  @on('set-page') setPage = async (state, page) => {
-    const t = state.type === 'tag' && state.tag ? `/${state.tag}` : '';
-    history.pushState(null, null, `#/${state.type}${t}/${page}`);
-    return await this.updateState(state, state.type, page, state.tag);
-  }
 
   @on('#update-article') updateArticle = (state, article, id) => {
     state.articles = state.articles.map(a => {

@@ -56,7 +56,7 @@ class ProfileComponent extends Component {
             </div>
             <Articles articles={state.articles} id='profile' />
             <Pages max={Math.floor(state.max / PAGE_SIZE)} selected={state.page}
-              onpage={page => this.run('set-page', page)} />
+              link={`#/profile/${state.profile.username}/${state.type}`} />
           </div>
         </div>
       </div>
@@ -89,19 +89,13 @@ class ProfileComponent extends Component {
 
   @on('#/profile') root = (state, name, type, page) => this.updateState(state, name, type, page)
 
-  @on('set-page') setPage = (state, page) => {
-    const url = `#/profile/${state.profile.username}/${state.type}/${page}`
-    history.pushState(null, null, url);
-    return this.updateState(state, null, null, page)
-  }
- 
   @on('#update-article') updateArticle = (state, article, id) => {
     state.articles = state.articles.map(a => {
       return a.slug === article.slug ? article : a;
     })
     return id === 'profile' ? state : null;
   }
- 
+
   @on('#update-follow') updateFollow = (state, profile, id) => {
     state.profile = profile;
     return id === 'profile' ? state : null;
@@ -114,6 +108,6 @@ class ProfileComponent extends Component {
       : await profile.follow(author.username);
     app.run(`#update-follow`, result.profile, id)
   }
-}  
+}
 
 export default new ProfileComponent().mount('my-app')
