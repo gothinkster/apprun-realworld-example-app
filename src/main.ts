@@ -9,6 +9,6 @@ import './components/settings';
 import './components/editor';
 import './components/article';
 
-app.on('#', async (route, ...p) => {
+app.on('#', (route, ...p) => {
   app.run(`#/${route || ''}`, ...p);
 })
