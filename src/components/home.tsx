@@ -5,7 +5,7 @@ import Articles from './article-list';
 import Pages from './page-list';
 
 const PAGE_SIZE = 10
-const Tag = ({ tag }) => <a href="" className="tag-pill tag-default">{tag}</a>
+const Tag = ({ tag }) => <a href={`#/tag/${tag}/1`} className="tag-pill tag-default">{tag}</a>
 
 declare interface IState {
   type: '' | 'feed' | 'tag'
@@ -59,7 +59,7 @@ class HomeComponent extends Component {
           <div className="col-md-3">
             <div className="sidebar">
               <p>Popular Tags</p>
-              <div className="tag-list" onclick={e => this.run('set-tag', e)}>
+              <div className="tag-list">
                 {state.tags.map(tag => <Tag tag={tag} />)}
               </div>
             </div>
@@ -73,7 +73,7 @@ class HomeComponent extends Component {
     let tagList = state.tags.length
       ? { tags: state.tags }
       : await tags.all();
-    
+
     page = parseInt(page) || 1;
     tag = tag || state.tag;
     const limit = PAGE_SIZE;
@@ -109,13 +109,6 @@ class HomeComponent extends Component {
     const t = state.type === 'tag' && state.tag ? `/${state.tag}` : '';
     history.pushState(null, null, `#/${state.type}${t}/${page}`);
     return await this.updateState(state, state.type, page, state.tag);
-  }
-
-  @on('set-tag') setTag = async (state, e) => {
-    e.preventDefault();
-    const tag = e.target.textContent;
-    history.pushState(null, null, `#/tag/${tag}/1`);
-    return await this.updateState(state, 'tag', 1, tag);
   }
 
   @on('#update-article') updateArticle = (state, article, id) => {
