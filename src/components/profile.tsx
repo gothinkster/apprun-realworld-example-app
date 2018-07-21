@@ -64,7 +64,7 @@ class ProfileComponent extends Component {
   }
 
   updateState = async (state, name, type, page) => {
-    name = name || state.name;
+    name = decodeURIComponent(name || state.name);
     type = type || state.type;
     page = parseInt(page) || state.page;
     let newState = state;
