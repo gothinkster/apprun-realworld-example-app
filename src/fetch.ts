@@ -25,6 +25,7 @@ export async function fetchAsync(method: 'GET' | 'POST' | 'DELETE' | 'PUT', url:
     headers,
     body: body && JSON.stringify(body)
   });
+  if (response.status === 401) return app.run('#/login');
   const result = await response.json();
   if (!response.ok) throw result;
   return result;
