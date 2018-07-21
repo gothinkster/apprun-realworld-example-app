@@ -1,25 +1,20 @@
 const path = require('path');
 module.exports = {
-  entry: {
-    'app': './src/main.ts',
-  },
+  // entry: {
+  //   'app': './src/main.ts',
+  // },
   output: {
-    filename: '[name].js'
+    filename: '[name].js',
+    path: path.resolve(__dirname)
   },
   resolve: {
-    extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js']
+    extensions: ['.ts', '.tsx', '.js']
   },
   module: {
     rules: [
       { test: /.tsx?$/, loader: 'ts-loader' },
-      {
-        test: /\.js$/,
-        use: ["source-map-loader"],
-        enforce: "pre"
-      }
+      { test: /\.js$/, use: ["source-map-loader"], enforce: "pre" }
     ]
   },
-  devtool:'source-map',
-  devServer: {
-  }
+  devtool:'source-map'
 }

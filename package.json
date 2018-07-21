@@ -6,8 +6,8 @@
   "scripts": {
     "jest": "jest",
     "test": "jest --watch",
-    "start": "webpack-dev-server",
-    "build": "webpack -p",
+    "start": "webpack-dev-server --mode development app=./src/main.ts",
+    "build": "webpack -p --mode production",
     "lint": "tslint -p ."
   },
   "repository": {
@@ -22,16 +22,18 @@
   },
   "homepage": "https://github.com/yysun/realworld-starter-kit#readme",
   "devDependencies": {
-    "@types/jest": "^22.2.3",
-    "jest": "^22.4.4",
+    "@types/jasmine": "^2.8.8",
+    "@types/jest": "^23.1.5",
+    "jest": "^23.3.0",
     "source-map-loader": "^0.2.3",
     "ts-jest": "^22.4.6",
-    "ts-loader": "^2.3.7",
+    "ts-loader": "^4.4.2",
     "tslib": "^1.9.3",
     "tslint": "^5.10.0",
     "typescript": "^2.9.2",
-    "webpack": "^3.12.0",
-    "webpack-dev-server": "^2.11.2"
+    "webpack": "^4.15.1",
+    "webpack-cli": "^3.0.8",
+    "webpack-dev-server": "^3.1.4"
   },
   "dependencies": {
     "apprun": "^1.13.8",
