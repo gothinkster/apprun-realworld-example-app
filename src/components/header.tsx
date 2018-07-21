@@ -41,15 +41,15 @@ class HeaderComponent extends Component {
 
   @on('/user') setUser = (state, user) => ({ ...state, user })
 
-  rednered = async () => {
+  rendered = async () => {
     let user = app['user'];
     if (!user) {
       try {
         const current = await auth.current();
-        app['user'] = current.user;
+        if (current) user = app['user'] = current.user;
       }
       catch (ex) {
-        console.log(ex.json());
+        console.log(ex);
       }
       app.run('/user', user);
     }
