@@ -82,7 +82,7 @@ class HomeComponent extends Component {
       let feed;
       switch (type) {
         case 'feed':
-          if (!auth.authorized) return { ...state, articles: [], max: 0};
+          if (!auth.authorized()) return { ...state, articles: [], max: 0};
           feed = await articles.feed({ limit, offset });
           break;
         case 'tag':

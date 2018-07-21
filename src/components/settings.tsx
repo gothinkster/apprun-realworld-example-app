@@ -57,7 +57,7 @@ class SettingsComponent extends Component {
 
 
   @on('#/settings') settings = state => {
-    if (!auth.authorized) return;
+    if (!auth.authorized()) return;
     return { user: app['user'] };
   }
 

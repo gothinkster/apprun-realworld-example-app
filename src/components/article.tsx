@@ -96,7 +96,7 @@ class ArticleComponent extends Component {
   }
 
   @on('#toggle-fav-article') toggleFavArticle = async (state, article: IArticle, id: string) => {
-    if (!auth.authorized) return;
+    if (!auth.authorized()) return;
     const result = article.favorited
       ? await articles.unfavorite(article.slug)
       : await articles.favorite(article.slug);

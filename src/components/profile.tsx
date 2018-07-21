@@ -102,7 +102,7 @@ class ProfileComponent extends Component {
   }
 
   @on('#toggle-follow') toggleFollow = async (state, author: IProfile, id: string) => {
-    if (!auth.authorized) return;
+    if (!auth.authorized()) return;
     const result = author.following
       ? await profile.unfollow(author.username)
       : await profile.follow(author.username);

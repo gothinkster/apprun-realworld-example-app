@@ -47,7 +47,7 @@ class EditorComponent extends Component {
 
 
   @on('#/editor') root = async (state, slug) => {
-    if (!auth.authorized) return;
+    if (!auth.authorized()) return;
     let article;
     if (slug) {
       const result = await articles.get(slug);
