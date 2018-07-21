@@ -39,21 +39,8 @@ class HeaderComponent extends Component {
     </ul>
   }
 
-  @on('/user') setUser = (state, user) => ({ ...state, user })
+  @on('/set-user') setUser = (state, user) => ({ ...state, user })
 
-  rendered = async () => {
-    let user = app['user'];
-    if (!user) {
-      try {
-        const current = await auth.current();
-        if (current) user = app['user'] = current.user;
-      }
-      catch (ex) {
-        console.log(ex);
-      }
-      app.run('/user', user);
-    }
-  }
 }
 
 export default new HeaderComponent().start('header')

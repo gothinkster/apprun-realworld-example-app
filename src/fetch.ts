@@ -1,5 +1,3 @@
-import app from 'apprun';
-
 declare var defaultBasePath;
 
 let access_token: string = window && window.localStorage && window.localStorage.getItem('jwt') || '';
@@ -7,15 +5,14 @@ export function getToken() {
   return access_token;
 }
 
-app.on('/user', user => {
-  app['user'] = user;
-  access_token = user && user.token;
+export function setToken(token: string) {
+  access_token = token;
   if (!window.localStorage) return;
-  if (access_token)
-    window.localStorage.setItem('jwt', access_token);
+  if (token)
+    window.localStorage.setItem('jwt', token);
   else
     window.localStorage.removeItem('jwt');
-});
+}
 
 export async function fetchAsync(method: 'GET' | 'POST' | 'DELETE' | 'PUT', url: string, body?: any) {
   const headers = { 'Content-Type': 'application/json; charset=utf-8' };
@@ -25,7 +22,7 @@ export async function fetchAsync(method: 'GET' | 'POST' | 'DELETE' | 'PUT', url:
     headers,
     body: body && JSON.stringify(body)
   });
-  if (response.status === 401) return app.run('#/login');
+  if (response.status === 401) throw new Error('401');
   const result = await response.json();
   if (!response.ok) throw result;
   return result;

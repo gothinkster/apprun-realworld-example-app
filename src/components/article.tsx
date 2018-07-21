@@ -1,5 +1,5 @@
 import app, { Component, on } from 'apprun';
-import { articles, comments } from '../api';
+import { auth, articles, comments } from '../api';
 import { IArticle } from '../models';
 import Comments from './comment-list';
 import ArticleMeta from './article-meta';
@@ -15,7 +15,7 @@ class ArticleComponent extends Component {
   view = (state) => {
     const article = state.article as IArticle;
     if (!article) return;
-    
+
     return <div className="article-page">
 
       {
@@ -96,7 +96,7 @@ class ArticleComponent extends Component {
   }
 
   @on('#toggle-fav-article') toggleFavArticle = async (state, article: IArticle, id: string) => {
-    if (!app['user']) return app.run('#/login');
+    if (!auth.authorized) return;
     const result = article.favorited
       ? await articles.unfavorite(article.slug)
       : await articles.favorite(article.slug);

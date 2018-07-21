@@ -1,8 +1,9 @@
-// Conduit API
+import app from 'apprun';
 
+// Conduit API
 window['defaultBasePath'] = 'https://conduit.productionready.io/api';
 
-import { toQueryString, serializeObject, getToken, get, post, del, put } from './fetch';
+import { toQueryString, serializeObject, getToken, setToken, get, post, del, put } from './fetch';
 export { toQueryString, serializeObject }
 import { IUser, IProfile, IArticle, IComment } from './models';
 
@@ -61,7 +62,10 @@ export const auth = {
   register: (user: { username: string, email: string, password: string }) =>
     post<IAuthResponse>('/users', { user }),
   save: user =>
-    put('/user', { user })
+    put('/user', { user }),
+  authorized: () => {
+    return app['user'] ? true : app.run('#/login');
+  }
 }
 
 export const articles = {
@@ -100,3 +104,16 @@ export const profile = {
   unfollow: (username: string) =>
     del(`/profiles/${username}/follow`)
 };
+
+app.on('get-user', async () => {
+  try {
+    const current = await auth.current();
+    if (current) app.run('/set-user', current.user);
+  }
+  catch { } // no user
+});
+
+app.on('/set-user', user => {
+  app['user'] = user;
+  setToken(user ? user.token : null);
+});

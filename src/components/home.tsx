@@ -1,5 +1,5 @@
 import app, { Component, on } from 'apprun';
-import { tags, articles } from '../api';
+import { auth, tags, articles } from '../api';
 import { IArticle } from '../models';
 import Articles from './article-list';
 import Pages from './page-list';
@@ -70,32 +70,37 @@ class HomeComponent extends Component {
   }
 
   updateState = async (state, type: '' | 'feed' | 'tag', page, tag?: string) => {
-    let tagList = state.tags.length
-      ? { tags: state.tags }
-      : await tags.all();
+    try {
+      let tagList = state.tags.length
+        ? { tags: state.tags }
+        : await tags.all();
 
-    page = parseInt(page) || 1;
-    tag = tag || state.tag;
-    const limit = PAGE_SIZE;
-    const offset = (page - 1) * PAGE_SIZE;
-    let feed;
-    switch (type) {
-      case 'feed':
-        feed = await articles.feed({ limit, offset });
-        break;
-      case 'tag':
-        feed = await articles.search({ tag, limit, offset });
-        break;
-      default:
-        feed = await articles.search({ limit, offset });
-        break;
-    }
-    return {
-      ...state,
-      tags: tagList.tags,
-      type, page, tag,
-      articles: feed.articles,
-      max: feed.articlesCount
+      page = parseInt(page) || 1;
+      tag = tag || state.tag;
+      const limit = PAGE_SIZE;
+      const offset = (page - 1) * PAGE_SIZE;
+      let feed;
+      switch (type) {
+        case 'feed':
+          if (!auth.authorized) return { ...state, articles: [], max: 0};
+          feed = await articles.feed({ limit, offset });
+          break;
+        case 'tag':
+          feed = await articles.search({ tag, limit, offset });
+          break;
+        default:
+          feed = await articles.search({ limit, offset });
+          break;
+      }
+      return {
+        ...state,
+        tags: tagList.tags,
+        type, page, tag,
+        articles: feed.articles,
+        max: feed.articlesCount
+      }
+    } catch ({ errors }) {
+      return { ...state, errors, articles: [], max: 0 }
     }
   }
 

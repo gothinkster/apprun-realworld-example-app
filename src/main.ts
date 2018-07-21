@@ -12,3 +12,5 @@ import './components/article';
 app.on('#', (route, ...p) => {
   app.run(`#/${route || ''}`, ...p);
 })
+
+app.run('get-user');

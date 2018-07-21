@@ -41,7 +41,7 @@ class SigninComponent extends Component {
   @on('#/login') login = state => ({ ...state, messages: [], returnTo: document.location.hash })
 
   @on('#/logout') logout = state => {
-    app.run('/user', null);
+    app.run('/set-user', null);
     document.location.hash = '#/';
   }
 
@@ -49,7 +49,7 @@ class SigninComponent extends Component {
     try {
       e.preventDefault();
       const session = await auth.signIn(serializeObject(e.target));
-      app.run('/user', session.user);
+      app.run('/set-user', session.user);
       const returnTo: string = (state.returnTo || '').replace(/\#\/login\/?/, '')
       if (!returnTo)
         document.location.hash = '#/feed';

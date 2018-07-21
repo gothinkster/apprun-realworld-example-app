@@ -1,5 +1,5 @@
 import app, { Component, on } from 'apprun';
-import { serializeObject, articles } from '../api'
+import { serializeObject, articles, auth } from '../api'
 import Errors from './error-list';
 
 class EditorComponent extends Component {
@@ -47,7 +47,7 @@ class EditorComponent extends Component {
 
 
   @on('#/editor') root = async (state, slug) => {
-    if (!app['user']) app.run('#/login');
+    if (!auth.authorized) return;
     let article;
     if (slug) {
       const result = await articles.get(slug);

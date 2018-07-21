@@ -1,6 +1,6 @@
 import app, { Component, on } from 'apprun';
 import { IProfile } from '../models';
-import { articles, profile } from '../api';
+import { auth, articles, profile } from '../api';
 import Articles from './article-list';
 import Pages from './page-list';
 
@@ -102,7 +102,7 @@ class ProfileComponent extends Component {
   }
 
   @on('#toggle-follow') toggleFollow = async (state, author: IProfile, id: string) => {
-    if (!app['user']) return app.run('#/login');
+    if (!auth.authorized) return;
     const result = author.following
       ? await profile.unfollow(author.username)
       : await profile.follow(author.username);

@@ -7,9 +7,7 @@ class SettingsComponent extends Component {
   state = {}
 
   view = (state) => {
-    if (!app['user']) return;
-    const user = app['user'];
-
+    const user =state.user;
     return <div className="settings-page">
       {
         state.showModal ? <Modal title='Confirmation'
@@ -59,8 +57,8 @@ class SettingsComponent extends Component {
 
 
   @on('#/settings') settings = state => {
-    if (!app['user']) app.run('#/login');
-    return {}
+    if (!auth.authorized) return;
+    return { user: app['user'] };
   }
 
   @on('submit-settings') submitSettings = async (state, e) => {
