@@ -7,18 +7,24 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Test",
+      "name": "Launch Jest",
       "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
       "args": [
-        "-i"
-      ]
+        "${relativeFile}"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
     },
     {
       "type": "chrome",
       "request": "launch",
       "name": "Launch App",
       "url": "http://localhost:8080",
-      "webRoot": "${workspaceRoot}"
+      "webRoot": "${workspaceRoot}",
+      "disableNetworkCache": true,
+      "sourceMapPathOverrides": {
+        "webpack:///*": "${webRoot}/*"
+      }
     }
   ]
 }
