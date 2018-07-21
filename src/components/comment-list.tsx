@@ -20,11 +20,11 @@ function Comment({ comment }: { comment: IComment }) {
     <span className="date-posted">
       { new Date(comment.createdAt).toLocaleString() }
     </span>
-    { app['user'] && app['user'].username === comment.author.username 
+    { app['user'] && app['user'].username === comment.author.username
       ? <span className="mod-options">
-          <i className="ion-trash-a" onclick={e=>app.run('#delete-comment', comment)} ></i>
+          <i className="ion-trash-a" onclick={e=>app.run('/delete-comment', comment)} ></i>
         </span>
-      : ''}    
+      : ''}
   </div>
 </div>
 }
@@ -36,7 +36,7 @@ export default function ({ comments }: { comments: Array<IComment> }) {
       {!user
         ? <p><a href={`#/login/${document.location.hash}`}>Sign in</a> or&nbsp;
           <a href='#/register'>sign up</a> to add comments on this article.</p>
-        : <form className="card comment-form" onsubmit={e=>app.run('#new-comment', e)}>
+        : <form className="card comment-form" onsubmit={e=>app.run('/new-comment', e)}>
           <div className="card-block">
             <textarea className="form-control" placeholder="Write a comment..." rows="3" name='comment'></textarea>
           </div>

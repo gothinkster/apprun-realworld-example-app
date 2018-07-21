@@ -1,5 +1,5 @@
 import app, { Component, on } from 'apprun';
-import { auth } from '../api'
+
 class HeaderComponent extends Component {
   state = {}
   view = state => {

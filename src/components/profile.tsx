@@ -28,7 +28,7 @@ class ProfileComponent extends Component {
                 {profile.bio}
               </p>
               <button className="btn btn-sm btn-outline-secondary action-btn"
-                onclick={e => app.run('#toggle-follow', profile, 'profile')}>
+                onclick={e => app.run('/toggle-follow', profile, this)}>
                 {profile.following
                   ? <span><i className="ion-minus-round"></i> Unfollow {profile.username}</span>
                   : <span><i className="ion-plus-round"></i> Follow {profile.username}</span>
@@ -54,7 +54,7 @@ class ProfileComponent extends Component {
                 </li>
               </ul>
             </div>
-            <Articles articles={state.articles} id='profile' />
+            <Articles articles={state.articles} component={this} />
             <Pages max={Math.floor(state.max / PAGE_SIZE)} selected={state.page}
               link={`#/profile/${state.profile.username}/${state.type}`} />
           </div>
@@ -89,25 +89,15 @@ class ProfileComponent extends Component {
 
   @on('#/profile') root = (state, name, type, page) => this.updateState(state, name, type, page)
 
-  @on('/update-article') updateArticle = (state, article, id) => {
+  @on('update-article') updateArticle = (state, article) => {
     state.articles = state.articles.map(a => {
       return a.slug === article.slug ? article : a;
     })
-    return id === 'profile' ? state : null;
+    return state;
   }
 
-  @on('#update-follow') updateFollow = (state, profile, id) => {
-    state.profile = profile;
-    return id === 'profile' ? state : null;
-  }
+  @on('update-follow') updateFollow = (state, profile) => ({...state, profile })
 
-  @on('#toggle-follow') toggleFollow = async (state, author: IProfile, id: string) => {
-    if (!auth.authorized()) return;
-    const result = author.following
-      ? await profile.unfollow(author.username)
-      : await profile.follow(author.username);
-    app.run(`#update-follow`, result.profile, id)
-  }
 }
 
 export default new ProfileComponent().mount('my-app')

@@ -14,7 +14,7 @@ function Article(props) {
         <span className="date">{new Date(article.updatedAt).toLocaleString()}</span>
       </div>
       <button className={`btn btn-sm pull-xs-right ${favClass}`}
-        onclick={e => app.run('#toggle-fav-article', article, props.id)}>
+        onclick={e => app.run('toggle-fav-article', article, props.component)}>
         <i className="ion-heart"></i> {article.favoritesCount}
       </button>
     </div>
@@ -34,8 +34,8 @@ function Article(props) {
   </div>
 }
 
-export default function ({ articles, id }: { articles: Array<IArticle>, id?: string }) {
+export default function ({ articles, component }: { articles: Array<IArticle>, component }) {
   return articles.length
-    ? articles.map(article => <Article article={article} id={id}></Article>)
+    ? articles.map(article => <Article article={article} component={component}></Article>)
     : <div className="article-preview">No articles are here... yet.</div>
 }

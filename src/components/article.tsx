@@ -29,7 +29,7 @@ class ArticleComponent extends Component {
       <div className="banner">
         <div className="container">
           <h1>{article.title}</h1>
-          <ArticleMeta article={article} />
+          <ArticleMeta article={article} component={this}/>
         </div>
       </div>
 
@@ -48,9 +48,9 @@ class ArticleComponent extends Component {
         </div>
         <hr />
         <div className="article-actions">
-          <ArticleMeta article={article} />
+          <ArticleMeta article={article} component={this}/>
         </div>
-        <Comments comments={state.comments} />
+        <Comments comments={state.comments}/>
       </div>
     </div>
   }
@@ -67,10 +67,11 @@ class ArticleComponent extends Component {
     return { ...state, article, comments: _comments }
   }
 
-  @on('#new-comment') newComment = async (state, e) => {
+  @on('/new-comment') newComment = async (state, e) => {
     try {
       e.preventDefault();
       const comment = e.target['comment'].value;
+      if (!comment) return;
       await comments.create(state.article.slug, { body: comment });
       const commentsResponse = await comments.forArticle(state.article.slug);
       return { ...state, comments: commentsResponse.comments }
@@ -79,35 +80,24 @@ class ArticleComponent extends Component {
     }
   }
 
-  @on('/update-article') updateArticle = (state, article, id) => {
-    state.article = article;
-    return id === 'article' ? state : null;
-  }
-
-  @on('#update-follow') updateFollow = (state, author, id) => {
-    state.article.author = author;
-    return id === 'article' ? state : null;
-  }
-
-  @on('#delete-comment') deleteComment = async (state, comment) => {
+  @on('/delete-comment') deleteComment = async (state, comment) => {
     await comments.delete(this.state.article.slug, comment.id);
     const commentsResponse = await comments.forArticle(state.article.slug);
     return { ...state, comments: commentsResponse.comments }
   }
 
-  @on('#toggle-fav-article') toggleFavArticle = async (state, article: IArticle, id: string) => {
-    if (!auth.authorized()) return;
-    const result = article.favorited
-      ? await articles.unfavorite(article.slug)
-      : await articles.favorite(article.slug);
-    app.run(`/update-article`, result.article, id)
+  @on('update-article') updateArticle = (state, article) => ({ ...state, article });
+
+  @on('update-follow') updateFollow = (state, author) => {
+    state.article.author = author;
+    return state;
   }
 
-  @on('#edit-article') editArticle = (state, article) => {
+  @on('edit-article') editArticle = (state, article) => {
     document.location.hash = `#/editor/${article.slug}`;
   }
 
-  @on('#delete-article') deleteArticle = (state, article) => ({ ...state, deleting: true })
+  @on('delete-article') deleteArticle = (state, article) => ({ ...state, deleting: true })
 
   @on('ok-delete-article') okDelete = (state, e) => {
     articles.delete(state.article.slug);

@@ -71,7 +71,7 @@ export const auth = {
 export const articles = {
   search: (request: IArticlesRequest) =>
     get<IFeed>(`/articles?${toQueryString(request)}`),
-  feed: (request: {limit: number, offset: number}) =>
+  feed: (request: { limit: number, offset: number }) =>
     get<IFeed>(`/articles/feed?${toQueryString(request)}`),
   get: (slug: string) =>
     get<IArticlesResponse>(`/articles/${slug}`),
@@ -105,7 +105,7 @@ export const profile = {
     del(`/profiles/${username}/follow`)
 };
 
-app.on('get-user', async () => {
+app.on('/get-user', async () => {
   try {
     const current = await auth.current();
     if (current) app.run('/set-user', current.user);
@@ -116,4 +116,20 @@ app.on('get-user', async () => {
 app.on('/set-user', user => {
   app['user'] = user;
   setToken(user ? user.token : null);
+});
+
+app.on('/toggle-follow', async (author: IProfile, component) => {
+  if (!auth.authorized()) return;
+  const result = author.following
+    ? await profile.unfollow(author.username)
+    : await profile.follow(author.username);
+  component.run('update-follow', result.profile);
+});
+
+app.on('/toggle-fav-article', async (article: IArticle, component) => {
+  if (!auth.authorized()) return;
+  const result = article.favorited
+    ? await articles.unfavorite(article.slug)
+    : await articles.favorite(article.slug);
+  component.run('update-article', result.article);
 });

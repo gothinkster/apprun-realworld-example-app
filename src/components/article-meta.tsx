@@ -2,7 +2,7 @@ import app from 'apprun';
 import { IArticle } from '../models';
 
 export default
-  function ArticleMeta({ article }: { article: IArticle }) {
+  function ArticleMeta({ article, component }: { article: IArticle, component }) {
   const favClass = article.favorited ? "btn-primary" : "btn-outline-primary";
   const followClass = article.author.following ? "btn-secondary" : "btn-outline-secondary";
   return <div className="article-meta">
@@ -17,24 +17,24 @@ export default
     {app['user'] && app['user'].username === article.author.username
       ? <span>
         <button className="btn btn-sm btn-outline-secondary"
-          onclick={e => app.run('#edit-article', article)}>
+          onclick={e => component.run('edit-article', article)}>
           <i className="ion-edit"></i>&nbsp; Edit Article
           </button>&nbsp;&nbsp;
           <button className="btn btn-sm btn-outline-danger"
-          onclick={e => app.run('#delete-article', article)}>
+          onclick={e => component.run('delete-article', article)}>
           <i className="ion-trash-o"></i>&nbsp; Delete Article
               </button>
       </span>
       : <span>
         <button className={`btn btn-sm ${followClass}`}
-          onclick={e => app.run('#toggle-follow', article.author, 'article')}>
+          onclick={e => app.run('/toggle-follow', article.author, component)}>
           {article.author.following
             ? <span><i className="ion-minus-round"></i> Unfollow {article.author.username}</span>
             : <span><i className="ion-plus-round"></i> Follow {article.author.username}</span>
           }
         </button> &nbsp;&nbsp;
         <button className={`btn btn-sm ${favClass}`}
-          onclick={e => app.run('#toggle-fav-article', article, 'article')}>
+          onclick={e => app.run('/toggle-fav-article', article, component)}>
           <i className="ion-heart"></i>
           &nbsp; Favorite Post <span className="counter">({article.favoritesCount})</span>
         </button>

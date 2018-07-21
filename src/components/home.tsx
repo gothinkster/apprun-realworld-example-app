@@ -53,7 +53,7 @@ class HomeComponent extends Component {
                 }
               </ul>
             </div>
-            <Articles articles={state.articles} id='home' />
+            <Articles articles={state.articles} component={this} />
             <Pages max={Math.floor(state.max / PAGE_SIZE)} selected={state.page} link={`#/${state.type}${tag}`} />
           </div>
           <div className="col-md-3">
@@ -110,11 +110,11 @@ class HomeComponent extends Component {
 
   @on('#/tag')  tag = async (state, tag, page) => await this.updateState(state, 'tag', page, tag)
 
-  @on('/update-article') updateArticle = (state, article, id) => {
+  @on('update-article') updateArticle = (state, article) => {
     state.articles = state.articles.map(a => {
       return a.slug === article.slug ? article : a;
     })
-    return id === 'home' ? state : null;
+    return state;
   }
 }
 

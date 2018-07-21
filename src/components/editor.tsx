@@ -65,7 +65,6 @@ class EditorComponent extends Component {
       const result = article.slug
         ? await articles.update(article)
         : await articles.create(article)
-      app.run(`/update-article`, result.article, 'editor')
       document.location.hash = `#/article/${result.article.slug}`;
     } catch ({ errors }) {
       return { ...state, errors }
