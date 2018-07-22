@@ -6,7 +6,7 @@
   "scripts": {
     "jest": "jest",
     "test": "jest --watch",
-    "start": "webpack-dev-server --mode development app=./src/main.ts",
+    "start": "webpack-dev-server --mode development",
     "build": "webpack -p --mode production",
     "lint": "tslint -p ."
   },
@@ -32,10 +32,10 @@
     "typescript": "^2.9.2",
     "webpack": "^4.15.1",
     "webpack-cli": "^3.0.8",
-    "webpack-dev-server": "^3.1.4"
+    "webpack-dev-server": "^3.1.5"
   },
   "dependencies": {
-    "apprun": "^1.13.8",
+    "apprun": "^1.14.1",
     "marked": "^0.3.19"
   },
   "jest": {
