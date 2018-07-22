@@ -6,14 +6,11 @@ app.on('#', async (route, ...p) => {
   app.run(`#/${route || ''}`, ...p);
 })
 
-tags.all = jasmine.createSpy('tags.all').and
-  .returnValue({ tags: [1, 2, 3] });
+tags.all = jest.fn(() => ({ tags: [1, 2, 3] }));
 
-articles.search = jasmine.createSpy('articles.search').and
-  .returnValue({ articles: [], articlesCount: 10 });
+articles.search = jest.fn(() => ({ articles: [], articlesCount: 10 }));
 
-articles.feed = jasmine.createSpy('articles.feed').and
-  .returnValue({ articles: [], articlesCount: 5 });
+articles.feed = jest.fn(()=>({ articles: [], articlesCount: 5 }));
 
 describe('home component', () => {
 
@@ -40,21 +37,17 @@ describe('home component', () => {
     })
   })
 
-  it('should update state: #/feed', (done) => {
+  it('should not call #/feed w/o user', () => {
+    const login = jest.fn();
+    app.on('#/login', login);
     app.run('route', '#/feed');
-    setTimeout(() => {
-      const state = home.state;
-      expect(state.type).toBe('feed');
-      expect(state.page).toBe(1);
-      expect(state.max).toBe(5);
-      expect(state.page).toBe(1);
-      expect(articles.feed).toHaveBeenCalledWith({ offset: 0, limit: 10 });
-      done();
-    })
+    expect(login).toHaveBeenCalled();
+    expect(articles.feed).not.toHaveBeenCalled();
   })
 
 
   it('should update state: #/feed/3', (done) => {
+    app['user'] = {};
     app.run('route', '#/feed/3');
     setTimeout(() => {
       const state = home.state;
@@ -98,30 +91,6 @@ describe('home component', () => {
       expect(state.tag).toBe('t3');
       expect(state.page).toBe(20);
       expect(articles.search).toHaveBeenCalledWith({ tag: 't3', offset: 190, limit: 10 });
-      done();
-    })
-  })
-
-  it('should update state: set-page', (done) => {
-    home.run('set-page', '30');
-    setTimeout(() => {
-      const state = home.state;
-      expect(state.page).toBe(30);
-      done();
-    })
-  })
-
-  it('should update state: set-tag', (done) => {
-    home.run('set-tag', {
-      target: { textContent: 't5' },
-      preventDefault: () => { }
-    });
-    setTimeout(() => {
-      const state = home.state;
-      expect(state.type).toBe('tag');
-      expect(state.tag).toBe('t5');
-      expect(state.page).toBe(1);
-      expect(document.location.hash).toBe('#/tag/t5/1');
       done();
     })
   })

@@ -22,7 +22,6 @@
   },
   "homepage": "https://github.com/yysun/realworld-starter-kit#readme",
   "devDependencies": {
-    "@types/jasmine": "^2.8.8",
     "@types/jest": "^23.1.5",
     "jest": "^23.3.0",
     "source-map-loader": "^0.2.3",
@@ -43,7 +42,7 @@
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "testRegex": "(/tests/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
     "moduleFileExtensions": [
       "ts",
       "tsx",
