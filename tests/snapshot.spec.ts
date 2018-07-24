@@ -6,7 +6,7 @@ import settings from '../src/components/settings';
 import profile from '../src/components/profile';
 import article from '../src/components/article';
 
-describe('home component', () => {
+describe('home component view', () => {
   it('view test', () => {
     const state = {
       type: 'feed',

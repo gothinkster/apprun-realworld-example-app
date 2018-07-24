@@ -92,6 +92,7 @@ class HomeComponent extends Component {
           feed = await articles.search({ limit, offset });
           break;
       }
+      page = Math.min(page, Math.floor(feed.articlesCount / PAGE_SIZE) + 1);
       return {
         ...state,
         tags: tagList.tags,

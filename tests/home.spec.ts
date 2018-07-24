@@ -1,6 +1,5 @@
 import app from 'apprun';
 import home from '../src/components/home';
-
 import { tags, articles } from '../src/api';
 import './mocks';
 
@@ -11,7 +10,8 @@ describe('home component', () => {
     setTimeout(() => {
       const state = home.state;
       expect(state.type).toBe('');
-      expect(state.max).toBe(10);
+      expect(state.page).toBe(1);
+      expect(state.max).toBe(101);
       expect(tags.all).toHaveBeenCalledWith();
       expect(articles.search).toHaveBeenCalledWith({ offset: 0, limit: 10 });
       done();
@@ -24,6 +24,8 @@ describe('home component', () => {
       const state = home.state;
       expect(state.type).toBe('');
       expect(state.page).toBe(2);
+      expect(state.max).toBe(101);
+      expect(tags.all).toHaveBeenCalledWith();
       expect(articles.search).toHaveBeenCalledWith({ offset: 10, limit: 10 });
       done();
     })
@@ -44,7 +46,9 @@ describe('home component', () => {
     setTimeout(() => {
       const state = home.state;
       expect(state.type).toBe('feed');
-      expect(state.page).toBe(3);
+      expect(state.page).toBe(1);
+      expect(state.max).toBe(5);
+      expect(tags.all).toHaveBeenCalledWith();
       expect(articles.feed).toHaveBeenCalledWith({ offset: 20, limit: 10 });
       done();
     })
@@ -55,8 +59,10 @@ describe('home component', () => {
     setTimeout(() => {
       const state = home.state;
       expect(state.type).toBe('tag');
-      expect(state.max).toBe(10);
       expect(state.tag).toBeUndefined();
+      expect(state.page).toBe(1);
+      expect(state.max).toBe(101);
+      expect(tags.all).toHaveBeenCalledWith();
       expect(articles.search).toHaveBeenCalledWith({ tag:undefined, offset: 0, limit: 10 });
       done();
     })
@@ -67,9 +73,10 @@ describe('home component', () => {
     setTimeout(() => {
       const state = home.state;
       expect(state.type).toBe('tag');
-      expect(state.max).toBe(10);
+      expect(state.max).toBe(101);
       expect(state.tag).toBe('t2');
       expect(state.page).toBe(1);
+      expect(tags.all).toHaveBeenCalledWith();
       expect(articles.search).toHaveBeenCalledWith({ tag: 't2', offset: 0, limit: 10 });
       done();
     })
@@ -81,7 +88,8 @@ describe('home component', () => {
       const state = home.state;
       expect(state.type).toBe('tag');
       expect(state.tag).toBe('t3');
-      expect(state.page).toBe(20);
+      expect(state.page).toBe(11);
+      expect(tags.all).toHaveBeenCalledWith();
       expect(articles.search).toHaveBeenCalledWith({ tag: 't3', offset: 190, limit: 10 });
       done();
     })

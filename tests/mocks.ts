@@ -13,7 +13,7 @@ auth.save = jest.fn(() => { });
 
 tags.all = jest.fn(() => ({ tags: [1, 2, 3] }));
 
-articles.search = jest.fn(() => ({ articles: [], articlesCount: 10 }));
+articles.search = jest.fn(() => ({ articles: [], articlesCount: 101 }));
 articles.feed = jest.fn(() => ({ articles: [], articlesCount: 5 }));
 articles.get = jest.fn((slug) => ({
   article: {
