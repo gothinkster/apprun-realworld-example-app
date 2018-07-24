@@ -7,7 +7,8 @@ class SettingsComponent extends Component {
   state = {}
 
   view = (state) => {
-    const user =state.user;
+    const user = state.user;
+    if (!user) return;
     return <div className="settings-page">
       {
         state.showModal ? <Modal title='Confirmation'

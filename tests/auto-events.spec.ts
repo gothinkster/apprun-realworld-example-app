@@ -7,6 +7,9 @@ import profile from '../src/components/profile';
 import article from '../src/components/article';
 import header from '../src/components/header';
 
+// import { tags, articles, comments } from '../src/api';
+import './mocks';
+
 describe('HeaderComponent', ()=>{
   it ('should handle event: /set-user', ()=>{
     header.run('/set-user');
@@ -106,14 +109,14 @@ describe('EditorComponent', () => {
 
 describe('ArticleComponent', () => {
   it('should handle event: #/article', () => {
-    article.run('#/article');
+    article.run('#/article', 'slug');
     expect(article.state).toBeTruthy();
   })
   it('should handle event: /new-comment', () => {
     article.run('/new-comment');
     expect(article.state).toBeTruthy();
   })
-  it('should handle event: /delete-comment', () => {
+  xit('should handle event: /delete-comment', () => {
     article.run('/delete-comment');
     expect(article.state).toBeTruthy();
   })

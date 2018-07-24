@@ -1,16 +1,8 @@
 import app from 'apprun';
-import { tags, articles } from '../src/api';
 import home from '../src/components/home';
 
-app.on('#', async (route, ...p) => {
-  app.run(`#/${route || ''}`, ...p);
-})
-
-tags.all = jest.fn(() => ({ tags: [1, 2, 3] }));
-
-articles.search = jest.fn(() => ({ articles: [], articlesCount: 10 }));
-
-articles.feed = jest.fn(()=>({ articles: [], articlesCount: 5 }));
+import { tags, articles } from '../src/api';
+import './mocks';
 
 describe('home component', () => {
 
