@@ -10,7 +10,9 @@ This codebase was created to demonstrate application frontend built with **[AppR
 
 We've gone to great lengths to adhere to the [RealWorld](https://github.com/gothinkster/realworld) community style guides & best practices.
 
-This codebase has about 1100 lines of source code that can be gziped to 18K.
+This codebase has about 1000 lines of source code that can be gziped to 18K.
+
+See a comparison from [A Real-World Comparison of Front-End Frameworks with Benchmarks (2018 Update)](https://medium.freecodecamp.org/a-real-world-comparison-of-front-end-frameworks-with-benchmarks-2018-update-e5760fb4a962).
 
 ## General functionality
 
@@ -21,48 +23,16 @@ This codebase has about 1100 lines of source code that can be gziped to 18K.
 * GET and display paginated lists of articles
 * Favorite articles
 * Follow other users
-* Modal confirmation for deleting articles and comments
+* **Modal dialog for deleting articles and comments**
+* **Static Typed**
+* **AppRun CLI in console enabled**
+* **Connect to the Redux devtool extensions**
 
-## How it works
+![devtools](https://github.com/yysun/apprun/raw/master/docs/apprun-dev-tools.gif)
 
-
-This RealWorld example application is built using [AppRun](https://github.com/yysun/apprun) components that implements the model-view-update architecture.
-```
-import app, { Component } from 'apprun';
-class ArticleComponent extends Component{
-
-  state = {}
-
-  view = (state) => <div></div>
-
-  update = {
-    '#/article': async(state, slug) => {}
-  }
-
-}
-```
-
-Or use the _on_ decorator
-```
-import app, { Component, on } from 'apprun';
-class ArticleComponent extends Component{
-
-  state = {}
-
-  view = (state) => <div></div>
-
-  @on('#/article') root =  async(state, slug) => {}
-
-}
-```
 
 ## About AppRun
-[AppRun](https://github.com/yysun/apprun) is a 3K library for developing applications using the elm style model-view-update architecture and event pub and sub pattern.
-
-Applications built with AppRun have less line of code, smaller js file and better performance. See a comparision from [A Real-World Comparison of Front-End Frameworks with Benchmarks](https://medium.freecodecamp.org/a-real-world-comparison-of-front-end-frameworks-with-benchmarks-e1cb62fd526c).
-
-
-AppRun has also joined the [js-framework-benchmark](https://github.com/krausest/js-framework-benchmark) project. You can see its [performance results](https://rawgit.com/krausest/js-framework-benchmark/master/webdriver-ts-results/table.html) compared to other frameworks and libraries.
+[AppRun](https://github.com/yysun/apprun) is a 3K library for developing applications using the elm inspired architecture and event pub and sub pattern.
 
 Following articles have more details of this application and AppRun.
 * [Deep Dive into AppRun State](https://medium.com/@yiyisun/deep-dive-into-apprun-state-3d6fb58b1521)
