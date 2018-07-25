@@ -110,7 +110,10 @@ app.on('/get-user', async () => {
     const current = await auth.current();
     if (current) app.run('/set-user', current.user);
   }
-  catch { } // no user
+  catch {
+    setToken(null);
+    document.location.reload(true);
+  }
 });
 
 app.on('/set-user', user => {
