@@ -25,7 +25,7 @@ class HeaderComponent extends Component {
       </li>
       }
       {user ? '' : <li className="nav-item">
-        <a className="nav-link" href="#/register">Sign up</a>
+        <a className="nav-link" href="#/register">Sign Up</a>
       </li>
       }
       {user && <li className="nav-item">
