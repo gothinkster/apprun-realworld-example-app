@@ -22,24 +22,23 @@
   },
   "homepage": "https://github.com/yysun/realworld-starter-kit#readme",
   "devDependencies": {
-    "@types/jest": "^23.3.12",
-    "jest": "^23.6.0",
+    "@types/jest": "^24.0.11",
+    "jest": "^24.7.1",
     "source-map-loader": "^0.2.4",
-    "ts-jest": "^23.10.5",
+    "ts-jest": "^24.0.2",
     "ts-loader": "^5.3.3",
     "tslib": "^1.9.3",
-    "tslint": "^5.12.0",
-    "typescript": "^3.2.2",
-    "webpack": "^4.28.1",
-    "webpack-cli": "^3.2.1",
-    "webpack-dev-server": "^3.1.14"
+    "tslint": "^5.15.0",
+    "typescript": "^3.4.2",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.3.0"
   },
   "dependencies": {
-    "apprun": "^3.2.0",
-    "marked": "^0.3.19"
+    "apprun": "^1.17.0",
+    "marked": "^0.6.2"
   },
   "jest": {
-    "verbose": true,
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
@@ -51,6 +50,11 @@
       "jsx",
       "json",
       "node"
-    ]
+    ],
+    "globals": {
+      "ts-jest": {
+        "diagnostics": true
+      }
+    }
   }
 }
