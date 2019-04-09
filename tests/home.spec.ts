@@ -1,6 +1,6 @@
 import app from 'apprun';
 import home from '../src/components/home';
-import { tags, articles } from '../src/api';
+import { auth, tags, articles } from '../src/api';
 import './mocks';
 
 describe('home component', () => {
@@ -32,13 +32,12 @@ describe('home component', () => {
   })
 
   it('should not call #/feed w/o user', () => {
-    const login = jest.fn();
-    app.on('#/login', login);
+    app.on('#/login', auth.signIn);
     app.run('route', '#/feed');
-    expect(login).toHaveBeenCalled();
+    expect(auth.authorized()).toBeFalsy();
+    expect(auth.signIn).toHaveBeenCalled();
     expect(articles.feed).not.toHaveBeenCalled();
   })
-
 
   it('should update state: #/feed/3', (done) => {
     app['user'] = {};

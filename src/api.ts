@@ -63,9 +63,7 @@ export const auth = {
     post<IAuthResponse>('/users', { user }),
   save: user =>
     put('/user', { user }),
-  authorized: () => {
-    return app['user'] ? true : app.run('#/login');
-  }
+  authorized: (): boolean => app['user']  ? true : app.run('#/login') && false // app.run returns true if found event handlers
 }
 
 export const articles = {
