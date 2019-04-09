@@ -6,37 +6,56 @@ app.on('#', async (route, ...p) => {
 })
 
 auth.current = jest.fn(() => null);
-auth.signIn = jest.fn(() => { });
-auth.register = jest.fn(() => { });
-auth.save = jest.fn(() => { });
-// auth.authorized = jest.fn(() => false);
+auth.signIn = jest.fn(() => new Promise(r => r(
+  {
+    user: {
+      username: '',
+      bio: '',
+      image: '',
+      following: true
+    }
+  }
+)));
 
-tags.all = jest.fn(() => ({ tags: [1, 2, 3] }));
+auth.register = jest.fn(() => null);
+auth.save = jest.fn(() => null);
 
-articles.search = jest.fn(() => ({ articles: [], articlesCount: 101 }));
-articles.feed = jest.fn(() => ({ articles: [], articlesCount: 5 }));
-articles.get = jest.fn((slug) => ({
-  article: {
-    slug,
-    author: {},
-    title: '',
-    body: '',
-    tagList: []
-  },
-}));
+tags.all = jest.fn(() => new Promise(r => r({ tags: ['1', '2', '3'] })));
 
-articles.delete = jest.fn(() => { });
-articles.favorite = jest.fn(() => { });
-articles.unfavorite = jest.fn(() => { });
-articles.update = jest.fn(() => { });
-articles.create = jest.fn(() => { });
+articles.search = jest.fn(() => new Promise(r => r(({ articles: [], articlesCount: 101 }))));
+articles.feed = jest.fn(() => new Promise(r => r({ articles: [], articlesCount: 5 })));
+articles.get = jest.fn(() => new Promise(r => r(
+  {
+    article: {
+      slug: '',
+      author: {
+        username: '',
+        bio: '',
+        image: '',
+        following: true
+      },
+      title: '',
+      body: '',
+      description: '',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      favorited: true,
+      favoritesCount: 0,
+      tagList: []
+    }
+  }
+)));
 
-comments.create = jest.fn(() => { });
-comments.delete = jest.fn(() => { });
-comments.forArticle = jest.fn(() => ({ comments: [] }));
+articles.delete = jest.fn(() => null);
+articles.favorite = jest.fn(() => null);
+articles.unfavorite = jest.fn(() => null);
+articles.update = jest.fn(() => null);
+articles.create = jest.fn(() => null);
 
-profile.get = jest.fn(() => { });
-profile.follow = jest.fn(() => { });
-profile.unfollow = jest.fn(() => { });
+comments.create = jest.fn(() => null);
+comments.delete = jest.fn(() => null);
+comments.forArticle = jest.fn(() => new Promise(r => r(({ comments: [] }))));
 
-
+profile.get = jest.fn(() => null);
+profile.follow = jest.fn(() => null);
+profile.unfollow = jest.fn(() => null);

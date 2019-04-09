@@ -3,7 +3,7 @@ export interface IUser {
   username: string;
   bio: string;
   image: string;
-  following: true;
+  following: boolean;
 }
 
 export interface IProfile extends IUser {
