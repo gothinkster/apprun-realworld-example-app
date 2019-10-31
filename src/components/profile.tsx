@@ -17,21 +17,21 @@ class ProfileComponent extends Component {
   view = (state) => {
     const profile = state.profile as IProfile;
     if (!profile) return;
-    return <div className="profile-page">
-      <div className="user-info">
-        <div className="container">
-          <div className="row">
-            <div className="col-xs-12 col-md-10 offset-md-1">
-              <img src={profile.image} className="user-img" />
+    return <div class="profile-page">
+      <div class="user-info">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12 col-md-10 offset-md-1">
+              <img src={profile.image} class="user-img" />
               <h4>{profile.username}</h4>
               <p>
                 {profile.bio}
               </p>
-              <button className="btn btn-sm btn-outline-secondary action-btn"
+              <button class="btn btn-sm btn-outline-secondary action-btn"
                 onclick={e => app.run('/toggle-follow', profile, this)}>
                 {profile.following
-                  ? <span><i className="ion-minus-round"></i> Unfollow {profile.username}</span>
-                  : <span><i className="ion-plus-round"></i> Follow {profile.username}</span>
+                  ? <span><i class="ion-minus-round"></i> Unfollow {profile.username}</span>
+                  : <span><i class="ion-plus-round"></i> Follow {profile.username}</span>
                 }
               </button>
             </div>
@@ -39,17 +39,17 @@ class ProfileComponent extends Component {
         </div>
       </div>
 
-      <div className="container">
-        <div className="row">
-          <div className="col-xs-12 col-md-10 offset-md-1">
-            <div className="articles-toggle">
-              <ul className="nav nav-pills outline-active">
-                <li className="nav-item">
-                  <a className={`nav-link ${state.type === 'articles' ? 'active' : ''}`}
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-md-10 offset-md-1">
+            <div class="articles-toggle">
+              <ul class="nav nav-pills outline-active">
+                <li class="nav-item">
+                  <a class={`nav-link ${state.type === 'articles' ? 'active' : ''}`}
                     href={`#/profile/${profile.username}/articles/1`}>My Articles</a>
                 </li>
-                <li className="nav-item">
-                  <a className={`nav-link ${state.type === 'favorites' ? 'active' : ''}`}
+                <li class="nav-item">
+                  <a class={`nav-link ${state.type === 'favorites' ? 'active' : ''}`}
                     href={`#/profile/${profile.username}/favorites/1`}>Favorited Articles</a>
                 </li>
               </ul>

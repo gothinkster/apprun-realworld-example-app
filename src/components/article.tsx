@@ -16,7 +16,7 @@ class ArticleComponent extends Component {
     const article = state.article as IArticle;
     if (!article) return;
 
-    return <div className="article-page">
+    return <div class="article-page">
 
       {
         state.deleting ? <Modal title='Delete Article'
@@ -26,20 +26,20 @@ class ArticleComponent extends Component {
         onCancel={e => this.run('cancel-delete-article', e)} /> : ''
       }
 
-      <div className="banner">
-        <div className="container">
+      <div class="banner">
+        <div class="container">
           <h1>{article.title}</h1>
           <ArticleMeta article={article} component={this}/>
         </div>
       </div>
 
-      <div className="container page">
-        <div className="row article-content">
-          <div className="col-md-12">
+      <div class="container page">
+        <div class="row article-content">
+          <div class="col-md-12">
             <p>{`_html:${marked(article.body, { sanitize: true })}`}</p>
-            <div className="tag-list"><br />
+            <div class="tag-list"><br />
               {article.tagList.map(tag =>
-                <li className="tag-default tag-pill tag-outline">
+                <li class="tag-default tag-pill tag-outline">
                   <a href={`#/tag/${tag}`}>{tag} </a>
                 </li>
               )}
@@ -47,7 +47,7 @@ class ArticleComponent extends Component {
           </div>
         </div>
         <hr />
-        <div className="article-actions">
+        <div class="article-actions">
           <ArticleMeta article={article} component={this}/>
         </div>
         <Comments comments={state.comments}/>

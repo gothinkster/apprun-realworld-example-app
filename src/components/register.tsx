@@ -8,29 +8,29 @@ class RegisterComponent extends Component {
   view = (state) => {
     if (!state || state instanceof Promise) return;
 
-    return <div className="auth-page">
-      <div className="container page">
-        <div className="row">
+    return <div class="auth-page">
+      <div class="container page">
+        <div class="row">
 
-          <div className="col-md-6 offset-md-3 col-xs-12">
-            <h1 className="text-xs-center">Sign Up</h1>
-            <p className="text-xs-center">
+          <div class="col-md-6 offset-md-3 col-xs-12">
+            <h1 class="text-xs-center">Sign Up</h1>
+            <p class="text-xs-center">
               <a href="#/login">Have an account?</a>
             </p>
 
             {state.errors && <Errors errors={state.errors} />}
 
             <form onsubmit={e => this.run('register', e)}>
-              <fieldset className="form-group">
-                <input className="form-control form-control-lg" type="text" placeholder="Your Name" name="username" />
+              <fieldset class="form-group">
+                <input class="form-control form-control-lg" type="text" placeholder="Your Name" name="username" />
               </fieldset>
-              <fieldset className="form-group">
-                <input className="form-control form-control-lg" type="text" placeholder="Email" name="email" />
+              <fieldset class="form-group">
+                <input class="form-control form-control-lg" type="text" placeholder="Email" name="email" />
               </fieldset>
-              <fieldset className="form-group">
-                <input className="form-control form-control-lg" type="password" placeholder="Password" name="password" />
+              <fieldset class="form-group">
+                <input class="form-control form-control-lg" type="password" placeholder="Password" name="password" />
               </fieldset>
-              <button className="btn btn-lg btn-primary pull-xs-right">
+              <button class="btn btn-lg btn-primary pull-xs-right">
                 Sign up
               </button>
             </form>

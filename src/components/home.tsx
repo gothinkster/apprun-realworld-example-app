@@ -5,7 +5,7 @@ import Articles from './article-list';
 import Pages from './page-list';
 
 const PAGE_SIZE = 10
-const Tag = ({ tag }) => <a href={`#/tag/${tag}/1`} className="tag-pill tag-default">{tag}</a>
+const Tag = ({ tag }) => <a href={`#/tag/${tag}/1`} class="tag-pill tag-default">{tag}</a>
 
 declare interface IState {
   type: '' | 'feed' | 'tag'
@@ -26,28 +26,28 @@ class HomeComponent extends Component {
 
   view = (state) => {
     const tag = state.type === 'tag' && state.tag ? `/${state.tag}` : '';
-    return <div className="home-page">
-      <div className="banner">
-        <div className="container">
-          <h1 className="logo-font">conduit</h1>
+    return <div class="home-page">
+      <div class="banner">
+        <div class="container">
+          <h1 class="logo-font">conduit</h1>
           <p>A place to share your knowledge.</p>
         </div>
       </div>
-      <div className="container page">
-        <div className="row">
-          <div className="col-md-9">
-            <div className="feed-toggle">
-              <ul className="nav nav-pills outline-active">
-                <li className="nav-item">
-                  <a className={`nav-link ${app['user'] ? '' : 'disabled'} ${state.type === 'feed' ? 'active' : ''}`}
+      <div class="container page">
+        <div class="row">
+          <div class="col-md-9">
+            <div class="feed-toggle">
+              <ul class="nav nav-pills outline-active">
+                <li class="nav-item">
+                  <a class={`nav-link ${app['user'] ? '' : 'disabled'} ${state.type === 'feed' ? 'active' : ''}`}
                     href="#/feed">Your Feed</a>
                 </li>
-                <li className="nav-item">
-                  <a className={`nav-link ${state.type === '' ? 'active' : ''}`} href="#/">Global Feed</a>
+                <li class="nav-item">
+                  <a class={`nav-link ${state.type === '' ? 'active' : ''}`} href="#/">Global Feed</a>
                 </li>
                 {state.tag ?
-                  <li className="nav-item">
-                    <a className={`nav-link ${state.type === 'tag' ? 'active' : ''}`} href={`#/tag/${state.tag}`}>#{state.tag}</a>
+                  <li class="nav-item">
+                    <a class={`nav-link ${state.type === 'tag' ? 'active' : ''}`} href={`#/tag/${state.tag}`}>#{state.tag}</a>
                   </li>
                   : ''
                 }
@@ -56,10 +56,10 @@ class HomeComponent extends Component {
             <Articles articles={state.articles} component={this} />
             <Pages max={Math.floor(state.max / PAGE_SIZE)} selected={state.page} link={`#/${state.type}${tag}`} />
           </div>
-          <div className="col-md-3">
-            <div className="sidebar">
+          <div class="col-md-3">
+            <div class="sidebar">
               <p>Popular Tags</p>
-              <div className="tag-list">
+              <div class="tag-list">
                 {state.tags.map(tag => <Tag tag={tag} />)}
               </div>
             </div>

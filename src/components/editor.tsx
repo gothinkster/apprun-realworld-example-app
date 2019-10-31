@@ -8,33 +8,33 @@ class EditorComponent extends Component {
   view = (state) => {
     if (!app['user'] || !state.article) return;
     const article = state.article;
-    return <div className="editor-page">
-      <div className="container page">
-        <div className="row">
-          <div className="col-md-10 offset-md-1 col-xs-12">
+    return <div class="editor-page">
+      <div class="container page">
+        <div class="row">
+          <div class="col-md-10 offset-md-1 col-xs-12">
             {state.errors && <Errors errors={state.errors} />}
             <form onsubmit={e => this.run('submit-article', e)}>
               {article.slug && <input type="hidden" name="slug" value={article.slug} />}
               <fieldset>
-                <fieldset className="form-group">
-                  <input type="text" className="form-control form-control-lg" placeholder="Article Title"
+                <fieldset class="form-group">
+                  <input type="text" class="form-control form-control-lg" placeholder="Article Title"
                     name="title" value={article.title} />
                 </fieldset>
-                <fieldset className="form-group">
-                  <input type="text" className="form-control" placeholder="What's this article about?"
+                <fieldset class="form-group">
+                  <input type="text" class="form-control" placeholder="What's this article about?"
                     name="description" value={article.description} />
                 </fieldset>
-                <fieldset className="form-group">
-                  <textarea className="form-control" rows="8" placeholder="Write your article (in markdown)" name="body">
+                <fieldset class="form-group">
+                  <textarea class="form-control" rows="8" placeholder="Write your article (in markdown)" name="body">
                     {article.body}
                   </textarea>
                 </fieldset>
-                <fieldset className="form-group">
-                  <input type="text" className="form-control" placeholder="Enter tags" name="tags"
+                <fieldset class="form-group">
+                  <input type="text" class="form-control" placeholder="Enter tags" name="tags"
                     value={article.tagList.join(', ')} />
-                  <div className="tag-list"></div>
+                  <div class="tag-list"></div>
                 </fieldset>
-                <button className="btn btn-lg pull-xs-right btn-primary" type="submit">
+                <button class="btn btn-lg pull-xs-right btn-primary" type="submit">
                   Publish Article
                 </button>
               </fieldset>
