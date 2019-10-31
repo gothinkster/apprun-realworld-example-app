@@ -25,18 +25,14 @@ class HeaderComponent extends Component {
             </a>
           </li>
         )}
-        {user ? (
-          ''
-        ) : (
+        {!user && (
           <li class="nav-item">
             <a class="nav-link" href="#/login">
               Sign In
             </a>
           </li>
         )}
-        {user ? (
-          ''
-        ) : (
+        {!user && (
           <li class="nav-item">
             <a class="nav-link" href="#/register">
               Sign Up

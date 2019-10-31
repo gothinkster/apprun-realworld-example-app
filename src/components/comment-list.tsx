@@ -19,12 +19,10 @@ function Comment({ comment }: { comment: IComment }) {
           {comment.author.username}
         </a>
         <span class="date-posted">{new Date(comment.createdAt).toLocaleString()}</span>
-        {app['user'] && app['user'].username === comment.author.username ? (
+        {app['user'] && app['user'].username === comment.author.username && (
           <span class="mod-options">
             <i class="ion-trash-a" onclick={e => app.run('/delete-comment', comment)}></i>
           </span>
-        ) : (
-          ''
         )}
       </div>
     </div>

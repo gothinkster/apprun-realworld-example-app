@@ -17,7 +17,7 @@ class ArticleComponent extends Component {
     if (!article) return;
     return (
       <div class="article-page">
-        {state.deleting ? (
+        {state.deleting && (
           <Modal
             title="Delete Article"
             body="Are you sure you want to delete this article?"
@@ -26,8 +26,6 @@ class ArticleComponent extends Component {
             onOK={e => this.run('ok-delete-article', e)}
             onCancel={e => this.run('cancel-delete-article', e)}
           />
-        ) : (
-          ''
         )}
 
         <div class="banner">
