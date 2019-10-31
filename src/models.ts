@@ -1,4 +1,3 @@
-
 export interface IUser {
   username: string;
   bio: string;
@@ -23,7 +22,6 @@ export interface IArticle {
   author: IUser;
   tagList: Array<string>;
 }
-
 
 export interface IComment {
   id: number;
