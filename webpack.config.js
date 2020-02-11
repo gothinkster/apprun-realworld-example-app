@@ -16,5 +16,6 @@ module.exports = {
       { test: /\.js$/, use: ["source-map-loader"], enforce: "pre" }
     ]
   },
+  externals: { apprun: 'apprun' },
   devtool:'source-map'
 }
