@@ -8,6 +8,7 @@
     "lib": ["dom", "es2015", "es5"],
     "sourceMap": true,
     "experimentalDecorators": true,
-    "importHelpers": true
+    "importHelpers": true,
+    "esModuleInterop": true
   }
 }

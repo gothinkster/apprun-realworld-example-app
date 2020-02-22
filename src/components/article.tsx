@@ -1,10 +1,10 @@
 import app, { Component, on } from 'apprun';
-import { auth, articles, comments } from '../api';
+import { articles, comments } from '../api';
 import { IArticle } from '../models';
 import Comments from './comment-list';
 import ArticleMeta from './article-meta';
 import Modal from './modal';
-import * as marked from 'marked';
+import marked from 'marked';
 
 class ArticleComponent extends Component {
   state = {

@@ -1,6 +1,6 @@
 import app, { Component, on } from 'apprun';
 import { IProfile } from '../models';
-import { auth, articles, profile } from '../api';
+import { articles, profile } from '../api';
 import Articles from './article-list';
 import Pages from './page-list';
 

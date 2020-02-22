@@ -1,6 +1,6 @@
 import app from 'apprun';
 import { IComment, IProfile } from '../models';
-import * as marked from 'marked';
+import marked from 'marked';
 
 function Comment({ comment }: { comment: IComment }) {
   return (
