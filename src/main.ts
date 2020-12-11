@@ -13,4 +13,8 @@ app.on('#', (route, ...p) => {
   app.run(`#/${route || ''}`, ...p);
 });
 
+app.once('/set-user', () => {
+  app.route(location.hash);
+});
+
 app.run('/get-user');

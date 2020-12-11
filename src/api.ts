@@ -89,10 +89,10 @@ export const profile = {
 app.on('/get-user', async () => {
   try {
     const current = await auth.current();
-    if (current) {app.run('/set-user', current.user);}
+    app.run('/set-user', current?.user);
   } catch {
     setToken(null);
-    document.location.reload(true);
+    document.location.reload();
   }
 });
 
