@@ -5,8 +5,8 @@ import Errors from './error-list';
 class RegisterComponent extends Component {
   state = {};
 
-  view = state => {
-    if (!state || state instanceof Promise) return;
+  view = (state) => {
+    if (!state || state instanceof Promise) {return;}
     return (
       <div class="auth-page">
         <div class="container page">

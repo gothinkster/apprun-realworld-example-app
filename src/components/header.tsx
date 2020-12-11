@@ -2,7 +2,7 @@ import app, { Component, on } from 'apprun';
 
 class HeaderComponent extends Component {
   state = {};
-  view = state => {
+  view = (state) => {
     const user = state.user;
     return (
       <ul class="nav navbar-nav pull-xs-right">

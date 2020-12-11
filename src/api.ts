@@ -89,20 +89,20 @@ export const profile = {
 app.on('/get-user', async () => {
   try {
     const current = await auth.current();
-    if (current) app.run('/set-user', current.user);
+    if (current) {app.run('/set-user', current.user);}
   } catch {
     setToken(null);
     document.location.reload(true);
   }
 });
 
-app.on('/set-user', user => {
+app.on('/set-user', (user) => {
   app['user'] = user;
   setToken(user ? user.token : null);
 });
 
 app.on('/toggle-follow', async (author: IProfile, component) => {
-  if (!auth.authorized()) return;
+  if (!auth.authorized()) {return;}
   const result = author.following
     ? await profile.unfollow(author.username)
     : await profile.follow(author.username);
@@ -110,7 +110,7 @@ app.on('/toggle-follow', async (author: IProfile, component) => {
 });
 
 app.on('/toggle-fav-article', async (article: IArticle, component) => {
-  if (!auth.authorized()) return;
+  if (!auth.authorized()) {return;}
   const result = article.favorited
     ? await articles.unfavorite(article.slug)
     : await articles.favorite(article.slug);

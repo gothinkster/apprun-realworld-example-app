@@ -14,9 +14,9 @@ class ProfileComponent extends Component {
     page: 1
   };
 
-  view = state => {
+  view = (state) => {
     const profile = state.profile as IProfile;
-    if (!profile) return;
+    if (!profile) {return;}
     return (
       <div class="profile-page">
         <div class="user-info">
@@ -28,7 +28,7 @@ class ProfileComponent extends Component {
                 <p>{profile.bio}</p>
                 <button
                   class="btn btn-sm btn-outline-secondary action-btn"
-                  onclick={e => app.run('/toggle-follow', profile, this)}>
+                  onclick={() => app.run('/toggle-follow', profile, this)}>
                   {profile.following ? (
                     <span>
                       <i class="ion-minus-round"></i> Unfollow {profile.username}
@@ -109,7 +109,7 @@ class ProfileComponent extends Component {
   @on('#/profile') root = (state, name, type, page) => this.updateState(state, name, type, page);
 
   @on('update-article') updateArticle = (state, article) => {
-    state.articles = state.articles.map(a => {
+    state.articles = state.articles.map((a) => {
       return a.slug === article.slug ? article : a;
     });
     return state;

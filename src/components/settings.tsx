@@ -6,9 +6,9 @@ import Modal from './modal';
 class SettingsComponent extends Component {
   state = {};
 
-  view = state => {
+  view = (state) => {
     const user = state.user;
-    if (!user) return;
+    if (!user) {return;}
     return (
       <div class="settings-page">
         {state.showModal ? (
@@ -85,14 +85,15 @@ class SettingsComponent extends Component {
     );
   };
 
-  @on('#/settings') settings = state => {
-    if (!auth.authorized()) return;
+  @on('#/settings') settings = () => {
+    if (!auth.authorized()) {return;}
     return { user: app['user'] };
   };
 
   @on('submit-settings') submitSettings = async (state, e) => {
     try {
       e.preventDefault();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const user = serializeObject<any>(e.target);
       const result = await auth.save(user);
       app.run('#user', result.user);
@@ -102,7 +103,7 @@ class SettingsComponent extends Component {
     }
   };
 
-  @on('ok, cancel') ok = state => {
+  @on('ok, cancel') ok = () => {
     return { showModel: false };
   };
 }

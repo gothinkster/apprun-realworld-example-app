@@ -18,7 +18,7 @@ function Article(props) {
         </div>
         <button
           class={`btn btn-sm pull-xs-right ${favClass}`}
-          onclick={e => app.run('toggle-fav-article', article, props.component)}>
+          onclick={() => app.run('toggle-fav-article', article, props.component)}>
           <i class="ion-heart"></i> {article.favoritesCount}
         </button>
       </div>
@@ -38,7 +38,7 @@ function Article(props) {
   );
 }
 
-export default function({ articles, component }: { articles: Array<IArticle>; component }) {
+export default function ({ articles, component }: { articles: Array<IArticle>; component }) {
   return articles.length ? (
     articles.map(article => <Article article={article} component={component}></Article>)
   ) : (

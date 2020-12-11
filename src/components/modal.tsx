@@ -1,6 +1,6 @@
 import app from 'apprun';
 
-export default function({ title, body, ok, cancel, onOK, onCancel }) {
+export default function ({ title, body, ok, cancel, onOK, onCancel }) {
   return (
     <div class="modal-open">
       <div class="modal-dialog" role="document">

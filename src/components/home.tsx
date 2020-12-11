@@ -28,7 +28,7 @@ class HomeComponent extends Component {
     page: 1
   };
 
-  view = state => {
+  view = (state) => {
     const tag = state.type === 'tag' && state.tag ? `/${state.tag}` : '';
     return (
       <div class="home-page">
@@ -95,23 +95,23 @@ class HomeComponent extends Component {
 
   updateState = async (state, type: '' | 'feed' | 'tag', page, tag?: string) => {
     try {
-      let tagList = state.tags.length ? { tags: state.tags } : await tags.all();
+      const tagList = state.tags.length ? { tags: state.tags } : await tags.all();
       page = parseInt(page) || 1;
       tag = tag || state.tag;
       const limit = PAGE_SIZE;
       const offset = (page - 1) * PAGE_SIZE;
       let feed;
       switch (type) {
-        case 'feed':
-          if (!auth.authorized()) return { ...state, articles: [], max: 0 };
-          feed = await articles.feed({ limit, offset });
-          break;
-        case 'tag':
-          feed = await articles.search({ tag, limit, offset });
-          break;
-        default:
-          feed = await articles.search({ limit, offset });
-          break;
+      case 'feed':
+        if (!auth.authorized()) {return { ...state, articles: [], max: 0 };}
+        feed = await articles.feed({ limit, offset });
+        break;
+      case 'tag':
+        feed = await articles.search({ tag, limit, offset });
+        break;
+      default:
+        feed = await articles.search({ limit, offset });
+        break;
       }
       page = Math.min(page, Math.floor(feed.articlesCount / PAGE_SIZE) + 1);
       return {
@@ -135,7 +135,7 @@ class HomeComponent extends Component {
   @on('#/tag') tag = async (state, tag, page) => await this.updateState(state, 'tag', page, tag);
 
   @on('update-article') updateArticle = (state, article) => {
-    state.articles = state.articles.map(a => {
+    state.articles = state.articles.map((a) => {
       return a.slug === article.slug ? article : a;
     });
     return state;

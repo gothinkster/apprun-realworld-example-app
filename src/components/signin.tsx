@@ -6,8 +6,8 @@ import Errors from './error-list';
 class SigninComponent extends Component {
   state = {};
 
-  view = state => {
-    if (!state || state instanceof Promise) return;
+  view = (state) => {
+    if (!state || state instanceof Promise) {return;}
     return (
       <div class="auth-page">
         <div class="container page">
@@ -48,7 +48,7 @@ class SigninComponent extends Component {
 
   @on('#/login') login = state => ({ ...state, messages: [], returnTo: document.location.hash });
 
-  @on('#/logout') logout = state => {
+  @on('#/logout') logout = () => {
     app.run('/set-user', null);
     document.location.hash = '#/';
   };
@@ -58,9 +58,8 @@ class SigninComponent extends Component {
       e.preventDefault();
       const session = await auth.signIn(serializeObject(e.target));
       app.run('/set-user', session.user);
-      const returnTo: string = (state.returnTo || '').replace(/\#\/login\/?/, '');
-      if (!returnTo) document.location.hash = '#/feed';
-      else {
+      const returnTo: string = (state.returnTo || '').replace(/#\/login\/?/, '');
+      if (!returnTo) {document.location.hash = '#/feed';} else {
         app.run('route', returnTo);
         history.pushState(null, null, returnTo);
       }

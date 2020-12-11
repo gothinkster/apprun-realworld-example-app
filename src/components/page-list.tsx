@@ -1,6 +1,6 @@
 import app from 'apprun';
 
-export default function({ max, selected, link }) {
+export default function ({ max, selected, link }) {
   const pages = new Array(max).fill(0);
   return (
     <nav>

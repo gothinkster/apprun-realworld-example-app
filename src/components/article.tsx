@@ -12,9 +12,9 @@ class ArticleComponent extends Component {
     comments: []
   };
 
-  view = state => {
+  view = (state) => {
     const article = state.article as IArticle;
-    if (!article) return;
+    if (!article) {return;}
     return (
       <div class="article-page">
         {state.deleting && (
@@ -38,7 +38,7 @@ class ArticleComponent extends Component {
         <div class="container page">
           <div class="row article-content">
             <div class="col-md-12">
-              <p>{`_html:${marked(article.body, { sanitize: true })}`}</p>
+              <p>{`_html:${marked(article.body)}`}</p>
               <div class="tag-list">
                 <br />
                 {article.tagList.map(tag => (
@@ -75,7 +75,7 @@ class ArticleComponent extends Component {
     try {
       e.preventDefault();
       const comment = e.target['comment'].value;
-      if (!comment) return;
+      if (!comment) {return;}
       await comments.create(state.article.slug, { body: comment });
       const commentsResponse = await comments.forArticle(state.article.slug);
       return { ...state, comments: commentsResponse.comments };
@@ -104,18 +104,18 @@ class ArticleComponent extends Component {
     document.location.hash = `#/editor/${article.slug}`;
   };
 
-  @on('delete-article') deleteArticle = (state, article) => ({
+  @on('delete-article') deleteArticle = state => ({
     ...state,
     deleting: true
   });
 
-  @on('ok-delete-article') okDelete = (state, e) => {
+  @on('ok-delete-article') okDelete = (state) => {
     articles.delete(state.article.slug);
     document.location.hash = '#/';
     return { ...state, deleting: false };
   };
 
-  @on('cancel-delete-article') cancelDelete = (state, article) => ({
+  @on('cancel-delete-article') cancelDelete = state => ({
     ...state,
     deleting: false
   });

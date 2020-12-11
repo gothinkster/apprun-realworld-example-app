@@ -5,8 +5,8 @@ import Errors from './error-list';
 class EditorComponent extends Component {
   state = {};
 
-  view = state => {
-    if (!app['user'] || !state.article) return;
+  view = (state) => {
+    if (!app['user'] || !state.article) {return;}
     const article = state.article;
     return (
       <div class="editor-page">
@@ -67,7 +67,7 @@ class EditorComponent extends Component {
   };
 
   @on('#/editor') root = async (state, slug) => {
-    if (!auth.authorized()) return;
+    if (!auth.authorized()) {return;}
     let article;
     if (slug) {
       const result = await articles.get(slug);
@@ -80,6 +80,7 @@ class EditorComponent extends Component {
   @on('submit-article') submitArticle = async (state, e) => {
     try {
       e.preventDefault();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const article = serializeObject<any>(e.target);
       article.tagList = article.tags.split(',');
       const result = article.slug ? await articles.update(article) : await articles.create(article);

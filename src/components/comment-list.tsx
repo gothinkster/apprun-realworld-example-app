@@ -7,7 +7,7 @@ function Comment({ comment }: { comment: IComment }) {
     <div class="card">
       <div class="card-block">
         <p class="card-text">
-          <p>{`_html:${marked(comment.body, { sanitize: true })}`}</p>
+          <p>{`_html:${marked(comment.body)}`}</p>
         </p>
       </div>
       <div class="card-footer">
@@ -21,7 +21,7 @@ function Comment({ comment }: { comment: IComment }) {
         <span class="date-posted">{new Date(comment.createdAt).toLocaleString()}</span>
         {app['user'] && app['user'].username === comment.author.username && (
           <span class="mod-options">
-            <i class="ion-trash-a" onclick={e => app.run('/delete-comment', comment)}></i>
+            <i class="ion-trash-a" onclick={() => app.run('/delete-comment', comment)}></i>
           </span>
         )}
       </div>
@@ -29,7 +29,7 @@ function Comment({ comment }: { comment: IComment }) {
   );
 }
 
-export default function({ comments }: { comments: Array<IComment> }) {
+export default function ({ comments }: { comments: Array<IComment> }) {
   const user = app['user'] as IProfile;
   return (
     <div class="row">

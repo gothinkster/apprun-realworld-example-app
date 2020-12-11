@@ -20,13 +20,13 @@ export default function ArticleMeta({ article, component }: { article: IArticle;
         <span>
           <button
             class="btn btn-sm btn-outline-secondary"
-            onclick={e => component.run('edit-article', article)}>
+            onclick={() => component.run('edit-article', article)}>
             <i class="ion-edit"></i>&nbsp; Edit Article
           </button>
           &nbsp;&nbsp;
           <button
             class="btn btn-sm btn-outline-danger"
-            onclick={e => component.run('delete-article', article)}>
+            onclick={() => component.run('delete-article', article)}>
             <i class="ion-trash-o"></i>&nbsp; Delete Article
           </button>
         </span>
@@ -34,7 +34,7 @@ export default function ArticleMeta({ article, component }: { article: IArticle;
         <span>
           <button
             class={`btn btn-sm ${followClass}`}
-            onclick={e => app.run('/toggle-follow', article.author, component)}>
+            onclick={() => app.run('/toggle-follow', article.author, component)}>
             {article.author.following ? (
               <span>
                 <i class="ion-minus-round"></i> Unfollow {article.author.username}
@@ -48,7 +48,7 @@ export default function ArticleMeta({ article, component }: { article: IArticle;
           &nbsp;&nbsp;
           <button
             class={`btn btn-sm ${favClass}`}
-            onclick={e => app.run('/toggle-fav-article', article, component)}>
+            onclick={() => app.run('/toggle-fav-article', article, component)}>
             <i class="ion-heart"></i>
             &nbsp; Favorite Post <span class="counter">({article.favoritesCount})</span>
           </button>

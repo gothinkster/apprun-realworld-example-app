@@ -13,9 +13,9 @@ module.exports = {
   module: {
     rules: [
       { test: /.tsx?$/, loader: 'ts-loader' },
-      { test: /\.js$/, use: ["source-map-loader"], enforce: "pre" }
+      { test: /\.js$/, use: ['source-map-loader'], enforce: 'pre' }
     ]
   },
   externals: { apprun: 'apprun', marked: 'marked' },
   devtool:'source-map'
-}
+};

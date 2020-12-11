@@ -1,6 +1,6 @@
 import app from 'apprun';
 
-export default function({ errors }) {
+export default function ({ errors }) {
   return (
     <ul class="error-messages">
       {Object.keys(errors).map(key => (
