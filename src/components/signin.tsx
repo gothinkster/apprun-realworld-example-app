@@ -20,7 +20,7 @@ class SigninComponent extends Component {
 
               {state.errors && <Errors errors={state.errors} />}
 
-              <form onsubmit={e => this.run('sign-in', e)}>
+              <form $onsubmit='sign-in'>
                 <fieldset class="form-group">
                   <input
                     class="form-control form-control-lg"

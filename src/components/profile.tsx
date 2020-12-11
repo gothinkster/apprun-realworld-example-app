@@ -28,7 +28,7 @@ class ProfileComponent extends Component {
                 <p>{profile.bio}</p>
                 <button
                   class="btn btn-sm btn-outline-secondary action-btn"
-                  onclick={() => app.run('/toggle-follow', profile, this)}>
+                  $onclick={['/toggle-follow', profile, this]}>
                   {profile.following ? (
                     <span>
                       <i class="ion-minus-round"></i> Unfollow {profile.username}

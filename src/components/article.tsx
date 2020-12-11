@@ -23,8 +23,8 @@ class ArticleComponent extends Component {
             body="Are you sure you want to delete this article?"
             ok="Delete"
             cancel="No"
-            onOK={e => this.run('ok-delete-article', e)}
-            onCancel={e => this.run('cancel-delete-article', e)}
+            onOK='ok-delete-article'
+            onCancel='cancel-delete-article'
           />
         )}
 

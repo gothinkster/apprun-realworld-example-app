@@ -17,8 +17,8 @@ class SettingsComponent extends Component {
             body="Your settings has been updated successfully."
             ok="OK"
             cancel="Cancel"
-            onOK={e => this.run('ok', e)}
-            onCancel={e => this.run('cancel', e)}
+            onOK={'ok'}
+            onCancel={'cancel'}
           />
         ) : (
           ''
@@ -28,7 +28,7 @@ class SettingsComponent extends Component {
             <div class="col-md-6 offset-md-3 col-xs-12">
               {state.errors && <Errors errors={state.errors} />}
               <h1 class="text-xs-center">Your Settings</h1>
-              <form onsubmit={e => this.run('submit-settings', e)}>
+              <form $onsubmit='submit-settings'>
                 <fieldset>
                   <fieldset class="form-group">
                     <input
@@ -96,15 +96,15 @@ class SettingsComponent extends Component {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const user = serializeObject<any>(e.target);
       const result = await auth.save(user);
-      app.run('#user', result.user);
-      return { showModal: true };
+      app.run('/set-user', result.user);
+      return { user: result.user, showModal: true };
     } catch ({ errors }) {
       return { ...state, errors };
     }
   };
 
-  @on('ok, cancel') ok = () => {
-    return { showModel: false };
+  @on('ok, cancel') ok = (state) => {
+    return { ...state, showModal: false };
   };
 }
 

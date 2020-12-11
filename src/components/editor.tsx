@@ -14,7 +14,7 @@ class EditorComponent extends Component {
           <div class="row">
             <div class="col-md-10 offset-md-1 col-xs-12">
               {state.errors && <Errors errors={state.errors} />}
-              <form onsubmit={e => this.run('submit-article', e)}>
+              <form $onsubmit='submit-article'>
                 {article.slug && <input type="hidden" name="slug" value={article.slug} />}
                 <fieldset>
                   <fieldset class="form-group">

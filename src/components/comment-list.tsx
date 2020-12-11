@@ -21,7 +21,7 @@ function Comment({ comment }: { comment: IComment }) {
         <span class="date-posted">{new Date(comment.createdAt).toLocaleString()}</span>
         {app['user'] && app['user'].username === comment.author.username && (
           <span class="mod-options">
-            <i class="ion-trash-a" onclick={() => app.run('/delete-comment', comment)}></i>
+            <i class="ion-trash-a" $onclick={['/delete-comment', comment]}></i>
           </span>
         )}
       </div>
@@ -40,7 +40,7 @@ export default function ({ comments }: { comments: Array<IComment> }) {
             <a href="#/register">sign up</a> to add comments on this article.
           </p>
         ) : (
-          <form class="card comment-form" onsubmit={e => app.run('/new-comment', e)}>
+          <form class="card comment-form" $onsubmit='/new-comment'>
             <div class="card-block">
               <textarea
                 class="form-control"

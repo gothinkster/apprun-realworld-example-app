@@ -13,7 +13,7 @@ export default function ({ title, body, ok, cancel, onOK, onCancel }) {
                 class="close"
                 data-dismiss="modal"
                 aria-label="Close"
-                onclick={e => onCancel(e)}>
+                $onclick={onCancel}>
                 <span aria-hidden="true">×</span>
               </button>
             </h5>
@@ -27,18 +27,18 @@ export default function ({ title, body, ok, cancel, onOK, onCancel }) {
                 type="button"
                 class="btn btn-secondary"
                 data-dismiss="modal"
-                onclick={e => onCancel(e)}>
+                $onclick={onCancel}>
                 {cancel}
               </button>
             )}
             &nbsp;&nbsp;
-            <button type="button" class="btn btn-primary" onclick={e => onOK(e)}>
+            <button type="button" class="btn btn-primary" $onclick={onOK}>
               {ok}
             </button>
           </div>
         </div>
       </div>
-      <div class="modal-backdrop show" onclick={e => onCancel(e)}></div>
+      <div class="modal-backdrop show" $onclick={onCancel}></div>
     </div>
   );
 }

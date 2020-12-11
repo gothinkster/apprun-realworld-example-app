@@ -19,7 +19,7 @@ class RegisterComponent extends Component {
 
               {state.errors && <Errors errors={state.errors} />}
 
-              <form onsubmit={e => this.run('register', e)}>
+              <form $onsubmit='register'>
                 <fieldset class="form-group">
                   <input
                     class="form-control form-control-lg"
@@ -59,7 +59,7 @@ class RegisterComponent extends Component {
     try {
       e.preventDefault();
       const session = await auth.register(serializeObject(e.target));
-      app.run('#user', session.user);
+      app.run('/set-user', session.user);
       app.run('route', '#/');
     } catch ({ errors }) {
       return { ...state, errors };

@@ -18,7 +18,7 @@ function Article(props) {
         </div>
         <button
           class={`btn btn-sm pull-xs-right ${favClass}`}
-          onclick={() => app.run('toggle-fav-article', article, props.component)}>
+          $onclick={['/toggle-fav-article', article, props.component]}>
           <i class="ion-heart"></i> {article.favoritesCount}
         </button>
       </div>
