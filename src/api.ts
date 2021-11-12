@@ -1,7 +1,7 @@
 import app from 'apprun';
 
 // Conduit API
-window['defaultBasePath'] = 'https://conduit.productionready.io/api';
+window['defaultBasePath'] = 'https://api.realworld.io/api';
 
 import { toQueryString, serializeObject, getToken, setToken, get, post, del, put } from './fetch';
 export { toQueryString, serializeObject };
