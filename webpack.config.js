@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const path = require('path');
 module.exports = {
   entry: {
@@ -17,5 +18,11 @@ module.exports = {
     ]
   },
   externals: { apprun: 'apprun', marked: 'marked' },
-  devtool:'source-map'
+  devtool: 'source-map',
+  devServer: {
+    static: {
+      directory: __dirname,
+    },
+    compress: true,
+  },
 };
