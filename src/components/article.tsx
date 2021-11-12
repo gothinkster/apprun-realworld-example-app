@@ -4,7 +4,7 @@ import { IArticle } from '../models';
 import Comments from './comment-list';
 import ArticleMeta from './article-meta';
 import Modal from './modal';
-import marked from 'marked';
+import { marked } from 'marked';
 
 class ArticleComponent extends Component {
   state = {
