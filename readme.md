@@ -30,8 +30,6 @@ See a comparison from [A Real-World Comparison of Front-End Frameworks with Benc
 * **AppRun CLI in console enabled**
 * **Connect to the Redux devtool extensions**
 
-![devtools](https://github.com/yysun/apprun/raw/master/docs/apprun-dev-tools.gif)
-
 ## Getting started
 
 * Visit the [live demo](https://gothinkster.github.io/apprun-realworld-example-app)
@@ -46,7 +44,7 @@ See a comparison from [A Real-World Comparison of Front-End Frameworks with Benc
 In the AppRun Book published by Apress, the Chapter 10-12 describe this application.
 * [Order from Amazon](https://www.amazon.com/Practical-Application-Development-AppRun-High-Performance/dp/1484240685/)
 
-[![Order from Amazon](https://camo.githubusercontent.com/99fad1f024c274a3d752a1583cf125037583811c/68747470733a2f2f696d616765732e737072696e6765722e636f6d2f7367772f626f6f6b732f6d656469756d2f393738313438343234303638372e6a7067)](https://www.amazon.com/Practical-Application-Development-AppRun-High-Performance/dp/1484240685/)
+[![Order from Amazon](https://images-na.ssl-images-amazon.com/images/I/51cr-t1pdSL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg)](https://www.amazon.com/Practical-Application-Development-AppRun-High-Performance/dp/1484240685/)
 
 
 
