@@ -46,8 +46,7 @@ class SigninComponent extends Component {
     );
   };
 
-  @on('#/login') login = state => ({ ...state, messages: [], returnTo: document.location.hash });
-
+  @on('#/login') login = state => !auth.authorized() ? { ...state, messages: [], returnTo: document.location.hash } : null;
   @on('#/logout') logout = () => {
     app.run('/set-user', null);
     document.location.hash = '#/';

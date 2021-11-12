@@ -1,6 +1,6 @@
 import app, { Component, on } from 'apprun';
 import { IProfile } from '../models';
-import { articles, profile } from '../api';
+import { articles, profile , auth } from '../api';
 import Articles from './article-list';
 import Pages from './page-list';
 
@@ -106,7 +106,7 @@ class ProfileComponent extends Component {
     return newState;
   };
 
-  @on('#/profile') root = (state, name, type, page) => this.updateState(state, name, type, page);
+  @on('#/profile') root = (state, name, type, page) => auth.authorized() ? this.updateState(state, name, type, page) : null;
 
   @on('update-article') updateArticle = (state, article) => {
     state.articles = state.articles.map((a) => {

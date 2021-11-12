@@ -53,7 +53,7 @@ class RegisterComponent extends Component {
     );
   };
 
-  @on('#/register') register = (state, messages) => ({ ...state, messages });
+  @on('#/register') register = (state, messages) => !auth.authorized() ? { ...state, messages } : null;
 
   @on('register') submitRegistration = async (state, e) => {
     try {
